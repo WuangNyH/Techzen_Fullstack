@@ -12,7 +12,7 @@ public class Bai11 {
         int maxDay = getMaxDayOfMonth(month, year);
 
         if (day > maxDay) {
-            System.out.println("Ngày không hợp lệ!");
+            System.out.printf("Không có ngày %d trong tháng %d", day, month);
             return false;
         } else {
             System.out.println("Ngày hợp lệ: " + day + "/" + month + "/" + year);
@@ -26,6 +26,37 @@ public class Bai11 {
             case 2 -> (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0) ? 29 : 28;
             default -> 31;
         };
+    }
+
+    public static void getNextDay(byte day, byte month, int year) {
+        day++;
+        int maxDay = getMaxDayOfMonth(month, year);
+
+        if (day > maxDay) {
+            day = 1;
+            month++;
+            if (month > 12){
+                month = 1;
+                year++;
+            }
+        }
+        System.out.printf("Ngày tiếp theo là ngày %d/%d/%d%n", day, month, year);
+    }
+
+    public static void getPreviousDay(byte day, byte month, int year) {
+        day--;
+
+        if (day == 0) {
+            month--;
+            if (month == 0){
+                month = 12;
+                year--;
+            }
+            day = (byte) getMaxDayOfMonth(month, year);
+        }
+
+
+        System.out.printf("Ngày hôm qua là ngày %d/%d/%d%n", day, month, year);
     }
 
 
@@ -42,18 +73,8 @@ public class Bai11 {
         int year =  sc.nextInt();
 
         if (validateTime(day, month, year)) {
-            day++;
-            int maxDay = getMaxDayOfMonth(month, year);
-
-            if (day > maxDay) {
-                day = 1;
-                month++;
-                if (month > 12){
-                    month = 1;
-                    year++;
-                }
-            }
-            System.out.printf("Ngày tiếp theo là ngày %d/%d/%d", day, month, year);
+            getNextDay(day, month, year);
+            getPreviousDay(day, month, year);
         }
     }
 }
