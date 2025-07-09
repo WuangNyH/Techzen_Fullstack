@@ -1,6 +1,6 @@
 package buoi_03;
 
-// In các tam giác bằng giấu *
+// In các tam giác bằng dấu *
 public class Bai09 {
 //   *
 //   **
