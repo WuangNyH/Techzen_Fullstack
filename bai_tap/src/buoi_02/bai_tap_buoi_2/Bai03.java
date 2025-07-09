@@ -1,4 +1,4 @@
-package bai_tap_buoi_2;
+package buoi_02.bai_tap_buoi_2;
 
 import java.util.Scanner;
 
