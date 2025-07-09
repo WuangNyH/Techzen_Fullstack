@@ -14,13 +14,12 @@ public class Bai11 {
         if (day > maxDay) {
             System.out.printf("Không có ngày %d trong tháng %d", day, month);
             return false;
-        } else {
-            System.out.println("Ngày hợp lệ: " + day + "/" + month + "/" + year);
-            return true;
         }
+        System.out.println("Ngày hợp lệ: " + day + "/" + month + "/" + year);
+        return true;
     }
 
-    public static int getMaxDayOfMonth(int month, int year) {
+    public static int getMaxDayOfMonth(byte month, int year) {
         return switch (month) {
             case 4, 6, 9, 11 -> 30;
             case 2 -> (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0) ? 29 : 28;
@@ -58,7 +57,6 @@ public class Bai11 {
 
         System.out.printf("Ngày hôm qua là ngày %d/%d/%d%n", day, month, year);
     }
-
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
