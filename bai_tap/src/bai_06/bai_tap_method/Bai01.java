@@ -1,6 +1,4 @@
-package bai_05.bai_tap_method;
-
-import buoi_02.bai_tap_buoi_2.Bai05;
+package bai_06.bai_tap_method;
 
 import java.util.Scanner;
 

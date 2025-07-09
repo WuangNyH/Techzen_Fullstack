@@ -1,4 +1,4 @@
-package bai_05.bai_tap_method;
+package bai_06.bai_tap_method;
 
 import java.util.Scanner;
 
