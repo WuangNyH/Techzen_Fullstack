@@ -78,7 +78,7 @@ public class Bai02 {
         output = isPalindrome(n) ? " là số đối xứng" : " không phải là số đối xứng";
         System.out.println(n + output);
 
-        output = isPerfectSquare(n) ? " là số chính quy" : " không phải là số chính quy";
+        output = isPerfectSquare(n) ? " là số chính phương" : " không phải là số chính phương";
         System.out.println(n + output);
 
         output = isPrimeNumber(n) ? " là số nguyên tố" : " không phải là số nguyên tố";
