@@ -3,33 +3,34 @@ package buoi_04;
 import java.util.Scanner;
 
 public class Bai01 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void demSoCau(String paragraph) {
+        paragraph = paragraph.replaceAll(" ", "").trim();
 
-        System.out.print("Nhập đoạn văn ");
-        String p = sc.nextLine();
+        int soCauHoi = 0, soCamThan = 0, soTuongThuat = 0;
 
-        p = p.replaceAll(" ", "").trim();
-
-        int cauHoi = 0;
-        int camThan = 0;
-        int tuongThuat = 0;
-
-        for (int  i = 0; i < p.length(); i++) {
-            if (p.charAt(i) == '?') {
-                cauHoi++;
-            } else if (p.charAt(i) == '!') {
-                camThan++;
-            }  else if (p.charAt(i) == '.') {
-                tuongThuat++;
+        for (char c : paragraph.toCharArray()) {
+            switch (c) {
+                case '?': soCauHoi++; break;
+                case '!': soCamThan++; break;
+                case '.': soTuongThuat++; break;
+                default: break;
             }
         }
 
-        int tongSoCau = cauHoi + camThan + tuongThuat;
+        int tongSoCau = soTuongThuat + soCauHoi + soCamThan;
 
         System.out.println("Tổng số câu: " + tongSoCau);
-        System.out.println("Câu hỏi (?): " + cauHoi);
-        System.out.println("Câu cảm thán (!): " + camThan);
-        System.out.println("Câu trần thuật (.): " + tuongThuat);
+        System.out.println("Câu hỏi (?): " + soCauHoi);
+        System.out.println("Câu cảm thán (!): " + soCamThan);
+        System.out.println("Câu trần thuật (.): " + soTuongThuat);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Nhập đoạn văn: ");
+        String paragraph = sc.nextLine();
+
+        demSoCau(paragraph);
     }
 }
