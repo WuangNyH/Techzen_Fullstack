@@ -14,7 +14,7 @@ public class Bai10 {
 
         for (int i = 1; i <= canh; i++) {
             for (int j = 1; j <= canh; j++) {
-                System.out.print((i == 1 || i == 6 || j == i) ? "*" : " ");
+                System.out.print((i == 1 || i == canh || j == i) ? "*" : " ");
             }
             System.out.println();
         }
