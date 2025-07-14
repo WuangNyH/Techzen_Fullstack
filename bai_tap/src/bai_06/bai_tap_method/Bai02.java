@@ -81,11 +81,11 @@ public class Bai02 {
         output = isPerfectSquare(n) ? " là số chính phương" : " không phải là số chính phương";
         System.out.println(n + output);
 
-        output = isPrimeNumber(n) ? " là số nguyên tố" : " không phải là số nguyên tố";
+//        output = isPrimeNumber(n) ? " là số nguyên tố" : " không phải là số nguyên tố";
         System.out.println(n + output);
 
         System.out.printf("Tổng các số lẻ từ 1 đến %d = %d%n", n, sumOfOddNum(n));
-        System.out.printf("Tổng các số nguyên tố từ 1 đến %d = %d%n", n, sumOfPrimeNum(n));
+//        System.out.printf("Tổng các số nguyên tố từ 1 đến %d = %d%n", n, sumOfPrimeNum(n));
         System.out.printf("Tổng các số chính phương từ 1 đến %d = %d%n", n, sumOfPerfectSquare(n));
     }
 }
