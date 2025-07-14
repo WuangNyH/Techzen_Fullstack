@@ -25,7 +25,7 @@ public class Hinh02 {
         int newIndex = 0;
         for (int num : arr) {
             newArr[newIndex++] = num;
-            if (Bai02.isPrimeNumber(num)) {
+            if (isPrimeNumber(num)) {
                 newArr[newIndex++] = 0;
             }
         }
@@ -67,7 +67,7 @@ public class Hinh02 {
 
     public static int[] add(int[] arr, int index, int value) {
         int count = 0;
-        int [] newArr = new int[arr.length + 1];
+        int [] newArr = new int[arr.length];
 
         for (int i = 0; i < newArr.length; i++) {
             if (i == index) {
@@ -99,6 +99,6 @@ public class Hinh02 {
 
         // Câu e
         int[] arrE = {1, 2, 3, 4, 5};
-        System.out.println(Arrays.toString(add(arrE, 2, 5)));
+        System.out.println(Arrays.toString(add(arrE, 3, 10)));
     }
 }
