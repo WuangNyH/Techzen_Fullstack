@@ -59,7 +59,6 @@ public class Hinh01 {
             }
         }
 
-
         return arr;
     }
 

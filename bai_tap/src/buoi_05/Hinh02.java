@@ -33,7 +33,52 @@ public class Hinh02 {
         return newArr;
     }
 
-    public static int[] xoaPhanThu(int[] arr) {}
+    public static int[] xoaPhanTu(int[] arr, int value) {
+        int countValue = 0;
+
+        for (int num : arr) {
+            if (num == value) countValue++;
+        }
+
+        int[] newArr = new int[arr.length - countValue];
+        int idx = 0;
+
+        for (int num : arr) {
+            if (num != value) newArr[idx++] = num;
+        }
+        return newArr;
+    }
+
+    public static int[] removePrime(int[] arr) {
+        int countPrime = 0;
+
+        for (int num : arr) {
+            if (isPrimeNumber(num)) countPrime++;
+        }
+
+        int[] newArr = new int[arr.length - countPrime];
+        int idx = 0;
+
+        for (int num : arr) {
+            if (!isPrimeNumber(num)) newArr[idx++] = num;
+        }
+        return newArr;
+    }
+
+    public static int[] add(int[] arr, int index, int value) {
+        int count = 0;
+        int [] newArr = new int[arr.length + 1];
+
+        for (int i = 0; i < newArr.length; i++) {
+            if (i == index) {
+                newArr[i] = value;
+            } else {
+                newArr[i] = arr[count++];
+            }
+        }
+
+        return newArr;
+    }
 
     public static void main(String[] args) {
         // Câu a
@@ -43,5 +88,17 @@ public class Hinh02 {
         // Câu b
         int[] arrB = {1, 2, 3, 4, 5};
         System.out.println(Arrays.toString(chenSoKhong(arrB)));
+
+        // Câu c
+        int[] arrC = {1, 2, 4, 4, 5};
+        System.out.println(Arrays.toString(xoaPhanTu(arrC, 4)));
+
+        // Câu d
+        int[] arrD = {1, 2, 3, 4, 5};
+        System.out.println(Arrays.toString(removePrime(arrD)));
+
+        // Câu e
+        int[] arrE = {1, 2, 3, 4, 5};
+        System.out.println(Arrays.toString(add(arrE, 2, 5)));
     }
 }
