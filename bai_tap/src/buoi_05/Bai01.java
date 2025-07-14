@@ -6,6 +6,7 @@ public class Bai01 {
     public static void printListEmployee(String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
         System.out.println("==== Danh sách nhân viên ====");
         for (int i = 1; i <= fullNames.length; i++) {
+            System.out.printf("==== Nhân viên %d ====\n", i);
             getEmployee(i, fullNames, ages, genders, salaries, gpas);
         }
     }
