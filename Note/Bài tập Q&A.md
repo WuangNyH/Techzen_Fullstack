@@ -14,12 +14,25 @@
 ## Hình ảnh
 UI trang chi tiết công việc.png
 
-# [Q&A][Danh sách tìm kiếm] Đề xuất thêm thanh tìm kiếm ở màn hình Danh sách tìm kiếm
+# [Q&A][Danh sách công việc] Đề xuất thêm thanh tìm kiếm.
 # Hiện trạng:
-### Hiện tại màn hình danh sách công việc chưa có chức hình tìm kiếm nhiệm vụ
+### Hiện tại chỉ cho lọc theo trạng thái 
 # Vấn đề
-### Khi danh sách nhiệm vụ quá dài, người dùng muốn tìm kiếm những nhiệm vụ ở gần cuối danh sách sẽ gặp nhiều khó khăn và mất thời gian.
+### Khi người dùng tìm kiếm task phải lướt mất thời gian
 # Confirm
 ### Đề xuất thêm một thanh tìm kiếm (tìm kiếm theo tên) ở đầu danh sách
 # Hình ảnh
 
+# [Q&A][Danh sách công việc] Confirm trạng thái của task lấy theo UI hay Spec
+# Hiện trạng:
+### Hiện tại ở spec và UI phần trạng thái đang khác nhau
+- Hiện trạng: Đã Hoàn thành / chưa hoàn thành
+- UI: Done / Todo / Doing
+# Vấn đề
+### Không xác định được trạng thái của task theo spec hay UI
+# Confirm
+### - Theo tôi đang hiểu sẽ lấy trạng thái theo UI đúng không?
+### - Nếu đúng thì ngoài 3 trạng thái (Todo/Doing/Done) còn những trạng thái nào khác không?
+# Đính kèm
+### Trong spec trạng thái của mỗi task gồm: Đã hoàn thành / Chưa hoàn thành
+### Trong hình ảnh
