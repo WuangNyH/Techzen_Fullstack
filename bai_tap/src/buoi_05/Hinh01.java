@@ -1,7 +1,7 @@
 package buoi_05;
 
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
 
 import static bai_06.bai_tap_method.Bai02.isPrimeNumber;
 
@@ -93,7 +93,7 @@ public class Hinh01 {
             }
         }
 
-        Arrays.sort(arrDuong, Comparator.reverseOrder());
+        Arrays.sort(arrDuong, Collections.reverseOrder());
         Arrays.sort(arrConLai);
 
         for (int num : arrDuong) {
