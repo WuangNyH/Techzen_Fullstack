@@ -1,31 +1,87 @@
 package buoi_05;
 
+import static buoi_05.bai01_class.Bai01.validateData;
+
 import java.util.Scanner;
 
 public class Bai01 {
-    public static void printListEmployee(String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
-        System.out.println("==== Danh sách nhân viên ====");
-        for (int i = 1; i <= fullNames.length; i++) {
-            System.out.printf("==== Nhân viên %d ====\n", i);
-            getEmployee(i, fullNames, ages, genders, salaries, gpas);
+    public static void displayMenu() {
+        System.out.println(">> FUNCTION SELECTION <<");
+        System.out.println("++ ----------------------------------------- ++");
+        System.out.println("| 1. Find employee (by ID)                    |");
+        System.out.println("| 2. Sort employees by ascending age          |");
+        System.out.println("| 3. Display employee list                    |");
+        System.out.println("| 4. Exit program                             |");
+        System.out.println("++ ----------------------------------------- ++");
+    }
+
+    public static String createEmployee(Scanner sc, int id, int[] ids, String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
+        System.out.print("Enter Fullname: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Age (18 - 100): ");
+        int age = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter Gender (Male/Female): ");
+        String gender = sc.nextLine();
+
+        System.out.print("Enter Salary: ");
+        double salary = Double.parseDouble(sc.nextLine());
+
+        System.out.print("Enter GPA (0-4): ");
+        float gpa = Float.parseFloat(sc.nextLine());
+
+        String errors = validateData(age, gender, salary, gpa, name);
+
+        if (!errors.isEmpty()) {
+            System.out.println("Error: " + errors);
+            return null;
+        }
+
+        ids[id - 1] = id;
+        fullNames[id - 1] = name;
+        ages[id - 1] = age;
+        genders[id - 1] = gender;
+        salaries[id - 1] = salary;
+        gpas[id - 1] = gpa;
+
+        return String.format("Successfully import employee with ID is %d.", id);
+    }
+
+    public static void getEmployeById(int id, int[] ids, String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
+        boolean found = false;
+
+        for (int i = 0; i < ids.length; i++) {
+            if (ids[i] == id) {
+                System.out.println("++ ----------------------------------------- ++");
+                displayEmployee(i, ids, fullNames, ages, genders, salaries, gpas);
+                System.out.println("++ ----------------------------------------- ++\n");
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Error: Employee ID does not exist.\n");
         }
     }
 
-    public static void getEmployee(int id, String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
-        if (id - 1 >= fullNames.length || id - 1 < 0) {
-            System.out.println("ID không hợp lệ!");
-            return;
+    public static void getListEmployees(int[] ids, String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
+        for (int id : ids) {
+            getEmployeById(id, ids, fullNames, ages, genders, salaries, gpas);
         }
-
-        System.out.println("ID: " + (id));
-        System.out.println("Fullname: " + fullNames[id - 1]);
-        System.out.println("Age: " + ages[id - 1]);
-        System.out.println("Gender: " + genders[id - 1]);
-        System.out.println("Salary: " + String.format("%,.0f", salaries[id - 1]));
-        System.out.println("GPA: " + String.format("%.1f", gpas[id - 1]));
     }
 
-    public static void sapXepTheoTuoi(String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
+    public static void displayEmployee(int index, int[] ids, String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
+        System.out.println("ID: " + ids[index]);
+        System.out.println("Fullname: " + fullNames[index]);
+        System.out.println("Age: " + ages[index]);
+        System.out.println("Gender: " + genders[index]);
+        System.out.println("Salary: " + String.format("%,.0fVND", salaries[index]));
+        System.out.println("GPA: " + String.format("%.1f", gpas[index]));
+    }
+
+    public static void sortListByAge(int[] ids, String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
         int temp;
         String tempString;
         double tempDouble;
@@ -33,6 +89,11 @@ public class Bai01 {
         for (int i = 0 ; i < ages.length - 1; i++) {
             for (int j = i + 1; j < ages.length; j++) {
                 if (ages[i] > ages[j]) {
+                    // Swap id
+                    temp = ids[j];
+                    ids[j] = ids[i];
+                    ids[i] = temp;
+
                     // Swap fullName
                     tempString = fullNames[j];
                     fullNames[j] = fullNames[i];
@@ -60,45 +121,68 @@ public class Bai01 {
                 }
             }
         }
-
-        printListEmployee(fullNames, ages, genders, salaries, gpas);
+        System.out.println("Sorting successful.");
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int newId = 1;
 
-        System.out.print("Số nhân viên cần nhập: ");
-        int soNhanVien = Integer.parseInt(sc.nextLine());
+        System.out.print("Number of employees to add: ");
+        int num = Integer.parseInt(sc.nextLine());
 
-        String[] fullNames = new String[soNhanVien];
-        int[] ages = new int[soNhanVien];
-        String[] genders = new String[soNhanVien];
-        double[] salaries = new double[soNhanVien];
-        double[] gpas = new double[soNhanVien];
+        int[] ids = new int[num];
+        String[] fullNames = new String[num];
+        int[] ages = new int[num];
+        String[] genders = new String[num];
+        double[] salaries = new double[num];
+        double[] gpas = new double[num];
 
-        for (int i = 0; i < soNhanVien; i++) {
-            System.out.println("================================");
-            System.out.print("Nhập tên nhân viên thứ " + (i + 1) + ": ");
-            fullNames[i] = sc.nextLine();
-
-            System.out.print("Nhập tuổi nhân viên thứ " + (i + 1) + ": ");
-            ages[i] = Integer.parseInt(sc.nextLine());
-
-            System.out.print("Nhập giới tính nhân viên thứ " + (i + 1) + " (Nam/Nữ): ");
-            genders[i] = sc.nextLine();
-
-            System.out.print("Nhập lương nhân viên thứ " + (i + 1) + " (lớn hơn 0): ");
-            salaries[i] = Double.parseDouble(sc.nextLine());
-
-            System.out.print("Nhập GPA nhân viên thứ " + (i + 1) + " (0-4): ");
-            gpas[i] = Double.parseDouble(sc.nextLine());
+        for (int i = 0; i < num; i++) {
+            while (true) {
+                System.out.println("\nImport info of employee with ID " + newId);
+                String output = createEmployee(sc, newId, ids, fullNames, ages, genders, salaries, gpas);
+                if  (output == null) continue;
+                System.out.println(output);
+                newId++;
+                break;
+            }
         }
 
-        System.out.print("Nhập id nhân viên muốn tìm kiếm: ");
-        int inputId = Integer.parseInt(sc.nextLine());
+        while (true) {
+            displayMenu();
+            System.out.print("Your choice: ");
+            int choice = Integer.parseInt(sc.nextLine());
 
-        getEmployee(inputId, fullNames, ages, genders, salaries, gpas);
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter employee ID: ");
+                    int id = Integer.parseInt(sc.nextLine());
 
-        sapXepTheoTuoi(fullNames, ages, genders, salaries, gpas);
+                    getEmployeById(id, ids, fullNames, ages, genders, salaries, gpas);
+                    break;
+                case 2:
+                    if (ids.length == 0) {
+                        System.out.println("Employee list is empty.\n");
+                        break;
+                    }
+                    sortListByAge(ids, fullNames, ages, genders, salaries, gpas);
+                    break;
+                case 3:
+                    if (ids.length == 0) {
+                        System.out.println("Employee list is empty.\n");
+                        break;
+                    }
+                    getListEmployees(ids, fullNames, ages, genders, salaries, gpas);
+                    break;
+                default:
+                    System.out.print("Are you sure you want to exit the program? (Y/N): ");
+                    String exitChoice = sc.nextLine();
+                    if (exitChoice.equalsIgnoreCase("Y") || exitChoice.equalsIgnoreCase("yes")) {
+                        return;
+                    }
+                    break;
+            }
+        }
     }
 }
