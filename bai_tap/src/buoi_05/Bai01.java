@@ -38,6 +38,7 @@ public class Bai01 {
             return null;
         }
 
+        // Vì id bắt đầu từ 1 còn index thì 0 nên sẽ gắn cho phần thử với index là id - 1
         ids[id - 1] = id;
         fullNames[id - 1] = name;
         ages[id - 1] = age;
@@ -128,9 +129,11 @@ public class Bai01 {
         Scanner sc = new Scanner(System.in);
         int newId = 1;
 
+        // Vì sử dụng Array nên sẽ để người dùng nhập thông tin của nhân viên trước
         System.out.print("Number of employees to add: ");
         int num = Integer.parseInt(sc.nextLine());
 
+        // Khởi tạo các mảng để lưu dữ liệu
         int[] ids = new int[num];
         String[] fullNames = new String[num];
         int[] ages = new int[num];
@@ -138,8 +141,9 @@ public class Bai01 {
         double[] salaries = new double[num];
         double[] gpas = new double[num];
 
+        // Sử dụng vòng lặp để nhập thông tin cho từng nhân viên
         for (int i = 0; i < num; i++) {
-            while (true) {
+            while (true) { // Sử dụng vòng while để nhập thông tin nếu lỗi thì có thể tiếp tục nhập lại
                 System.out.println("\nImport info of employee with ID " + newId);
                 String output = createEmployee(sc, newId, ids, fullNames, ages, genders, salaries, gpas);
                 if  (output == null) continue;
@@ -150,32 +154,32 @@ public class Bai01 {
         }
 
         while (true) {
-            displayMenu();
+            displayMenu(); // In ra menu các function
             System.out.print("Your choice: ");
             int choice = Integer.parseInt(sc.nextLine());
 
             switch (choice) {
-                case 1:
+                case 1: // Tìm nhân viên bằng ID
                     System.out.print("Enter employee ID: ");
                     int id = Integer.parseInt(sc.nextLine());
 
                     getEmployeById(id, ids, fullNames, ages, genders, salaries, gpas);
                     break;
-                case 2:
+                case 2: // Sắp xếp danh sách nhân viên theo độ tuổi tăng dần
                     if (ids.length == 0) {
                         System.out.println("Employee list is empty.\n");
                         break;
                     }
                     sortListByAge(ids, fullNames, ages, genders, salaries, gpas);
                     break;
-                case 3:
+                case 3: // In ra danh sách nhân viên
                     if (ids.length == 0) {
                         System.out.println("Employee list is empty.\n");
                         break;
                     }
                     getListEmployees(ids, fullNames, ages, genders, salaries, gpas);
                     break;
-                default:
+                default: // Thoát chương trình
                     System.out.print("Are you sure you want to exit the program? (Y/N): ");
                     String exitChoice = sc.nextLine();
                     if (exitChoice.equalsIgnoreCase("Y") || exitChoice.equalsIgnoreCase("yes")) {
