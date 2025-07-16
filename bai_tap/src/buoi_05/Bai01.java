@@ -68,8 +68,10 @@ public class Bai01 {
     }
 
     public static void getListEmployees(int[] ids, String[] fullNames, int[] ages, String[] genders, double[] salaries, double[] gpas) {
-        for (int id : ids) {
-            getEmployeById(id, ids, fullNames, ages, genders, salaries, gpas);
+        for (int i = 0; i < ids.length; i++) {
+            System.out.println("++ ----------------------------------------- ++");
+            displayEmployee(i, ids, fullNames, ages, genders, salaries, gpas);
+            System.out.println("++ ----------------------------------------- ++\n");
         }
     }
 
