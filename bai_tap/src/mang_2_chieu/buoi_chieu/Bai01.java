@@ -18,20 +18,18 @@ public class Bai01 {
         long max = Long.MIN_VALUE;
         int[] coorMax = new int[2];
 
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                if (j + k - 1 < arr[i].length && i + k - 1 < arr.length) {
-                    int sum = 0;
-                    for (int x = i; x <= i + k - 1; x++) {
-                        for (int y = j; y <= j + k - 1; y++) {
-                            sum += arr[x][y];
-                        }
+        for (int i = 0; i < arr.length - k; i++) {
+            for (int j = 0; j < arr[i].length - k; j++) {
+                long sum = 0;
+                for (int x = i; x <= i + k - 1; x++) {
+                    for (int y = j; y <= j + k - 1; y++) {
+                        sum += arr[x][y];
                     }
-                    if (sum > max) {
-                        max = sum;
-                        coorMax[0] = i;
-                        coorMax[1] = j;
-                    }
+                }
+                if (sum > max) {
+                    max = sum;
+                    coorMax[0] = i;
+                    coorMax[1] = j;
                 }
             }
         }
