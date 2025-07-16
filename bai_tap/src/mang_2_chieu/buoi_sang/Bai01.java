@@ -1,4 +1,4 @@
-package mang_2_chieu.buoi_chieu;
+package mang_2_chieu.buoi_sang;
 
 import java.util.Arrays;
 import java.util.Scanner;
