@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import static buoi_05.bai01_class.Bai01.validateData;
 
-public class Bai01 {
+public class Bai01v1 {
     static int id = 1;
     static Scanner sc = new Scanner(System.in);
     static ArrayList<ArrayList<Object>> employees = new ArrayList<>();
@@ -168,7 +168,7 @@ public class Bai01 {
             return;
         }
 
-        filtered.forEach(Bai01::displayEmployee);
+        filtered.forEach(Bai01v1::displayEmployee);
     }
 
 
