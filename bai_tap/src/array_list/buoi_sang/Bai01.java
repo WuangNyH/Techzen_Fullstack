@@ -125,11 +125,10 @@ public class Bai01 {
 
         // Câu k
         System.out.println("\nCâu k: ");
-        Collections.sort(arr);
-
         if (arr.isEmpty()) {
             System.out.println("List is empty!");
         } else {
+            Collections.sort(arr);
             System.out.println("Gía trị lớn nhì của danh sách: " + arr.get(arr.size() - 2));
         }
     }

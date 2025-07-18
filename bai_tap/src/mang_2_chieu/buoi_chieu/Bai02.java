@@ -4,6 +4,14 @@ import static mang_2_chieu.buoi_sang.Bai01.displayArray;
 
 public class Bai02 {
 
+    int[][] arr = {
+            {1, 2, 3, 4},
+            {5, 6, 7, 8},
+            {9, 1, 2, 3},
+            {4, 5, 6, 7}
+    };
+
+
     public static int[][] rotateMatrix90(int[][] matrix) {
         int[][] newMatrix = new int[matrix[0].length][matrix.length];
         int row = 0;
