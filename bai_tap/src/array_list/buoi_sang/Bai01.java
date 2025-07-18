@@ -21,25 +21,26 @@ public class Bai01 {
         return arr;
     }
 
-    public static int countOdd(ArrayList<Integer> arr) {
-        int count = 0;
-        for (int number : arr) {
-            if (number % 2 != 0) {
-                count++;
-            }
-        }
+    public static long countOdd(ArrayList<Integer> arr) {
+//        int count = 0;
+//        for (int number : arr) {
+//            if (number % 2 != 0) {
+//                count++;
+//            }
+//        }
 
-        return count;
+        return arr.stream().filter(x -> x % 2 != 0).count();
     }
 
     public static int sumOddPositive(ArrayList<Integer> arr) {
-        int sum = 0;
-        for (int number : arr) {
-            if (number > 0 && number % 2 != 0) {
-                sum += number;
-            }
-        }
-        return sum;
+//        int sum = 0;
+//        for (int number : arr) {
+//            if (number > 0 && number % 2 != 0) {
+//                sum += number;
+//            }
+//        }
+
+        return arr.stream().filter(x -> x > 0 && x % 2 != 0).mapToInt(Integer::intValue).sum();
     }
 
     public static ArrayList<Integer> findIndexOfValue(int value, ArrayList<Integer> arr) {
@@ -52,26 +53,6 @@ public class Bai01 {
         }
 
         return arrIndex;
-    }
-
-    public static int maxOfList(ArrayList<Integer> arr) {
-        int max = arr.get(0);
-
-        for (int i = 1; i < arr.size(); i++) {
-            max = Math.max(max, arr.get(i));
-        }
-
-        return max;
-    }
-
-    public static int minOfList(ArrayList<Integer> arr) {
-        int min = arr.get(0);
-
-        for (int i = 1; i < arr.size(); i++) {
-            min = Math.min(min, arr.get(i));
-        }
-
-        return min;
     }
 
     public static void main(String[] args) {
@@ -139,12 +120,17 @@ public class Bai01 {
 
         // Câu j
         System.out.println("\nCâu j: ");
-        System.out.println("Max of list: " + maxOfList(arr));
-        System.out.println("Min of list: " + minOfList(arr));
+        System.out.println("Max of list: " + Collections.max(arr));
+        System.out.println("Min of list: " + Collections.min(arr));
 
         // Câu k
         System.out.println("\nCâu k: ");
         Collections.sort(arr);
-        System.out.println("Gía trị lớn nhì của danh sách: " + arr.get(arr.size() - 2));
+
+        if (arr.isEmpty()) {
+            System.out.println("List is empty!");
+        } else {
+            System.out.println("Gía trị lớn nhì của danh sách: " + arr.get(arr.size() - 2));
+        }
     }
 }
