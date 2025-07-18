@@ -60,7 +60,9 @@ public class Bai01 {
     }
 
     public static ArrayList<Object> getEmployeeById(int id) {
-        return employees.stream().filter(employee -> (int) employee.get(0) == id).findFirst().orElse(null);
+        return employees.stream()
+                .filter(employee -> (int) employee.get(0) == id)
+                .findFirst().orElse(null);
     }
 
 
