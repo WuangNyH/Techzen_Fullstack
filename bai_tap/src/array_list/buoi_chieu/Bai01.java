@@ -44,6 +44,7 @@ public class Bai01 {
         return employee;
     }
 
+
     public static void removeEmployeeById(int id) {
         ArrayList<Object> employee = getEmployeeById(id);
 
@@ -59,6 +60,7 @@ public class Bai01 {
     public static ArrayList<Object> getEmployeeById(int id) {
         return employees.stream().filter(employee -> (int) employee.get(0) == id).findFirst().orElse(null);
     }
+
 
     public static void updateEmployee(int id) {
         ArrayList<Object> employee = getEmployeeById(id);
@@ -99,6 +101,7 @@ public class Bai01 {
         System.out.println("Updated employee with id " + id);
     }
 
+
     public static void getListEmployee() {
         if (employees.isEmpty()) {
             System.out.println("No employee with id");
@@ -109,6 +112,7 @@ public class Bai01 {
             displayEmployee(employee);
         }
     }
+
 
     public static void displayMenu() {
         System.out.println(">> FUNCTION SELECTION <<");
@@ -122,6 +126,7 @@ public class Bai01 {
         System.out.println("++ ----------------------------------------- ++");
     }
 
+
     public static void displayEmployee(ArrayList<Object> employee) {
         System.out.println("++ ----------------------------------------- ++");
         System.out.println("ID: " + employee.get(0).toString());
@@ -132,6 +137,7 @@ public class Bai01 {
         System.out.println("GPA: " + String.format("%.1f", (float) employee.get(5)));
         System.out.println("++ ----------------------------------------- ++\n");
     }
+
 
     public static void main(String[] args) {
         while (true) {
