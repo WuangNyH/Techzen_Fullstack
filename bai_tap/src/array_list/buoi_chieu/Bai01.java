@@ -1,6 +1,9 @@
 package array_list.buoi_chieu;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
 
 import static buoi_05.bai01_class.Bai01.validateData;
 
