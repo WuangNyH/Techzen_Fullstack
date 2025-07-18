@@ -136,7 +136,7 @@ public class Bai01 {
         System.out.println("++ ----------------------------------------- ++");
         System.out.println("ID: " + employee.get(0).toString());
         System.out.println("Fullname: " + employee.get(1).toString());
-        System.out.println("Age: " + employee.get(2).toString());
+        System.out.println("Age: " + (int) employee.get(2));
         System.out.println("Gender: " + employee.get(3).toString());
         System.out.println("Salary: " + String.format("%,.0fVND", (double) employee.get(4)));
         System.out.println("GPA: " + String.format("%.1f", (float) employee.get(5)));
