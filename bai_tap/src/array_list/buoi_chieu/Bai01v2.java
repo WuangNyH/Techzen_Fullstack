@@ -141,8 +141,12 @@ public class Bai01v2 {
             return;
         }
 
+        if (fullNames.size() == 1) {
+            displayEmployee(ids.get(0));
+        }
 
-        for (int i = 0; i < ids.size() - 1; i++) {
+
+        for (int i = 0; i < 2; i++) {
             for (int j = i + 1; j < ids.size(); j++) {
                 if (gpas.get(i) < gpas.get(j)) {
                     Collections.swap(ids, i, j);
@@ -155,12 +159,8 @@ public class Bai01v2 {
             }
         }
 
-        if (fullNames.size() == 1) {
-            displayEmployee(ids.get(0));
-        } else {
-            displayEmployee(0);
-            displayEmployee(1);
-        }
+        displayEmployee(0);
+        displayEmployee(1);
     }
 
     public static void getEmployeeByName() {
