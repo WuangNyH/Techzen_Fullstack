@@ -1,7 +1,8 @@
 package array_list.buoi_chieu;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static buoi_05.bai01_class.Bai01.validateData;
 
@@ -104,7 +105,7 @@ public class Bai01 {
 
     public static void getListEmployee() {
         if (employees.isEmpty()) {
-            System.out.println("No employee with id");
+            System.out.println("No employee in list");
             return;
         }
 
@@ -122,7 +123,10 @@ public class Bai01 {
         System.out.println("| 3. Remove employee (by ID)                  |");
         System.out.println("| 4. Update employee (by ID)                  |");
         System.out.println("| 5. Display list employee                    |");
-        System.out.println("| 6. Exit program                             |");
+        System.out.println("| 6. Top 2 GPA                                |");
+        System.out.println("| 7. Find employee (by Name)                  |");
+        System.out.println("| 8. Sort employee by age                     |");
+        System.out.println("| 9. Exit program                             |");
         System.out.println("++ ----------------------------------------- ++");
     }
 
@@ -136,6 +140,44 @@ public class Bai01 {
         System.out.println("Salary: " + String.format("%,.0fVND", (double) employee.get(4)));
         System.out.println("GPA: " + String.format("%.1f", (float) employee.get(5)));
         System.out.println("++ ----------------------------------------- ++\n");
+    }
+
+
+    public static void findTopTwoGPA() {
+        if (employees.isEmpty()) {
+            System.out.println("No employee in list");
+            return;
+        }
+
+        employees.sort((e1, e2) -> Float.compare((float) e2.get(5), (float) e1.get(5)));
+        displayEmployee(employees.get(0));
+        displayEmployee(employees.get(1));
+    }
+
+
+    public static void getEmployeeByName(String name) {
+        List<ArrayList<Object>> filtered = employees.stream()
+                .filter(x -> x.get(1).toString().contains(name))
+                .toList();
+
+        if (filtered.isEmpty()) {
+            System.out.println("No employee with name " + name);
+            return;
+        }
+
+        filtered.forEach(Bai01::displayEmployee);
+    }
+
+
+    public static void sortEmployeeByAge() {
+        if (employees.isEmpty()) {
+            System.out.println("No employee in list");
+            return;
+        }
+
+        employees.sort(Comparator.comparingInt(e -> (int) e.get(2)));
+
+        System.out.println("Sorting successful!");
     }
 
 
@@ -187,6 +229,18 @@ public class Bai01 {
                     break;
                 case 5:
                     getListEmployee();
+                    break;
+                case 6:
+                    findTopTwoGPA();
+                    break;
+                case 7:
+                    System.out.print("Enter name: ");
+                    String nameGet = sc.nextLine();
+
+                    getEmployeeByName(nameGet);
+                    break;
+                case 8:
+                    sortEmployeeByAge();
                     break;
                 default:
                     System.out.print("Are you sure you want to exit the program? (Y/N): ");
