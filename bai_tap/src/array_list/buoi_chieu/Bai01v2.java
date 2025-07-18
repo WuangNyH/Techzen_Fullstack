@@ -142,7 +142,7 @@ public class Bai01v2 {
         }
 
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < ids.size() - 1; i++) {
             for (int j = i + 1; j < ids.size(); j++) {
                 if (gpas.get(i) < gpas.get(j)) {
                     Collections.swap(ids, i, j);
