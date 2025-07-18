@@ -1,8 +1,6 @@
 package array_list.buoi_chieu;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static buoi_05.bai01_class.Bai01.validateData;
 
