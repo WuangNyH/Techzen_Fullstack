@@ -7,31 +7,31 @@ public class MainFraction {
 
 
     public static void displayMenu() {
-        System.out.println(">> LỰA CHỌN TÍNH NĂNG <<");
+        System.out.println(">> FEATURE SELECTION <<");
         System.out.println("++ ----------------------------------------- ++");
-        System.out.println("| 1. Thao tác với 1 phân số                   |");
-        System.out.println("| 2. Tính 2 phân số                           |");
-        System.out.println("| 3. Kết thúc                                 |");
+        System.out.println("| 1. Operations with a single fraction        |");
+        System.out.println("| 2. Calculate with two fractions             |");
+        System.out.println("| 3. Exit                                     |");
         System.out.println("++ ----------------------------------------- ++");
     }
 
     public static void displayMenu1() {
-        System.out.println(">> LỰA CHỌN TÍNH NĂNG <<");
+        System.out.println(">> FEATURE SELECTION <<");
         System.out.println("++ ----------------------------------------- ++");
-        System.out.println("| 1. Rút gọn                                  |");
-        System.out.println("| 2. KIểm tra âm, dương hoặc bằng 0           |");
-        System.out.println("| 3. Kết thúc                                 |");
+        System.out.println("| 1. Simplify                                 |");
+        System.out.println("| 2. Check sign (positive, negative, or zero) |");
+        System.out.println("| 3. Exit                                     |");
         System.out.println("++ ----------------------------------------- ++");
     }
 
     public static void displayMenu2() {
-        System.out.println(">> LỰA CHỌN TÍNH NĂNG <<");
+        System.out.println(">> FEATURE SELECTION <<");
         System.out.println("++ ----------------------------------------- ++");
-        System.out.println("| 1. Cộng                                     |");
-        System.out.println("| 2. Trừ                                      |");
-        System.out.println("| 3. Nhân                                     |");
-        System.out.println("| 4. Chia                                     |");
-        System.out.println("| 5. Kết thúc                                 |");
+        System.out.println("| 1. Add                                      |");
+        System.out.println("| 2. Subtract                                 |");
+        System.out.println("| 3. Multiply                                 |");
+        System.out.println("| 4. Divide                                   |");
+        System.out.println("| 5. Exit                                     |");
         System.out.println("++ ----------------------------------------- ++");
     }
 
