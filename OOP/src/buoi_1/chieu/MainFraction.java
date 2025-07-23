@@ -16,7 +16,7 @@ public class MainFraction {
     }
 
     public static void displayMenu1() {
-        System.out.println(">> FEATURE SELECTION <<");
+        System.out.println(">> FEATURE SELECTION (MENU 1) <<");
         System.out.println("++ ----------------------------------------- ++");
         System.out.println("| 1. Simplify                                 |");
         System.out.println("| 2. Check sign (positive, negative, or zero) |");
@@ -25,7 +25,7 @@ public class MainFraction {
     }
 
     public static void displayMenu2() {
-        System.out.println(">> FEATURE SELECTION <<");
+        System.out.println(">> FEATURE SELECTION (MENU 2) <<");
         System.out.println("++ ----------------------------------------- ++");
         System.out.println("| 1. Add                                      |");
         System.out.println("| 2. Subtract                                 |");
@@ -43,7 +43,11 @@ public class MainFraction {
 
             switch (choice) {
                 case 1:
-                    fraction.outputReudce();
+                    if (fraction.numerator == fraction.reduce().numerator) {
+                        System.out.println("Fraction is simplified!");
+                        break;
+                    }
+                    System.out.println(String.format("%d/%d", fraction.numerator, fraction.denominator) + " = " + fraction);
                     break;
                 case 2:
                     if (fraction.checkSign() == 0) {

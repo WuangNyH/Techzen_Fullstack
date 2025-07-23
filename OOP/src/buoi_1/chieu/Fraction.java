@@ -16,30 +16,29 @@ public class Fraction {
     public void input(Scanner sc) {
         while (true) {
             System.out.print("Enter numerator: ");
-            sc.nextLine();
-            if (!sc.hasNextInt()) {
-                System.out.println("Invalid numerator. Please try again. (Integer)!");
-                continue;
+            if (sc.hasNextInt()) {
+                this.numerator = sc.nextInt();
+                break;
+            } else {
+                System.out.println("Invalid numerator. Please enter an integer!");
+                sc.next(); // clear invalid input
             }
-
-            this.numerator = sc.nextInt();
-            break;
         }
 
         while (true) {
             System.out.print("Enter denominator: ");
-            sc.nextLine();
-            if (!sc.hasNextInt()) {
-                System.out.println("Invalid denominator. Please try again. (Integer and different zero)!");
-                continue;
-            }
+            if (sc.hasNextInt()) {
+                this.denominator = sc.nextInt();
 
-            this.denominator = sc.nextInt();
-            if (this.denominator == 0) {
-                System.out.println("Invalid denominator. Please try again. (Integer and different zero)!");
-                continue;
+                if (this.denominator == 0) {
+                    System.out.println("Invalid denominator. Please enter an integer and different zero!");
+                    continue;
+                }
+                break;
+            } else {
+                System.out.println("Invalid denominator. Please enter an integer!");
+                sc.next();
             }
-            break;
         }
     }
 
@@ -48,22 +47,13 @@ public class Fraction {
         int GCD = GCD(this.numerator, this.denominator);
         reduced.numerator = this.numerator / GCD;
         reduced.denominator = this.denominator / GCD;
+
+        if (reduced.denominator < 0) {
+            reduced.numerator = -reduced.numerator;
+            reduced.denominator = -reduced.denominator;
+        }
+
         return reduced;
-    }
-
-    public void outputReudce() {
-        Fraction reduced = this.reduce();
-
-        if (reduced.numerator == this.numerator && reduced.denominator == this.denominator) {
-            System.out.println("Fraction is simplify!");
-            return;
-        }
-
-        if (reduced.numerator % reduced.denominator == 0) {
-            System.out.printf("%d/%d = %d\n", this.numerator, this.denominator, reduced.numerator / reduced.denominator);
-        } else {
-            System.out.printf("%d/%d = %d/%d\n", this.numerator, this.denominator, reduced.numerator, reduced.denominator);
-        }
     }
 
     public Fraction sum(Fraction f2) {
