@@ -51,7 +51,7 @@ public class Fraction {
         return reduced;
     }
 
-    public void output() {
+    public void outputReudce() {
         Fraction reduced = this.reduce();
 
         if (reduced.numerator == this.numerator && reduced.denominator == this.denominator) {
@@ -68,25 +68,15 @@ public class Fraction {
 
     public Fraction sum(Fraction f2) {
         Fraction sum = new Fraction();
-        if (this.denominator == f2.denominator) {
-            sum.numerator = this.numerator + f2.numerator;
-            sum.denominator = this.denominator;
-        } else {
-            sum.numerator = (this.numerator * f2.denominator) + (f2.numerator * this.denominator);
-            sum.denominator = this.denominator * f2.denominator;
-        }
+        sum.numerator = (this.numerator * f2.denominator) + (f2.numerator * this.denominator);
+        sum.denominator = this.denominator * f2.denominator;
         return sum;
     }
 
     public Fraction sub(Fraction f2) {
         Fraction sub = new Fraction();
-        if (this.denominator == f2.denominator) {
-            sub.numerator = this.numerator - f2.numerator;
-            sub.denominator = this.denominator;
-        } else {
-            sub.numerator = (this.numerator * f2.denominator) - (f2.numerator * this.denominator);
-            sub.denominator = this.denominator * f2.denominator;
-        }
+        sub.numerator = (this.numerator * f2.denominator) - (f2.numerator * this.denominator);
+        sub.denominator = this.denominator * f2.denominator;
         return sub;
     }
 

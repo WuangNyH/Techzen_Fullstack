@@ -43,7 +43,7 @@ public class MainFraction {
 
             switch (choice) {
                 case 1:
-                    fraction.output();
+                    fraction.outputReudce();
                     break;
                 case 2:
                     if (fraction.checkSign() == 0) {
