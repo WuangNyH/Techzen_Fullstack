@@ -9,11 +9,20 @@ public class Student {
 
 
     public void input(Scanner sc) {
-        System.out.print("Enter full name: ");
-        String name = sc.nextLine();
-
+        String name;
         float math;
         float literature;
+
+        do {
+            System.out.print("Enter full name: ");
+            name = sc.nextLine();
+
+            if (!name.matches("[a-zA-ZÀ-Ỹà-ỹ\\s]+")) {
+                System.out.println("Invalid name. Please enter again (alphabet characters and whitespaces).");
+                continue;
+            }
+            break;
+        } while (true);
 
         do {
             System.out.print("Enter math score: ");

@@ -9,6 +9,7 @@ public class StudentManager {
     static final String GREEN = "\u001B[32m";
     static final String YELLOW = "\u001B[33m";
     static final String PURPLE = "\u001B[35m";
+    static final String RED = "\u001B[31m";
 
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Student> students = new ArrayList<>();
@@ -20,8 +21,10 @@ public class StudentManager {
     }
 
     public static void displayStudents() {
-        for (Student student : students) {
+        for (int i = 0; i < students.size(); i++) {
+            Student student = students.get(i);
             System.out.println(CYAN + "++ ----------------------------------------- ++");
+            System.out.println(YELLOW + "Sinh viên thứ " + (i + 1) + ":" + RESET);
             student.output();
             System.out.println(CYAN + "++ ----------------------------------------- ++\n" + RESET);
         }

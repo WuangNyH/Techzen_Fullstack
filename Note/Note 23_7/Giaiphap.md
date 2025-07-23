@@ -1,19 +1,10 @@
-# Nhóm 1 (bàn đầu)
-## B1: Xác định và phân tích yêu câu 
-## B2: Xác định cấu trúc
-- Thuộc tính:
-    - Tên
-    - Điểm toán
-    - Điểm văn
+# Tạo class PhanSo
 - Phương thức:
-    - validateData();
-        - Điểm phải từ 0 đền 10
-    - input();
-    - output();
-    - calculateAverageScore() ((Điểm toán + điểm văn) / 2)
-## B3: Viết class Student
-## B4: Viết class StudentManager sử dụng
-- Phương thức:
-    - addStudent();
-    - displayAllStudent();
-
+    - Tử
+    - Mẫu
+-  method
+    - input()
+    - output() (rút gọn)
+    - isNegative (xác định phân số là âm hay dương)
+    - 1 phương thước static (tính tổng, hiệu, tích, thương)
+# Tạo Main
