@@ -11,22 +11,22 @@ public class Point {
             System.out.print("Enter x: ");
             if (sc.hasNextInt()) {
                 this.x = sc.nextInt();
-                sc.nextLine();
                 break;
+            } else {
+                System.out.println("Invalid x. Please enter an integer!");
+                sc.next();
             }
-            System.out.println("Invalid x. Please try again. (Integer)!");
-            sc.nextLine();
         }
 
         while (true) {
             System.out.print("Enter y: ");
             if (sc.hasNextInt()) {
                 this.y = sc.nextInt();
-                sc.nextLine();
                 break;
+            } else {
+                System.out.println("Invalid x. Please enter an integer!");
+                sc.next();
             }
-            System.out.println("Invalid y. Please try again. (Integer)!");
-            sc.nextLine();
         }
     }
 
