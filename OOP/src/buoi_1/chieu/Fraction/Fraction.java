@@ -1,4 +1,4 @@
-package buoi_1.chieu;
+package buoi_1.chieu.Fraction;
 
 import java.util.Scanner;
 

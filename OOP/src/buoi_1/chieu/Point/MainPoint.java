@@ -1,4 +1,4 @@
-package buoi_1.chieu;
+package buoi_1.chieu.Point;
 
 import java.util.Scanner;
 
