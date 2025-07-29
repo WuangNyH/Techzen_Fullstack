@@ -84,4 +84,12 @@ public class NhanSu {
     public double tinhLuong() {
         return 0;
     }
+
+    @Override
+    public String toString() {
+        double luong = this.tinhLuong();
+        String formatLuong = String.format("%,.2fVND", luong);
+        return String.format("| %-10s | %-20s | %-5d | %-12.2f | %-18s |",
+                this.getId(), this.getHoTen(), this.getTuoi(), this.getSoGioLam(), formatLuong);
+    }
 }

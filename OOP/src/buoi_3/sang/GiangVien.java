@@ -30,9 +30,6 @@ public class GiangVien extends NhanSu {
 
     @Override
     public String toString() {
-        double luong = tinhLuong();
-        String formatLuong = String.format("%,.2fVND", luong);
-        return String.format("| %-10s | %-20s | %-5d | %-12.2f | %-15s | %-18s |",
-                this.getId(), this.getHoTen(), this.getTuoi(), this.getSoGioLam(), this.monGiangDay, formatLuong);
+        return super.toString() + String.format(" %-15s |", this.monGiangDay);
     }
 }

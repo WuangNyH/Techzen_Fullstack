@@ -33,8 +33,8 @@ public class QuanLyNhanSu {
 
     public static void hienDanhSachNhanSu(ArrayList<NhanSu> danhSachNhanSu) {
         System.out.println("============= Danh sách nhân sự =============");
-        System.out.printf("| %-10s | %-20s | %-5s | %-12s | %-15s | %-18s |\n",
-                "ID", "Họ Tên", "Tuổi", "Số giờ làm", "Môn học", "Lương");
+        System.out.printf("| %-10s | %-20s | %-5s | %-12s | %-18s | %-15s \n",
+                "ID", "Họ Tên", "Tuổi", "Số giờ làm", "Lương", "Môn học");
 
         for (NhanSu nhanSu : danhSachNhanSu) {
             System.out.println(nhanSu);
@@ -56,7 +56,7 @@ public class QuanLyNhanSu {
         System.out.println("Thêm nhân sự thành công!\n");
     }
 
-    public static ArrayList<NhanSu> nhanSuTheoTen(String keyword) {
+    public static ArrayList<NhanSu> timNhaSuTheoTen(String keyword) {
         ArrayList<NhanSu> danhSach = new ArrayList<>();
 
         if (danhSachNhanSu.isEmpty()) {
@@ -73,7 +73,7 @@ public class QuanLyNhanSu {
         return danhSach;
     }
 
-    public static ArrayList<NhanSu> nhieuGioNhat() {
+    public static ArrayList<NhanSu> nhanSuNhieuGioNhat() {
         ArrayList<NhanSu> danhSach = new ArrayList<>();
 
         if (danhSachNhanSu.isEmpty()) {
@@ -96,7 +96,7 @@ public class QuanLyNhanSu {
         return danhSach;
     }
 
-    public static ArrayList<NhanSu> itHon20Gio() {
+    public static ArrayList<NhanSu> nhanSuItHon20Gio() {
         ArrayList<NhanSu> danhSach = new ArrayList<>();
 
         if (danhSachNhanSu.isEmpty()) {
@@ -159,7 +159,7 @@ public class QuanLyNhanSu {
                 case 3:
                     System.out.print("Nhập tên cần tìm: ");
                     String keyword = sc.nextLine().trim().toLowerCase();
-                    ArrayList<NhanSu> timTheoTen = nhanSuTheoTen(keyword);
+                    ArrayList<NhanSu> timTheoTen = timNhaSuTheoTen(keyword);
 
                     if (!timTheoTen.isEmpty()) {
                         hienDanhSachNhanSu(timTheoTen);
@@ -175,7 +175,7 @@ public class QuanLyNhanSu {
                     System.out.println("Tổng số nhân sự: " + NhanSu.tongNhanSu());
                     break;
                 case 5:
-                    ArrayList<NhanSu> nhieuGioNhat = nhieuGioNhat();
+                    ArrayList<NhanSu> nhieuGioNhat = nhanSuNhieuGioNhat();
 
                     if (!nhieuGioNhat.isEmpty()) {
                         hienDanhSachNhanSu(nhieuGioNhat);
@@ -183,7 +183,7 @@ public class QuanLyNhanSu {
 
                     break;
                 case 6:
-                    ArrayList<NhanSu> itHon20Gio = itHon20Gio();
+                    ArrayList<NhanSu> itHon20Gio = nhanSuItHon20Gio();
 
                     if (!itHon20Gio.isEmpty()) {
                         hienDanhSachNhanSu(itHon20Gio);
