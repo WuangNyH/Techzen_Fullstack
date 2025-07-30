@@ -328,7 +328,6 @@ public class Main {
                 boolean needSwap = ascending
                         ? salaryI > salaryJ
                         : salaryI < salaryJ;
-
                 if (needSwap) {
                     Employee temp = list.get(i);
                     list.set(i, list.get(j));

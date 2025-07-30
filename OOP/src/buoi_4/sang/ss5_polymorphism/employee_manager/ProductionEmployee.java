@@ -8,7 +8,8 @@ public class ProductionEmployee extends Employee {
     public ProductionEmployee() {
     }
 
-    public ProductionEmployee(double numberProducts) {
+    public ProductionEmployee(String id, String fullName, String dayOfBirth, String address, double numberProducts) {
+        super(id, fullName, dayOfBirth, address);
         this.numberProducts = numberProducts;
     }
 
