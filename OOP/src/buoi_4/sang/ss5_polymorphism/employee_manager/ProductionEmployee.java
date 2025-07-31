@@ -24,7 +24,7 @@ public class ProductionEmployee extends Employee {
 
     @Override
     public void output() {
-        super.input();
+        super.output();
         System.out.println("Số sản phẩm: " + this.numberProducts);
     }
 

@@ -137,6 +137,7 @@ public class Main {
         }
     }
 
+    // Có thể xử lý util
     private static ArrayList<ManagementEmployee> getManagementEmployee() {
         ArrayList<ManagementEmployee> managementEmployees = new ArrayList<>();
         for (Employee employee : employees) {
@@ -159,6 +160,7 @@ public class Main {
         return productionEmployees;
     }
 
+    // có thể gộp chung 1 hàm
     private static String getIdManagement() {
         ArrayList<ManagementEmployee> managementEmployees = getManagementEmployee();
 
@@ -276,12 +278,16 @@ public class Main {
                 switch (choose) {
                     case 1:
                         // logic sắp xếp theo lương cho nhân viên quản lý
+                        List<ManagementEmployee> managementEmployee = getManagementEmployee();
+                        sortList(managementEmployee);
                         break;
                     case 2:
                         // logic sắp xếp theo lương cho nhân viên sản xuất
+                        List<ProductionEmployee> productionEmployee = getProductionEmployee();
+                        sortList(productionEmployee);
                         break;
                     case 3:
-                        sortAllEmployees();
+                        sortList(employees);
                         break;
                     case 4:
                         return;
@@ -292,18 +298,16 @@ public class Main {
         }
     }
 
-    private static void sortAllEmployees() {
+    private static <T extends Employee> void sortList(List<T> employeeList) {
         System.out.println("1. Tăng dần theo lương");
         System.out.println("2. Giảm dần theo lương");
         System.out.print("Chọn cách sắp xếp: ");
         int choose = Integer.parseInt(sc.nextLine());
 
         if (choose == 1) {
-            sortByFor(employees, true);
-//            employees.sort((a, b) -> Double.compare(a.getSalary(), b.getSalary()));
+            sortByFor(employeeList, true);
         } else if (choose == 2) {
-            sortByFor(employees, false);
-//            employees.sort(Comparator.comparingDouble(Employee::getSalary).reversed());
+            sortByFor(employeeList, false);
         } else {
             System.out.println("Lựa chọn không hợp lệ, xin chọn lại!");
             return;
@@ -311,7 +315,7 @@ public class Main {
 
         System.out.println("----- Danh sách sau khi sắp xếp theo lương -----");
         int count = 1;
-        for (Employee employee : employees) {
+        for (T employee : employeeList) {
             System.out.println("Thông tin nhân viên thứ " + count++);
             employee.output();
             System.out.println("Lương: " + employee.getSalary());
@@ -319,7 +323,7 @@ public class Main {
         }
     }
 
-    private static void sortByFor(List<Employee> list, boolean ascending) {
+    private static <T extends Employee> void sortByFor(List<T> list, boolean ascending) {
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = i + 1; j < list.size(); j++) {
                 double salaryI = list.get(i).getSalary();
@@ -329,7 +333,7 @@ public class Main {
                         ? salaryI > salaryJ
                         : salaryI < salaryJ;
                 if (needSwap) {
-                    Employee temp = list.get(i);
+                    T temp = list.get(i);
                     list.set(i, list.get(j));
                     list.set(j, temp);
                 }
