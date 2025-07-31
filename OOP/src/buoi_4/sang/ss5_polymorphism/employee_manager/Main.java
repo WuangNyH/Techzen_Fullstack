@@ -1,7 +1,6 @@
 package buoi_4.sang.ss5_polymorphism.employee_manager;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -278,12 +277,12 @@ public class Main {
                 switch (choose) {
                     case 1:
                         // logic sắp xếp theo lương cho nhân viên quản lý
-                        List<ManagementEmployee> managementEmployee = getManagementEmployee();
+                        ArrayList<ManagementEmployee> managementEmployee = getManagementEmployee();
                         sortList(managementEmployee);
                         break;
                     case 2:
                         // logic sắp xếp theo lương cho nhân viên sản xuất
-                        List<ProductionEmployee> productionEmployee = getProductionEmployee();
+                        ArrayList<ProductionEmployee> productionEmployee = getProductionEmployee();
                         sortList(productionEmployee);
                         break;
                     case 3:
@@ -298,7 +297,7 @@ public class Main {
         }
     }
 
-    private static <T extends Employee> void sortList(List<T> employeeList) {
+    private static <T extends Employee> void sortList(ArrayList<T> employeeList) {
         System.out.println("1. Tăng dần theo lương");
         System.out.println("2. Giảm dần theo lương");
         System.out.print("Chọn cách sắp xếp: ");
@@ -323,7 +322,7 @@ public class Main {
         }
     }
 
-    private static <T extends Employee> void sortByFor(List<T> list, boolean ascending) {
+    private static <T extends Employee> void sortByFor(ArrayList<T> list, boolean ascending) {
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = i + 1; j < list.size(); j++) {
                 double salaryI = list.get(i).getSalary();
