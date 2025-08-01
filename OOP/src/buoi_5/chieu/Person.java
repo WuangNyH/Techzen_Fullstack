@@ -51,8 +51,6 @@ public abstract class Person {
             if (this.email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) break;
             else System.out.println("❌ Email không hợp lệ! Vui lòng nhập đúng định dạng (vd: ten@gmail.com).");
         }
-
-
     }
 
     public String getId() {
@@ -90,6 +88,9 @@ public abstract class Person {
     // ===== toString (tuỳ chọn) =====
     @Override
     public String toString() {
-        return String.format("| %-6s | %-20s | %-8d | %-25s", id, name, age, email);
+        return "ID: " + id + "\n"
+                + "Họ tên: " + name + "\n"
+                + "Tuổi: " + age + "\n"
+                + "Email: " + email + "\n";
     }
 }

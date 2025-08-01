@@ -8,8 +8,8 @@ public class StudentFT extends Student {
     public StudentFT() {
     }
 
-    public StudentFT(String id, String name, int age, String email, double diemTrungBinh, int soDuAnThamGia) {
-        super(id, name, age, email, diemTrungBinh);
+    public StudentFT(String id, String name, int age, String email, double diemTrungBinh, int soBuoiHoc, int soDuAnThamGia) {
+        super(id, name, age, email, diemTrungBinh, soBuoiHoc);
         this.soDuAnThamGia = soDuAnThamGia;
     }
 
@@ -22,15 +22,16 @@ public class StudentFT extends Student {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + String.format(" %-20s |", soDuAnThamGia);
+    public void setId(String id) {
+        super.setId("HVFS-00" + id);
     }
 
-    public void printHeaderSFT() {
-        System.out.printf("| %-10s | %-20s | %-8s | %-25s | %-10s | %-20s |\n",
-                "ID", "Họ tên", "Tuổi", "Email", "Điểm TB", "Số dự án tham gia");
-        System.out.println("------------------------------------------------------------------------------------------------------");
+    @Override
+    public String toString() {
+        return super.toString()
+                + "Số dự án tham gia: " + soDuAnThamGia + "\n";
     }
+
 
     @Override
     public void input(Scanner sc) {
@@ -52,13 +53,23 @@ public class StudentFT extends Student {
     }
 
     @Override
-    public void xepLoai() {
+    public double getTuition() {
+        return this.soBuoiHoc * 50000 * 0.85;
+    }
+
+    @Override
+    public String xepLoai() {
         if (this.soDuAnThamGia >= 2 && this.diemTrungBinh >= 8) {
-            System.out.println("Giỏi");
+            return "Giỏi";
         } else if (this.diemTrungBinh >= 6.5) {
-            System.out.println("Khá");
+            return "Khá";
         } else {
-            System.out.println("Trung bình");
+            return "Trung bình";
         }
+    }
+
+    @Override
+    public double hocPhi() {
+        return this.soBuoiHoc * 50000 * 0.85;
     }
 }

@@ -8,8 +8,8 @@ public class StudentBE extends Student {
     public StudentBE() {
     }
 
-    public StudentBE(String id, String name, int age, String email, double diemTrungBinh, String ngonNguLapTrinh) {
-        super(id, name, age, email, diemTrungBinh);
+    public StudentBE(String id, String name, int age, String email, double diemTrungBinh, int soBuoiHoc, String ngonNguLapTrinh) {
+        super(id, name, age, email, diemTrungBinh, soBuoiHoc);
         this.ngonNguLapTrinh = ngonNguLapTrinh;
     }
 
@@ -22,14 +22,19 @@ public class StudentBE extends Student {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + String.format("  %-20s|", ngonNguLapTrinh);
+    public void setId(String id) {
+        super.setId("HVBE-00" + id);
     }
 
-    public void printHeaderSBE() {
-        System.out.printf("| %10s | %-20s | %-8s | %-25s | %-10s | %-20s |\n",
-                "ID", "Họ tên", "Tuổi", "Email", "Điểm TB", "Ngôn ngữ lập trình");
-        System.out.println("------------------------------------------------------------------------------------------------------");
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + "Ngôn ngữ lập trình: " + ngonNguLapTrinh + "\n";
     }
 
     @Override
@@ -40,13 +45,23 @@ public class StudentBE extends Student {
     }
 
     @Override
-    public void xepLoai() {
+    public double getTuition() {
+        return this.soBuoiHoc * 50000 * 0.9;
+    }
+
+    @Override
+    public String xepLoai() {
         if (this.diemTrungBinh >= 7.5) {
-            System.out.println("Giỏi");
+            return "Giỏi";
         } else if (this.diemTrungBinh >= 5) {
-            System.out.println("Khá");
+            return "Khá";
         } else {
-            System.out.println("Trung bình");
+            return "Trung Bình";
         }
+    }
+
+    @Override
+    public double hocPhi() {
+        return this.soBuoiHoc * 50000 * 0.9;
     }
 }

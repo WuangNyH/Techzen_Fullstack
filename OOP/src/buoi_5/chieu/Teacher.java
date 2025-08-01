@@ -1,41 +1,30 @@
 package buoi_5.chieu;
 
-import java.math.BigDecimal;
 import java.util.Scanner;
 
-public class Teacher extends Person implements ITeacher {
-    private String boMon;
+public abstract class Teacher extends Person implements ITeacher {
     private Double soGioDay;
-    final double heSoLuong = 200000;
-    Scanner sc = new Scanner(System.in);
 
     public Teacher() {
     }
 
-    public Teacher(String id, String name, int age, String email, String boMon, Double soGioDay) {
+    public Teacher(String id, String name, int age, String email, Double soGioDay) {
         super(id, name, age, email);
-        this.boMon = boMon;
         this.soGioDay = soGioDay;
-    }
-
-    public BigDecimal luong() {
-        BigDecimal soGio = BigDecimal.valueOf(this.soGioDay);
-        BigDecimal heSo = BigDecimal.valueOf(this.heSoLuong);
-        return soGio.multiply(heSo);
     }
 
     public Double getSoGioDay() {
         return soGioDay;
     }
 
+    public void setSoGioDay(Double soGioDay) {
+        this.soGioDay = soGioDay;
+    }
+
     @Override
     public void input(Scanner sc) {
 
         super.input(sc); // gọi phương thức input của lớp cha (Person)
-
-        // Nhập bộ môn
-        System.out.print("Nhập bộ môn giảng dạy: ");
-        this.boMon = sc.nextLine().trim();
 
         // Nhập số giờ dạy
         while (true) {
@@ -56,21 +45,12 @@ public class Teacher extends Person implements ITeacher {
         }
     }
 
-    public void printHeader() {
-        System.out.printf("| %10s | %-20s | %-8s | %-25s | %-15s | %-12s | %-15s |\n",
-                "ID", "Họ tên", "Tuổi", "Email", "Bộ môn", "Số giờ", "Lương");
-        System.out.println("---------------------------------------------------------------------------------------------"
-                + "----------------------------------");
-    }
-
-
     @Override
     public String toString() {
-        return super.toString() + String.format(" | %-15s | %-12.2f | %-15.2f |", boMon, soGioDay, luong());
+        return super.toString()
+                + "Số giờ dạy: " + String.format("%.2f", this.soGioDay) + "\n"
+                + "Lương: " + String.format("%.2f", this.getSalary()) + "\n";
     }
 
-    @Override
-    public double getSalary() {
-        return 0;
-    }
+    public abstract double getSalary();
 }
