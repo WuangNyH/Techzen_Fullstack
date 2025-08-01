@@ -2,7 +2,7 @@ package buoi_4.sang.ss5_polymorphism.employee_manager;
 
 import java.util.Scanner;
 
-public class Employee {
+abstract public class Employee {
     // ===== Properties =====
     private String id;
     private String fullName;
@@ -43,9 +43,7 @@ public class Employee {
         System.out.println("Địa chỉ: " + this.address);
     }
 
-    public double getSalary() {
-        return 0;
-    }
+    public abstract double getSalary();
 
     // ===== Getter & Setter =====
     public String getId() {
@@ -55,6 +53,8 @@ public class Employee {
     public void setId(String id) {
         this.id = id;
     }
+
+    public abstract void setId(int id);
 
     public String getFullName() {
         return fullName;

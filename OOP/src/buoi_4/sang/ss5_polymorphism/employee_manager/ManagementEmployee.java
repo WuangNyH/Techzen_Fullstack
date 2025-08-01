@@ -41,6 +41,11 @@ public class ManagementEmployee extends Employee {
         return basicSalary * coefficientSalary;
     }
 
+    @Override
+    public void setId(int id) {
+        this.setId(String.format("QL%03d", id));
+    }
+
     public double getBasicSalary() {
         return basicSalary;
     }

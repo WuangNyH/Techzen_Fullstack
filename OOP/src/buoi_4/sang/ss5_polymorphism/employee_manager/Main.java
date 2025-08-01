@@ -116,14 +116,14 @@ public class Main {
                     case 1:
                         ManagementEmployee managementEmployee = new ManagementEmployee();
                         managementEmployee.input();
-                        managementEmployee.setId(getIdManagement());
+                        managementEmployee.setId(getIdentification(getManagementEmployee()));
                         employees.add(managementEmployee);
                         System.out.println("Thêm nhân viên quản lý mới thành công");
                         break;
                     case 2:
                         ProductionEmployee productionEmployee = new ProductionEmployee();
                         productionEmployee.input();
-                        productionEmployee.setId(getIdProduction());
+                        productionEmployee.setId(getIdentification(getProductionEmployee()));
                         employees.add(productionEmployee);
                         System.out.println("Thêm nhân viên sản xuất mới thành công");
                         break;
@@ -160,38 +160,19 @@ public class Main {
     }
 
     // có thể gộp chung 1 hàm
-    private static String getIdManagement() {
-        ArrayList<ManagementEmployee> managementEmployees = getManagementEmployee();
+    private static <T extends Employee> int getIdentification(ArrayList<T> employees) {
+        if (employees.isEmpty()) return 1;
 
-        if (managementEmployees.isEmpty()) return "QL001";
+        int max = Integer.parseInt(employees.get(0).getId().substring(2));
 
-        int max = Integer.parseInt(managementEmployees.get(0).getId().substring(2));
-
-        for (ManagementEmployee managementEmployee : managementEmployees) {
-            int id = Integer.parseInt(managementEmployee.getId().substring(2));
+        for (T employee : employees) {
+            int id = Integer.parseInt(employee.getId().substring(2));
             if (max < id) {
                 max = id;
             }
         }
 
-        return String.format("QL%3d", max + 1).replace(" ", "0");
-    }
-
-    private static String getIdProduction() {
-        ArrayList<ProductionEmployee> productionEmployees = getProductionEmployee();
-
-        if (productionEmployees.isEmpty()) return "SX001";
-
-        int max = Integer.parseInt(productionEmployees.get(0).getId().substring(2));
-
-        for (ProductionEmployee productionEmployee : productionEmployees) {
-            int id = Integer.parseInt(productionEmployee.getId().substring(2));
-            if (max < id) {
-                max = id;
-            }
-        }
-
-        return String.format("SX%3d", max + 1).replace(" ", "0");
+        return max + 1;
     }
 
     private static void menuUpdate() {

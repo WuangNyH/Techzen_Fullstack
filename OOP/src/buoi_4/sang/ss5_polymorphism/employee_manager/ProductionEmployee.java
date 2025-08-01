@@ -33,6 +33,11 @@ public class ProductionEmployee extends Employee {
         return numberProducts * 100;
     }
 
+    @Override
+    public void setId(int id) {
+        this.setId(String.format("SX%03d", id));
+    }
+
     public double getNumberProducts() {
         return numberProducts;
     }
