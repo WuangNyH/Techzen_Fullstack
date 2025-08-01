@@ -1,11 +1,12 @@
-package buoi_3.chieu;
+package buoi_5.chieu;
 
 import java.util.Scanner;
 
-public class Student extends Person {
+public abstract class Student extends Person {
     double diemTrungBinh;
 
-    public Student() {}
+    public Student() {
+    }
 
     public Student(String id, String name, int age, String email, double diemTrungBinh) {
         super(id, name, age, email);
@@ -22,7 +23,7 @@ public class Student extends Person {
 
     @Override
     public String toString() {
-        return super.toString() + String.format(" | DiemTB: %.2f", diemTrungBinh);
+        return super.toString() + String.format(" | %-10.2f |", diemTrungBinh);
     }
 
     @Override
@@ -44,7 +45,5 @@ public class Student extends Person {
         }
     }
 
-    public void xepLoai() {
-        System.out.println("Xếp loại.");
-    }
+    public abstract void xepLoai();
 }

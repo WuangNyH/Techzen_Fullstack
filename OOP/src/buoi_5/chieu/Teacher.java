@@ -1,9 +1,9 @@
-package buoi_3.chieu;
+package buoi_5.chieu;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-public class Teacher extends Person {
+public class Teacher extends Person implements ITeacher {
     private String boMon;
     private Double soGioDay;
     final double heSoLuong = 200000;
@@ -18,9 +18,10 @@ public class Teacher extends Person {
         this.soGioDay = soGioDay;
     }
 
-    public BigDecimal luong(double soGioDay) {
-        BigDecimal luongGiangVien = BigDecimal.valueOf(soGioDay * heSoLuong);
-        return luongGiangVien;
+    public BigDecimal luong() {
+        BigDecimal soGio = BigDecimal.valueOf(this.soGioDay);
+        BigDecimal heSo = BigDecimal.valueOf(this.heSoLuong);
+        return soGio.multiply(heSo);
     }
 
     public Double getSoGioDay() {
@@ -29,7 +30,7 @@ public class Teacher extends Person {
 
     @Override
     public void input(Scanner sc) {
-        System.out.println("Thêm  giang vien id #" + getId());
+
         super.input(sc); // gọi phương thức input của lớp cha (Person)
 
         // Nhập bộ môn
@@ -56,7 +57,7 @@ public class Teacher extends Person {
     }
 
     public void printHeader() {
-        System.out.printf("| %-6s | %-20s | %-8s | %-25s | %-15s | %-12s | %-15s |\n",
+        System.out.printf("| %10s | %-20s | %-8s | %-25s | %-15s | %-12s | %-15s |\n",
                 "ID", "Họ tên", "Tuổi", "Email", "Bộ môn", "Số giờ", "Lương");
         System.out.println("---------------------------------------------------------------------------------------------"
                 + "----------------------------------");
@@ -65,11 +66,11 @@ public class Teacher extends Person {
 
     @Override
     public String toString() {
-        return String.format(
-                "%-5s | %-20s | %-5d | %-25s | %-15s | %-10.2f | %-15s",
-                getId(), getName(), getAge(), getEmail(), boMon, soGioDay, luong(soGioDay).toString()
-        );
+        return super.toString() + String.format(" | %-15s | %-12.2f | %-15.2f |", boMon, soGioDay, luong());
     }
 
-
+    @Override
+    public double getSalary() {
+        return 0;
+    }
 }

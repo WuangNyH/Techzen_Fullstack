@@ -115,17 +115,13 @@ public class Main {
                 switch (choose) {
                     case 1:
                         ManagementEmployee managementEmployee = new ManagementEmployee();
-                        managementEmployee.input();
-                        managementEmployee.setId(getIdentification(getManagementEmployee()));
-                        employees.add(managementEmployee);
-                        System.out.println("Thêm nhân viên quản lý mới thành công");
+                        int idManagement = getIdentification(getManagementEmployee());
+                        addEmployee(managementEmployee, idManagement);
                         break;
                     case 2:
                         ProductionEmployee productionEmployee = new ProductionEmployee();
-                        productionEmployee.input();
-                        productionEmployee.setId(getIdentification(getProductionEmployee()));
-                        employees.add(productionEmployee);
-                        System.out.println("Thêm nhân viên sản xuất mới thành công");
+                        int idProduction = getIdentification(getProductionEmployee());
+                        addEmployee(productionEmployee, idProduction);
                         break;
                     case 3:
                         return;
@@ -134,6 +130,13 @@ public class Main {
                 }
             } while (choose < 1 || choose > 3);
         }
+    }
+
+    private static <T extends Employee> void addEmployee(T employee, int id) {
+        employee.input();
+        employee.setId(id);
+        employees.add(employee);
+        System.out.println("Thêm nhân viên quản lý mới thành công");
     }
 
     // Có thể xử lý util
@@ -163,10 +166,12 @@ public class Main {
     private static <T extends Employee> int getIdentification(ArrayList<T> employees) {
         if (employees.isEmpty()) return 1;
 
-        int max = Integer.parseInt(employees.get(0).getId().substring(2));
+        String firstId = employees.get(0).getId();
+        int max = Integer.parseInt(firstId.substring(firstId.length() - 3));
 
         for (T employee : employees) {
-            int id = Integer.parseInt(employee.getId().substring(2));
+            String idString = employee.getId();
+            int id = Integer.parseInt(idString.substring(idString.length() - 3));
             if (max < id) {
                 max = id;
             }
@@ -216,22 +221,14 @@ public class Main {
 
                 switch (choose) {
                     case 1:
-                        int count = 1;
-                        for (Employee employee : employees) {
-                            if (employee instanceof ManagementEmployee) {
-                                System.out.println("Thông tin nhân viên thứ " + count++);
-                                employee.output();
-                            }
-                        }
+                        printList(getManagementEmployee());
                         break;
                     case 2:
                         // logic show danh sách nhân viên sản xuất
+                        printList(getProductionEmployee());
                         break;
                     case 3:
-                        for (int i = 0; i < employees.size(); i++) {
-                            System.out.println("Thông tin nhân viên thứ " + (i + 1));
-                            employees.get(i).output();
-                        }
+                        printList(employees);
                         break;
                     case 4:
                         return;
@@ -239,6 +236,13 @@ public class Main {
                         System.out.println("Lựa chọn không hợp lệ, xin chọn lại!");
                 }
             } while (choose < 1 || choose > 4);
+        }
+    }
+
+    private static <T extends Employee> void printList(ArrayList<T> list) {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("Thông tin nhân viên thứ " + (i + 1));
+            list.get(i).output();
         }
     }
 

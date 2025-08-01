@@ -1,9 +1,8 @@
-package buoi_3.chieu;
+package buoi_5.chieu;
 
 import java.util.Scanner;
 
-public class Person {
-
+public abstract class Person {
     private String id;
     private String name;
     private int age;
@@ -21,11 +20,9 @@ public class Person {
     }
 
     public void input(Scanner sc) {
-        System.out.println("Thêm sinh viên với id #" + id);
-
         // Nhập tên
         while (true) {
-            System.out.print("Nhập tên sinh viên: ");
+            System.out.print("Nhập tên: ");
             this.name = sc.nextLine().trim();
             if (this.name.matches("[a-zA-ZÀ-Ỹà-ỹ\\s]+")) break;
             else System.out.println("❌ Tên không hợp lệ! Không chứa số hoặc ký tự đặc biệt.");
@@ -49,7 +46,7 @@ public class Person {
         }
         // Nhập email
         while (true) {
-            System.out.print("Nhập email sinh viên: ");
+            System.out.print("Nhập email: ");
             this.email = sc.nextLine().trim();
             if (this.email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) break;
             else System.out.println("❌ Email không hợp lệ! Vui lòng nhập đúng định dạng (vd: ten@gmail.com).");
@@ -93,7 +90,6 @@ public class Person {
     // ===== toString (tuỳ chọn) =====
     @Override
     public String toString() {
-        return String.format("%-5s | %-20s | %-5d | %-25s", id, name, age, email);
+        return String.format("| %-6s | %-20s | %-8d | %-25s", id, name, age, email);
     }
-
 }

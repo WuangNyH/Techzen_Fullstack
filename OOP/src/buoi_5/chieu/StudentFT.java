@@ -1,4 +1,4 @@
-package buoi_3.chieu;
+package buoi_5.chieu;
 
 import java.util.Scanner;
 
@@ -23,7 +23,13 @@ public class StudentFT extends Student {
 
     @Override
     public String toString() {
-        return super.toString() + String.format(" | SoDuAnThamGia: %5d", soDuAnThamGia);
+        return super.toString() + String.format(" %-20s |", soDuAnThamGia);
+    }
+
+    public void printHeaderSFT() {
+        System.out.printf("| %-10s | %-20s | %-8s | %-25s | %-10s | %-20s |\n",
+                "ID", "Họ tên", "Tuổi", "Email", "Điểm TB", "Số dự án tham gia");
+        System.out.println("------------------------------------------------------------------------------------------------------");
     }
 
     @Override

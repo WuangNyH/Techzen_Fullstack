@@ -1,4 +1,4 @@
-package buoi_3.chieu;
+package buoi_5.chieu;
 
 import java.util.Scanner;
 
@@ -23,7 +23,13 @@ public class StudentBE extends Student {
 
     @Override
     public String toString() {
-        return super.toString() + String.format(" | NgonNguLapTrinh: %20s", ngonNguLapTrinh);
+        return super.toString() + String.format("  %-20s|", ngonNguLapTrinh);
+    }
+
+    public void printHeaderSBE() {
+        System.out.printf("| %10s | %-20s | %-8s | %-25s | %-10s | %-20s |\n",
+                "ID", "Họ tên", "Tuổi", "Email", "Điểm TB", "Ngôn ngữ lập trình");
+        System.out.println("------------------------------------------------------------------------------------------------------");
     }
 
     @Override
