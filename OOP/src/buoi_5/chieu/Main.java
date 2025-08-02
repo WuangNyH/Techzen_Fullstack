@@ -399,6 +399,110 @@ public class Main {
         }
     }
 
+    // 7 Minh
+    private static void tuitionStudent() {
+        System.out.println("Bạn muốn tính học phí cho học viên nào?");
+        System.out.println("1. Học viên Backend");
+        System.out.println("2. Học viên Fullstack");
+        System.out.println("3. Tất cả");
+        int choose;
+        do {
+            choose = Integer.parseInt(sc.nextLine());
+            switch (choose) {
+                case 1 -> System.out.println("Tong hoc phi backend" + totalTuition(StudentBE.class));
+                case 2 -> System.out.println("Tong hoc phi Fullend" + totalTuition(StudentFS.class));
+                case 3 -> System.out.println("Tong tat hoc phi " + totalTuition(Student.class));
+                default -> System.out.println("Bạn đã nhập sai ! Vui lòng chọn 1 - 2.");
+            }
+        } while (choose < 1 || choose > 3);
+    }
+
+    private static <T extends Student> double totalTuition(Class<T> type) {
+        double sum = 0;
+        for (Person person : persons) {
+            if (type.isInstance(person)) {
+                T student = type.cast(person);
+                sum += student.tuitionFee();
+            }
+        }
+        return sum;
+    }
+
+    // 8 Thủy
+    private static void calculateSalary() {
+        System.out.println("Hãy lựa chọn: ");
+        System.out.println("1. Giảng viên");
+        System.out.println("2. Trợ giảng");
+        System.out.print("Mời bạn nhập: ");
+        int choice = sc.nextInt();
+
+        if (choice == 1) {
+            double totalSalaryLecturer = 0;
+            for (Person p : persons) {
+                if (p instanceof Lecturer lecturer) {
+                    totalSalaryLecturer += lecturer.getSalary();
+                }
+            }
+            System.out.println("=> Tổng lương của các giảng viên: " + totalSalaryLecturer);
+        } else if (choice == 2) {
+            double totalSalaryTA = 0;
+            for (Person p : persons) {
+                if (p instanceof TeachingAssistant ta) {
+                    totalSalaryTA += ta.getSalary();
+                }
+            }
+            System.out.println("=> Tổng lương của các trợ giảng: " + totalSalaryTA);
+        } else {
+            System.out.println("Lựa chọn không hợp lệ! Chỉ chọn 1 hoặc 2.");
+        }
+    }
+
+    // 9 Thủy
+    private static void findSupportsOfTeacherByName() {
+        sc.nextLine();
+        System.out.print("Nhập id giảng viên cần tra cứu: ");
+        String id = sc.nextLine().trim();
+
+        Lecturer foundLecturer = null;
+
+        // Tìm giảng viên theo ID
+        for (Person p : persons) {
+            if (p instanceof Lecturer && id.equals(p.getId())) {
+                foundLecturer = (Lecturer) p;
+                break;
+            }
+        }
+        // Nếu không tìm thấy
+        if (foundLecturer == null) {
+            System.out.println("Không tìm thấy giảng viên với ID: " + id);
+            return;
+        }
+        // Duyệt toàn bộ danh sách để tìm các trợ giảng hỗ trợ giảng viên này
+        ArrayList<TeachingAssistant> teachingAssistants = new ArrayList<>();
+        for (Person p : persons) {
+            if (p instanceof TeachingAssistant ta) {
+                for (Lecturer supported : ta.getLecturers()) {
+                    if (supported.equals(foundLecturer)) {
+                        teachingAssistants.add(ta);
+                        break;
+                    }
+                }
+            }
+        }
+        // In kết quả
+        System.out.println("Giảng viên: \n" + foundLecturer);
+        System.out.println("Số lượng trợ giảng hỗ trợ: " + teachingAssistants.size());
+
+        if (teachingAssistants.isEmpty()) {
+            System.out.println("Không có trợ giảng nào hỗ trợ giảng viên này.");
+        } else {
+            System.out.println("Danh sách trợ giảng:");
+            for (TeachingAssistant ta : teachingAssistants) {
+                System.out.println(" - " + ta);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int choice;
 
@@ -409,33 +513,19 @@ public class Main {
             choice = Integer.parseInt(sc.nextLine());
 
             switch (choice) {
-                case 1:
-                    processAdd();
-                    break;
-                case 2:
-                    processShowPerson();
-                    break;
-                case 3:
-                    findPerson();
-                    break;
-                case 4:
-                    menuUpdate();
-                    break;
-                case 5:
-                    menuDelete();
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
-                case 10:
+                case 1 -> processAdd();
+                case 2 -> processShowPerson();
+                case 3 -> findPerson();
+                case 4 -> menuUpdate();
+                case 5 -> menuDelete();
+                case 6 -> menuSortByAVG();
+                case 7 -> tuitionStudent();
+                case 8 -> calculateSalary();
+                case 9 -> findSupportsOfTeacherByName();
+                case 10 -> {
                     return;
-                default:
-                    System.out.println("Lựa chọn không hợp lệ xin chọn lại!\n");
+                }
+                default -> System.out.println("Lựa chọn không hợp lệ xin chọn lại!\n");
             }
         }
     }
