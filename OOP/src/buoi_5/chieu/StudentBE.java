@@ -3,22 +3,22 @@ package buoi_5.chieu;
 import java.util.Scanner;
 
 public class StudentBE extends Student {
-    String ngonNguLapTrinh;
+    private String progLanguage;
 
     public StudentBE() {
     }
 
-    public StudentBE(String id, String name, int age, String email, double diemTrungBinh, int soBuoiHoc, String ngonNguLapTrinh) {
-        super(id, name, age, email, diemTrungBinh, soBuoiHoc);
-        this.ngonNguLapTrinh = ngonNguLapTrinh;
+    public StudentBE(String id, String fullName, int age, String email, double avgScore, int sessionNumber, String progLanguage) {
+        super(id, fullName, age, email, avgScore, sessionNumber);
+        this.progLanguage = progLanguage;
     }
 
-    public String getNgonNguLapTrinh() {
-        return ngonNguLapTrinh;
+    public String getProgLanguage() {
+        return progLanguage;
     }
 
-    public void setNgonNguLapTrinh(String ngonNguLapTrinh) {
-        this.ngonNguLapTrinh = ngonNguLapTrinh;
+    public void setProgLanguage(String progLanguage) {
+        this.progLanguage = progLanguage;
     }
 
     @Override
@@ -27,33 +27,27 @@ public class StudentBE extends Student {
     }
 
     @Override
-    public void setName(String name) {
-        super.setName(name);
+    public void input() {
+        Scanner sc = new Scanner(System.in);
+
+        super.input();
+
+        while (true) {
+            System.out.print("Nhập ngôn ngữ lập trình: ");
+            this.progLanguage = sc.nextLine().trim();
+            if (this.progLanguage.matches("[a-zA-Z\\s]+")) {
+                break;
+            } else {
+                System.out.println("Ngôn ngữ lập trình không hợp lệ! Không chứa Ký tự đặc biệt.\n");
+            }
+        }
     }
 
     @Override
-    public String toString() {
-        return super.toString()
-                + "Ngôn ngữ lập trình: " + ngonNguLapTrinh + "\n";
-    }
-
-    @Override
-    public void input(Scanner sc) {
-        super.input(sc);
-        System.out.print("Nhập ngôn ngữ lập trình: ");
-        this.ngonNguLapTrinh = sc.nextLine().trim();
-    }
-
-    @Override
-    public double getTuition() {
-        return this.soBuoiHoc * 50000 * 0.9;
-    }
-
-    @Override
-    public String xepLoai() {
-        if (this.diemTrungBinh >= 7.5) {
+    public String getClassify() {
+        if (this.getAvgScore() >= 7.5) {
             return "Giỏi";
-        } else if (this.diemTrungBinh >= 5) {
+        } else if (this.getAvgScore() >= 5) {
             return "Khá";
         } else {
             return "Trung Bình";
@@ -61,7 +55,13 @@ public class StudentBE extends Student {
     }
 
     @Override
-    public double hocPhi() {
-        return this.soBuoiHoc * 50000 * 0.9;
+    public double tuitionFee() {
+        return this.getSessionNumber() * 50000 * 0.9;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + "Ngôn ngữ lập trình: " + this.progLanguage + "\n";
     }
 }

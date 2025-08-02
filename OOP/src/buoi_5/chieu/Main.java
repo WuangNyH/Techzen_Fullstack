@@ -1,219 +1,223 @@
 package buoi_5.chieu;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Person> persons = new ArrayList<>();
 
+    private static void mainMenu() {
+        System.out.println("===== Màn Hình =====");
+        System.out.println("Hệ Thống Quản Lý Academy");
+        System.out.println("1. Thêm thành viên");
+        System.out.println("2. Hiển thị danh sách thành viên");
+        System.out.println("3. Tìm kiếm thành viên theo tên hoặc email");
+        System.out.println("4. Cập nhật thông tin cho thành viên");
+        System.out.println("5. Xóa thành viên");
+        System.out.println("6. Sắp xếp học viên theo điểm trung bình");
+        System.out.println("7. Tính học phí của học viên");
+        System.out.println("8. Tính  lương của  giảng viên");
+        System.out.println("9. Tìm kếm giảng viên có bao nhiêu trợ giảng");
+        System.out.println("10. Thoát...");
+    }
 
-    public static String getRandomIdentify() {
+    // 1 Quân
+    private static void menuAdd() {
+        System.out.println("===== Màn Hình =====");
+        System.out.println("Thêm thành viên");
+        System.out.println("1. Học viên BE");
+        System.out.println("2. Học viên FS");
+        System.out.println("3. Giảng viên");
+        System.out.println("4. Trợ giảng");
+        System.out.println("5. Thoát...");
+    }
+
+    private static void processAdd() {
+        int choice;
+
+        while (true) {
+            menuAdd();
+
+            System.out.print("Bạn muốn thêm thành viên nào: ");
+            choice = Integer.parseInt(sc.nextLine());
+
+            switch (choice) {
+                case 1:
+                    StudentBE newStudentBE = new StudentBE();
+                    addNewPerson(newStudentBE);
+                    break;
+                case 2:
+                    StudentFS newStudentFS = new StudentFS();
+                    addNewPerson(newStudentFS);
+                    break;
+                case 3:
+                    Lecturer newLecturer = new Lecturer();
+                    addNewPerson(newLecturer);
+                    break;
+                case 4:
+                    TeachingAssistant newTeachingAssistant = new TeachingAssistant();
+                    addNewPerson(newTeachingAssistant);
+                    addLecturerForAssistant(newTeachingAssistant);
+                    break;
+                case 5:
+                    return;
+                case 6:
+                    System.out.println("Lựa chọn không hợp lệ xin chọn lại!\n");
+            }
+        }
+    }
+
+    private static String getRandomIdentify() {
         int number = (int) (Math.random() * 1000);
         return String.format("%03d", number);
     }
 
-    private static void menuAddNew() {
-        int choose;
-        while (true) {
-            do {
-                System.out.println("===== Màn Hình 1 =====\nTHÊM MỚI");
-                System.out.println("1. Học viên BE");
-                System.out.println("2. Học viên FT");
-                System.out.println("3. Giảng viên");
-                System.out.println("4. Trở giảng");
-                System.out.println("5. Trở về menu chính");
-
-                System.out.print("Mời bạn lựa chọn: ");
-                choose = Integer.parseInt(sc.nextLine());
-
-                switch (choose) {
-                    case 1:
-                        StudentBE studentBE = new StudentBE();
-                        addNew(studentBE, getRandomIdentify(), getStudentBE());
-                        break;
-                    case 2:
-                        StudentFT studentFT = new StudentFT();
-                        addNew(studentFT, getRandomIdentify(), getStudentFT());
-                        break;
-                    case 3:
-                        TeacherMain teacherMain = new TeacherMain();
-                        addNew(teacherMain, getRandomIdentify(), getTeacher());
-                        return;
-                    case 4:
-                        TeacherSupport teacherSupport = new TeacherSupport();
-                        addNew(teacherSupport, getRandomIdentify(), getTeacherSupport());
-                        addTeacherToTS(teacherSupport);
-                        break;
-                    case 5:
-                        return;
-                    default:
-                        System.out.println("Lựa chọn không hợp lệ, xin chọn lại!");
-                }
-            } while (choose < 1 || choose > 3);
+    private static boolean checkIdentify(String id) {
+        for (Person person : persons) {
+            if (person.getId().equals(id)) {
+                return false;
+            }
         }
+        return true;
     }
 
-    public static void addTeacherToTS(TeacherSupport teacherSupport) {
-        ArrayList<TeacherMain> teacherMains = getTeacher();
+    private static <T extends Person> void addNewPerson(T person) {
+        do {
+            person.setId(getRandomIdentify());
+        } while (!checkIdentify(person.getId()));
+        person.input();
+        persons.add(person);
+        System.out.println("Thêm thành viên mới thành công!\n");
+    }
 
-        for (int i = 0; i < teacherMains.size(); i++) {
-            System.out.println(i + 1 + ". " + teacherMains.get(i).getId() + ": " + teacherMains.get(i).getName());
+    private static void addLecturerForAssistant(TeachingAssistant teachingAssistant) {
+        ArrayList<Lecturer> lecturers = getList(Lecturer.class);
+
+        if (lecturers.isEmpty()) {
+            System.out.println("Hiện tại chưa có giảng viên!\n");
+            return;
         }
 
-        while (true) {
-            System.out.println("Chọn giảng viên hộ trợ: ");
+        while (!lecturers.isEmpty()) {
+            System.out.println("Giảng viện hổ trợ: ");
+            for (int i = 0; i < lecturers.size(); i++) {
+                Lecturer lecturer = lecturers.get(i);
+                System.out.println((i + 1) + ". " + lecturer.getId() + ": " + lecturer.getFullName());
+            }
+            System.out.println((lecturers.size() + 1) + ". " + "Dừng chọn.");
+
+            System.out.println("Chọn GV: ");
             int choice = Integer.parseInt(sc.nextLine());
 
-            if (choice < 1 || choice > teacherMains.size() + 1) {
-                System.out.println("Lựa chọn không hợp lệ!");
+            if (choice == lecturers.size() + 1) {
+                break;
+            }
+
+            if (choice < 1 || choice > lecturers.size() + 1) {
+                System.out.println("Lựa chọn không hợp lệ!\n");
                 continue;
             }
 
-            teacherSupport.setTeachers(teacherMains.get(choice - 1));
-            break;
+            teachingAssistant.addLecture(lecturers.get(choice - 1));
+            lecturers.remove(choice - 1);
         }
     }
 
-    private static <T extends Person> void addNew(T newPerson, String id, ArrayList<T> person) {
-        newPerson.input(sc);
-        newPerson.setId(id);
 
-        for (Person p : person) {
-            if (p.getId().equals(id)) {
-                System.out.println("ID đã tồn tại!");
-                return;
-            }
-        }
-
-        persons.add(newPerson);
-        System.out.println("Thêm nhân viên quản lý mới thành công");
-    }
-
-    private static ArrayList<StudentBE> getStudentBE() {
-        ArrayList<StudentBE> studentBE = new ArrayList<>();
-        for (Person p : persons) {
-            if (p instanceof StudentBE) {
-                studentBE.add((StudentBE) p);
-            }
-        }
-
-        return studentBE;
-    }
-
-    private static ArrayList<StudentFT> getStudentFT() {
-        ArrayList<StudentFT> studentFT = new ArrayList<>();
-        for (Person p : persons) {
-            if (p instanceof StudentFT) {
-                studentFT.add((StudentFT) p);
-            }
-        }
-
-        return studentFT;
-    }
-
-    private static ArrayList<TeacherMain> getTeacher() {
-        ArrayList<TeacherMain> teacherMain = new ArrayList<>();
-        for (Person p : persons) {
-            if (p instanceof TeacherMain) {
-                teacherMain.add((TeacherMain) p);
-            }
-        }
-
-        return teacherMain;
-    }
-
-    private static ArrayList<TeacherSupport> getTeacherSupport() {
-        ArrayList<TeacherSupport> teacherSupport = new ArrayList<>();
-        for (Person p : persons) {
-            if (p instanceof TeacherSupport) {
-                teacherSupport.add((TeacherSupport) p);
-            }
-        }
-
-        return teacherSupport;
-    }
-
-    private static void printPerson() {
-        System.out.println("Bạn muốn hiển thị danh sách thành viên nào?");
-        System.out.println("1. Học viên Backend");
-        System.out.println("2. Học viên Fullstack");
+    // 2 Quân
+    private static void menuShowPerson() {
+        System.out.println("===== Màn Hình =====");
+        System.out.println("Hiển thị thành viên");
+        System.out.println("1. Học viên BE");
+        System.out.println("2. Học viên FS");
         System.out.println("3. Giảng viên");
         System.out.println("4. Trợ giảng");
         System.out.println("5. Tất cả");
-        System.out.println("6. Thoát");
-
-        int choose;
-        do {
-            choose = Integer.parseInt(sc.nextLine());
-            switch (choose) {
-                case 1:
-                    printList(getStudentBE());
-                    break;
-                case 2:
-                    printList(getStudentFT());
-                    break;
-                case 3:
-                    printList(getTeacher());
-                    break;
-                case 4:
-                    printList(getTeacherSupport());
-                    break;
-                case 5:
-                    printList(persons);
-                    break;
-                case 6:
-                    break;
-                default:
-                    System.out.println("Lựa chọn không hợp lệ!");
-            }
-        } while (choose < 1 || choose > 6);
+        System.out.println("6. Thoát...");
     }
 
-    private static <T extends Person> void printList(ArrayList<T> list) {
+    private static void processShowPerson() {
+        int choice;
+
+        while (true) {
+            menuShowPerson();
+
+            System.out.print("Lựa chọn của bạn: ");
+            choice = Integer.parseInt(sc.nextLine());
+
+            switch (choice) {
+                case 1 -> displayList(getList(StudentBE.class));
+                case 2 -> displayList(getList(StudentFS.class));
+                case 3 -> displayList(getList(Lecturer.class));
+                case 4 -> displayList(getList(TeachingAssistant.class));
+                case 5 -> displayList(persons);
+                case 6 -> {
+                    return;
+                }
+                default -> System.out.println("Lựa chọn không hợp lệ xin chọn lại!\n");
+            }
+        }
+    }
+
+    private static <T extends Person> ArrayList<T> getList(Class<T> type) {
+        ArrayList<T> list = new ArrayList<>();
+
+        for (Person person : persons) {
+            if (type.isInstance(person)) {
+                list.add(type.cast(person));
+            }
+        }
+
+        return list;
+    }
+
+    private static <T extends Person> void displayList(ArrayList<T> list) {
+        if (list.isEmpty()) {
+            System.out.println("Danh sách trống!");
+            return;
+        }
+
         for (int i = 0; i < list.size(); i++) {
             System.out.println("Thông tin người thứ " + (i + 1));
             System.out.println(list.get(i));
         }
     }
 
-    //    // 3 - Như
-    public static void findPerson(Scanner sc, ArrayList<Person> listMembers) {
+    // 3 Như
+    public static void findPerson() {
         System.out.print("Nhập từ khóa cần tìm (họ tên hoặc email): ");
-        String keyword = sc.nextLine().trim();
-        String lowerKeyword = keyword.toLowerCase();
+        String keyword = sc.nextLine().trim().toLowerCase();
 
         ArrayList<Person> ketQua = new ArrayList<>();
         String kieuTimKiem = "";
 
         if (isValidEmail(keyword)) {
-            for (Person p : listMembers) {
+            for (Person p : persons) {
                 if (p.getEmail().equalsIgnoreCase(keyword)) {
                     ketQua.add(p);
                 }
             }
             kieuTimKiem = "email";
         } else if (isValidName(keyword)) {
-            for (Person p : listMembers) {
-                if (p.getName().toLowerCase().equals(lowerKeyword)) {
+            for (Person p : persons) {
+                if (p.getFullName().toLowerCase().contains(keyword)) {
                     ketQua.add(p);
                 }
             }
             kieuTimKiem = "tên";
         } else {
-            System.out.println("Từ khóa không hợp lệ. Vui lòng nhập tên hoặc email đúng định dạng.");
+            System.out.println("Từ khóa không hợp lệ. Vui lòng nhập tên hoặc email đúng định dạng.\n");
             return;
         }
 
         if (ketQua.isEmpty()) {
-            System.out.println("Không tìm thấy thành viên nào với " + kieuTimKiem + " \"" + keyword + "\"");
+            System.out.println("Không tìm thấy thành viên nào với " + kieuTimKiem + " \"" + keyword + "\"" + "\n");
         } else {
             System.out.println("Kết quả tìm kiếm theo " + kieuTimKiem + ":");
-            printList(ketQua);
+            displayList(ketQua);
         }
     }
-
 
     public static boolean isValidName(String keyword) {
         return keyword.matches("[a-zA-Z\\s]+");
@@ -223,25 +227,7 @@ public class Main {
         return keyword.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,}$");
     }
 
-
-    public static ArrayList<Person> findByEmail(String keyword) {
-        ArrayList<Person> dsTimTheoEmail = new ArrayList<>();
-        for (Person p : persons)
-            if (p.getEmail().trim().toLowerCase().contains(keyword)) {
-                dsTimTheoEmail.add(p);
-            }
-        return dsTimTheoEmail;
-    }
-
-    public static ArrayList<Person> findByName(String keyword) {
-        ArrayList<Person> dsTimTheoTen = new ArrayList<>();
-        for (Person p : persons)
-            if (p.getName().trim().toLowerCase().contains(keyword)) {
-                dsTimTheoTen.add(p);
-            }
-        return dsTimTheoTen;
-    }
-
+    // 4 Như
     private static void menuUpdate() {
         System.out.println("===== Màn Hình 2 =====");
         System.out.print("Nhập vào ID muốn cập nhật thông tin: ");
@@ -263,7 +249,7 @@ public class Main {
                     case 1:
                         System.out.print("Nhập tên mới: ");
                         String newName = sc.nextLine().trim();
-                        person.setName(newName);
+                        person.setFullName(newName);
                         System.out.println("Đã cập nhật tên thành công!");
                         break;
                     case 2:
@@ -284,9 +270,7 @@ public class Main {
                         break;
                     default:
                         System.out.println("Lựa chọn không hợp lệ!");
-                        break;
                 }
-
                 break;
             }
         }
@@ -316,10 +300,10 @@ public class Main {
             return;
         }
 
-        if (personToDelete instanceof Teacher) {
+        if (personToDelete instanceof Lecturer) {
             for (Person p : persons) {
-                if (p instanceof TeacherSupport ts) {
-                    ts.getTeachers().removeIf(t -> t.getId().equalsIgnoreCase(id));
+                if (p instanceof TeachingAssistant ta) {
+                    ta.removeLecture((Lecturer) personToDelete);
                 }
             }
         }
@@ -328,12 +312,40 @@ public class Main {
         System.out.println("Đã xóa thành viên thành công.");
     }
 
-    //6---------------------------------------------------------------------------------------
-    private static <T extends Person & IStudent> void sortAllStudentsUtil(Class<T> clazz, ArrayList<Person> persons) {
+    // 6 Minh
+    private static void menuSortByAVG() {
+        int choose;
+        while (true) {
+            do {
+                System.out.println("===== Màn Hình 4 =====\nSẮP XẾP THEO ĐIỂM TRUNG BÌNH");
+                System.out.println("1. Học viên backend");
+                System.out.println("2. Học viên fullstack");
+                System.out.println("3. Trở về menu chính");
+
+                System.out.print("Mời bạn lựa chọn: ");
+                choose = Integer.parseInt(sc.nextLine());
+
+                switch (choose) {
+                    case 1:
+                        sortAllStudentsUtil(StudentBE.class);
+                        break;
+                    case 2:
+                        sortAllStudentsUtil(StudentFS.class);
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ, xin chọn lại!");
+                }
+            } while (choose < 1 || choose > 3);
+        }
+    }
+
+    private static <T extends Student> void sortAllStudentsUtil(Class<T> type) {
         ArrayList<T> filteredList = new ArrayList<>();
-        for (Person e : persons) {
-            if (clazz.isInstance(e)) {
-                filteredList.add((T) e);
+        for (Person person : persons) {
+            if (type.isInstance(person)) {
+                filteredList.add(type.cast(person));
             }
         }
 
@@ -358,24 +370,24 @@ public class Main {
 
         System.out.println("----- Danh sách sau khi sắp xếp theo điểm trung bình -----");
         int count = 1;
-        for (T l : filteredList) {
+        for (T student : filteredList) {
             System.out.println("Học viên thứ " + count++);
 
-            System.out.println("ID: " + l.getId());
-            System.out.println("Tên: " + l.getName());
-            System.out.println("Email: " + l.getEmail());
-            System.out.println("Điểm trung bình: " + l.getDiemTrungBinh());
-            System.out.println("Xếp loại: " + l.xepLoai());
+            System.out.println("ID: " + student.getId());
+            System.out.println("Tên: " + student.getFullName());
+            System.out.println("Email: " + student.getEmail());
+            System.out.println("Điểm trung bình: " + student.getAvgScore());
+            System.out.println("Xếp loại: " + student.getClassify());
             System.out.println("----------------------------");
         }
     }
 
     // Sắp xếp danh sách theo điểm trung bình
-    private static <T extends Person & IStudent> void sortByFor(List<T> list, boolean ascending) {
+    private static <T extends Student> void sortByFor(ArrayList<T> list, boolean ascending) {
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = i + 1; j < list.size(); j++) {
-                double avgI = list.get(i).getDiemTrungBinh();
-                double avgJ = list.get(j).getDiemTrungBinh();
+                double avgI = list.get(i).getAvgScore();
+                double avgJ = list.get(j).getAvgScore();
 
                 boolean needSwap = ascending ? avgI > avgJ : avgI < avgJ;
                 if (needSwap) {
@@ -387,222 +399,44 @@ public class Main {
         }
     }
 
-    //7  In danh sách
-    private static <T extends Person & IStudent> void printListStudent(List<T> list) {
-        int count = 1;
-        for (T l : list) {
-            if (l instanceof StudentBE) {
-                System.out.println("Học viên backend thứ " + count++);
-            } else if (l instanceof StudentFT) {
-                System.out.println("Học viên fullstack thứ " + count++);
-            }
-
-            System.out.println("ID: " + l.getId());
-            System.out.println("Tên: " + l.getName());
-            System.out.println("Email: " + l.getEmail());
-            System.out.println("Điểm trung bình: " + l.getDiemTrungBinh());
-            System.out.println("Xếp loại: " + l.xepLoai());
-            System.out.println("Học phí: " + l.getTuition() + " VND");
-            System.out.println("----------------------------");
-        }
-    }
-
-    //8
-    private static void calculateSalary() {
-        System.out.println("Hãy lựa chọn: ");
-        System.out.println("1. Giảng viên");
-        System.out.println("2. Trợ giảng");
-        System.out.print("Mời bạn nhập: ");
-        int choice = sc.nextInt();
-
-        if (choice == 1) {
-            System.out.println("====== Danh sách lương các giảng viên ======");
-            for (Person p : persons) {
-                if (p instanceof Teacher) {
-                    System.out.printf("Giảng viên: %-20s | Lương: %,.0f VND%n", p.getName(), ((Teacher) p).getSalary());
-                }
-            }
-        } else if (choice == 2) {
-            System.out.println("====== Danh sách lương các trợ giảng ======");
-            for (Person p : persons) {
-                if (p instanceof TeacherSupport) {
-                    System.out.printf("Trợ giảng: %-20s | Lương: %,.0f VND%n", p.getName(), ((TeacherSupport) p).getSalary());
-                }
-            }
-        }
-    }
-
-    //9
-    private static void findSupportsOfTeacherByName() {
-        sc.nextLine();
-        System.out.print("Nhập id giảng viên cần tra cứu: ");
-        String id = sc.nextLine().trim();
-
-        Teacher foundTeacher = null;
-
-        // Tìm giảng viên theo ID
-        for (Person p : persons) {
-            if (p instanceof Teacher && id.equals(p.getId())) {
-                foundTeacher = (Teacher) p;
-                break;
-            }
-        }
-        // Nếu không tìm thấy
-        if (foundTeacher == null) {
-            System.out.println("Không tìm thấy giảng viên với ID: " + id);
-            return;
-        }
-        // Duyệt toàn bộ danh sách để tìm các trợ giảng hỗ trợ giảng viên này
-        ArrayList<TeacherSupport> teacherSupports = new ArrayList<>();
-        for (Person p : persons) {
-            if (p instanceof TeacherSupport ts) {
-                for (Teacher supported : ts.getTeachers()) {
-                    if (supported.equals(foundTeacher)) {
-                        teacherSupports.add(ts);
-                        break;
-                    }
-                }
-            }
-        }
-        // In kết quả
-        System.out.println("Giảng viên: " + foundTeacher);
-        System.out.println("Số lượng trợ giảng hỗ trợ: " + teacherSupports.size());
-
-        if (teacherSupports.isEmpty()) {
-            System.out.println("Không có trợ giảng nào hỗ trợ giảng viên này.");
-        } else {
-            System.out.println("Danh sách trợ giảng:");
-            for (TeacherSupport ts : teacherSupports) {
-                System.out.println(" - " + ts);
-            }
-        }
-    }
-
-    //---------------------------------------------------------------------------------------
-    private static <T extends Student & IStudent> ArrayList<T> filterStudent(Class<T> type) { // type = ManagementEmployee.class
-        ArrayList<T> result = new ArrayList<>();
-        for (Person student2 : persons) {
-            if (type.isInstance(student2)) {
-                result.add(type.cast(student2));
-            }
-        }
-        return result;
-    }
-
     public static void main(String[] args) {
-        int choose;
+        int choice;
+
         while (true) {
-            do {
-                System.out.println("\n===== Màn Hình =====\nHệ Thống Quản Lý Academy");
-                System.out.println("1. Thêm thành viên");
-                System.out.println("2. Hiển thị danh sách thành viên");
-                System.out.println("3. Tìm kiếm thành viên theo tên hoặc email");
-                System.out.println("4. Cập nhật thông tin cho thành viên");
-                System.out.println("5. Xóa thành viên");
-                System.out.println("6. Sắp xếp học viên theo điểm trung bình");
-                System.out.println("7. Tính học phí của học viên");
-                System.out.println("8. Tính  lương của  giảng viên");
-                System.out.println("9. Tìm kếm giảng viên có bao nhiêu trợ giảng");
-                System.out.println("10. Thoát...");
+            mainMenu();
 
-                System.out.print("Mời bạn lựa chọn: ");
-                choose = Integer.parseInt(sc.nextLine());
+            System.out.print("Lựa chọn của bạn: ");
+            choice = Integer.parseInt(sc.nextLine());
 
-                switch (choose) {
-                    case 1 -> menuAddNew();
-
-                    case 2 -> printPerson();
-
-                    case 3 -> findPerson(sc, persons);
-                    case 4 -> menuUpdate();
-                    case 5 -> menuDelete();
-                    case 6 -> menuSortByAVG();
-                    case 7 -> tuitionStudent();
-//                   case 8 -> tuitionTeacher();
-                    case 9 -> findSupportsOfTeacherByName();
-
-                    case 10 -> {
-                        return;
-                    }
-                    default -> System.out.println("Lựa chọn không hợp lệ, xin chọn lại!");
-                }
-            } while (choose < 1 || choose > 7);
-        }
-    }
-
-    private static void menuSortByAVG() {
-        int choose;
-        while (true) {
-            do {
-                System.out.println("===== Màn Hình 4 =====\nSẮP XẾP THEO ĐIỂM TRUNG BÌNH");
-                System.out.println("1. Học viên backend");
-                System.out.println("2. Học viên fullstack");
-                System.out.println("3. Trở về menu chính");
-
-                System.out.print("Mời bạn lựa chọn: ");
-                choose = Integer.parseInt(sc.nextLine());
-
-                switch (choose) {
-                    case 1:
-                        sortAllStudentsUtil(StudentBE.class, persons);
-                        break;
-                    case 2:
-                        sortAllStudentsUtil(StudentFT.class, persons);
-                        break;
-
-                    case 3:
-                        return;
-                    default:
-                        System.out.println("Lựa chọn không hợp lệ, xin chọn lại!");
-                }
-            } while (choose < 1 || choose > 3);
-        }
-    }
-
-    private static double totalAll() {
-        double sum = 0;
-        for (Person p : persons) {
-            if (p instanceof Student student) {
-                sum += student.getTuition();
+            switch (choice) {
+                case 1:
+                    processAdd();
+                    break;
+                case 2:
+                    processShowPerson();
+                    break;
+                case 3:
+                    findPerson();
+                    break;
+                case 4:
+                    menuUpdate();
+                    break;
+                case 5:
+                    menuDelete();
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    return;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ xin chọn lại!\n");
             }
         }
-        return sum;
-    }
-
-    private static double totalBe() {
-        double sum = 0;
-        for (Person p : persons) {
-            if (p instanceof StudentBE student) {
-                sum += student.getTuition();
-            }
-        }
-        return sum;
-    }
-
-    private static double totalFT() {
-        double sum = 0;
-        for (Person p : persons) {
-            if (p instanceof StudentFT student) {
-                sum += student.getTuition();
-            }
-        }
-        return sum;
-    }
-
-    private static void tuitionStudent() {
-        System.out.println("Bạn muốn tính học phí cho học viên nào?");
-        System.out.println("1. Học viên Backend");
-        System.out.println("2. Học viên Fullstack");
-        System.out.println("3. Tất cả");
-        int choose;
-        do {
-            choose = Integer.parseInt(sc.nextLine());
-            switch (choose) {
-                case 1 -> System.out.println("Tong hoc phi backend" + totalBe());
-                case 2 -> System.out.println("Tong hoc phi Fullend" + totalFT());
-                case 3 -> System.out.println("Tong tat hoc phi " + totalAll());
-                default -> System.out.println("Bạn đã nhập sai ! Vui lòng chọn 1 - 2.");
-            }
-        } while (choose < 1 || choose > 3);
     }
 }

@@ -2,67 +2,84 @@ package buoi_5.chieu;
 
 import java.util.Scanner;
 
-public abstract class Student extends Person implements IStudent {
-    double diemTrungBinh;
-    int soBuoiHoc;
+public abstract class Student extends Person {
+    private double avgScore;
+    private int sessionNumber;
 
     public Student() {
     }
 
-    public Student(String id, String name, int age, String email, double diemTrungBinh, int soBuoiHoc) {
-        super(id, name, age, email);
-        this.diemTrungBinh = diemTrungBinh;
-        this.soBuoiHoc = soBuoiHoc;
+    public Student(String id, String fullName, int age, String email, double avgScore, int sessionNumber) {
+        super(id, fullName, age, email);
+        this.avgScore = avgScore;
+        this.sessionNumber = sessionNumber;
     }
 
-    public double getDiemTrungBinh() {
-        return diemTrungBinh;
+    public double getAvgScore() {
+        return avgScore;
     }
 
-    public void setDiemTrungBinh(double diemTrungBinh) {
-        this.diemTrungBinh = diemTrungBinh;
+    public void setAvgScore(double avgScore) {
+        this.avgScore = avgScore;
     }
 
-    public double getSoBuoiHoc() {
-        return soBuoiHoc;
+    public int getSessionNumber() {
+        return sessionNumber;
     }
 
-    public void setSoBuoiHoc(int soBuoiHoc) {
-        this.soBuoiHoc = soBuoiHoc;
+    public void setSessionNumber(int sessionNumber) {
+        this.sessionNumber = sessionNumber;
     }
+
+    @Override
+    public void input() {
+        Scanner sc = new Scanner(System.in);
+
+        super.input();
+
+        while (true) {
+            System.out.print("Nhập điểm trung bình: ");
+            if (sc.hasNextDouble()) {
+                this.avgScore = sc.nextDouble();
+                if (this.avgScore < 0) {
+                    System.out.println("Điểm trung bình không hợp lệ! Phải >= 0.\n");
+                    continue;
+                }
+                sc.nextLine();
+                break;
+            } else {
+                System.out.println("Điểm trung bình không hợp lệ! Nhập số thực.\n");
+                sc.nextLine();
+            }
+        }
+
+        while (true) {
+            System.out.print("Nhập số buổi học: ");
+            if (sc.hasNextInt()) {
+                this.sessionNumber = sc.nextInt();
+                if (this.sessionNumber < 0) {
+                    System.out.println("Số buổi học không hợp lệ! Phải >= 0.\n");
+                    continue;
+                }
+                sc.nextLine();
+                break;
+            } else {
+                System.out.println("Số buổi học không hợp lệ! Nhập số nguyên.\n");
+                sc.nextLine();
+            }
+        }
+    }
+
+    public abstract String getClassify();
+
+    public abstract double tuitionFee();
 
     @Override
     public String toString() {
         return super.toString()
-                + "Điểm TB: " + diemTrungBinh + "\n"
-                + "Số buổi học: " + soBuoiHoc + "\n"
-                + "Xếp loại: " + this.xepLoai() + "\n"
-                + "Học phí: " + String.format("%.2fVND", this.hocPhi()) + "\n";
+                + "Điểm TB: " + this.avgScore + "\n"
+                + "Số buổi học: " + this.sessionNumber + "\n"
+                + "Xếp loại: " + this.getClassify() + "\n"
+                + "Học phí: " + String.format("%.2fVND", this.tuitionFee()) + "\n";
     }
-
-    @Override
-    public void input(Scanner sc) {
-        super.input(sc);
-        // Nhập điểm trung bình
-        while (true) {
-            System.out.print("Nhập điểm trung bình: ");
-            if (sc.hasNextDouble()) {
-                this.diemTrungBinh = Double.parseDouble(sc.nextLine());
-                if (this.diemTrungBinh < 0 || this.diemTrungBinh > 10) {
-                    System.out.println("❌ Điểm trung bình không hợp lệ! Phải từ 0 - 10.");
-                    continue;
-                }
-                break;
-            } else {
-                System.out.println("❌ Điểm trung bình không hợp lệ! Nhập số nguyên.");
-            }
-        }
-
-        System.out.println("sỐ BUỔI HỌC: ");
-        this.soBuoiHoc = Integer.parseInt(sc.nextLine());
-    }
-
-    public abstract String xepLoai();
-
-    public abstract double hocPhi();
 }
