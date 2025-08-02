@@ -7,7 +7,58 @@ public class Main {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Person> persons = new ArrayList<>();
 
+    private static void initializeSampleData() {
+        // Create Lecturers first (for Teaching Assistants to reference)
+        Lecturer lecturer1 = new Lecturer("L001", "Dr. John Smith", 45, "john.smith@university.edu",
+                40, "Computer Science");
+        Lecturer lecturer2 = new Lecturer("L002", "Prof. Sarah Johnson", 38, "sarah.johnson@university.edu",
+                35, "Software Engineering");
+        Lecturer lecturer3 = new Lecturer("L003", "Dr. Michael Brown", 42, "michael.brown@university.edu",
+                38, "Database Systems");
+
+        // Add Backend Students
+        persons.add(new StudentBE("BE001", "Alice Chen", 22, "alice.chen@student.edu",
+                8.7, 45, "Java"));
+        persons.add(new StudentBE("BE002", "Bob Wilson", 23, "bob.wilson@student.edu",
+                7.2, 42, "Python"));
+        persons.add(new StudentBE("BE003", "Charlie Davis", 21, "charlie.davis@student.edu",
+                6.8, 38, "C#"));
+        persons.add(new StudentBE("BE004", "Diana Lee", 24, "diana.lee@student.edu",
+                9.1, 48, "Java"));
+
+        // Add Fullstack Students
+        persons.add(new StudentFS("FS001", "Eva Martinez", 23, "eva.martinez@student.edu",
+                8.3, 50, 3));
+        persons.add(new StudentFS("FS002", "Frank Thompson", 22, "frank.thompson@student.edu",
+                7.9, 47, 2));
+        persons.add(new StudentFS("FS003", "Grace Kim", 25, "grace.kim@student.edu",
+                8.8, 52, 5));
+        persons.add(new StudentFS("FS004", "Henry Garcia", 24, "henry.garcia@student.edu",
+                6.5, 44, 1));
+
+        // Add Lecturers
+        persons.add(lecturer1);
+        persons.add(lecturer2);
+        persons.add(lecturer3);
+
+        // Add Teaching Assistants
+        TeachingAssistant ta1 = new TeachingAssistant("TA001", "Ivan Petrov", 26,
+                "ivan.petrov@university.edu", 20, 15);
+        ta1.addLecture(lecturer1);
+        ta1.addLecture(lecturer2);
+
+        TeachingAssistant ta2 = new TeachingAssistant("TA002", "Julia Wang", 25,
+                "julia.wang@university.edu", 18, 12);
+        ta2.addLecture(lecturer2);
+        ta2.addLecture(lecturer3);
+
+        persons.add(ta1);
+        persons.add(ta2);
+    }
+
     private static void mainMenu() {
+        initializeSampleData();
+
         System.out.println("===== Màn Hình =====");
         System.out.println("Hệ Thống Quản Lý Academy");
         System.out.println("1. Thêm thành viên");
