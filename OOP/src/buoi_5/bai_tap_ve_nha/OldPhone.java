@@ -3,7 +3,7 @@ package buoi_5.bai_tap_ve_nha;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class OldPhone extends Phone {
+public class OldPhone extends Phone implements Promotion {
     private int statusBattery;
     private static int autoId = 0;
 
@@ -57,5 +57,15 @@ public class OldPhone extends Phone {
     @Override
     public String toString() {
         return super.toString() + "Tình trạng pin: " + this.getStatusBattery() + "%\n";
+    }
+
+    @Override
+    public double totalPrice() {
+        return this.statusBattery * this.getPrice();
+    }
+
+    @Override
+    public void promotion(int ratePromote) {
+        this.setPrice(this.getPrice() * (1 - (double) ratePromote / 100));
     }
 }

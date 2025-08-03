@@ -58,4 +58,9 @@ public class NewPhone extends Phone {
     public String toString() {
         return super.toString() + "Số lượng: " + getQuantity() + "\n";
     }
+
+    @Override
+    public double totalPrice() {
+        return this.quantity * this.getPrice();
+    }
 }

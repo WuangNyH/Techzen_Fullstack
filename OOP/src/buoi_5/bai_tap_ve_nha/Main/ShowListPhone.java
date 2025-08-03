@@ -26,6 +26,7 @@ public class ShowListPhone {
             System.out.println("Thông tin điện thoại thứ: " + (i + 1));
             System.out.println(list.get(i).toString());
         }
+        System.out.printf("Tìm được %d sản phẩm!\n", list.size());
     }
 
     public static <T extends Phone> ArrayList<T> getListPhone(Class<T> type, ArrayList<Phone> phones) {

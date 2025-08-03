@@ -177,6 +177,8 @@ public abstract class Phone implements PhoneConstants {
                 + "Nhà sản xuất: " + getManufacturer() + "\n"
                 + "Tình trạng: " + getStatus().getDisplayName() + "\n";
     }
+
+    public abstract double totalPrice();
 }
 
 

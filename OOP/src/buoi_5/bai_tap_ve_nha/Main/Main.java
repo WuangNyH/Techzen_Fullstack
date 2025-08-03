@@ -14,28 +14,29 @@ import static buoi_5.bai_tap_ve_nha.Main.ShowListPhone.*;
 import static buoi_5.bai_tap_ve_nha.Main.UpdatePhone.updateNewPhone;
 import static buoi_5.bai_tap_ve_nha.Main.UpdatePhone.updateOldPhone;
 import static buoi_5.bai_tap_ve_nha.Main.SortPhoneByPrice.*;
+import static buoi_5.bai_tap_ve_nha.Main.SearchPhone.*;
 
 public class Main implements PhoneConstants {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Phone> phones = new ArrayList<>();
 
-    public static void initializePhones() {
-        // Thêm điện thoại mới
-        phones.add(new NewPhone("DTM000", "iPhone 15 Pro", 25000000, 24, OSType.IOS, "Apple", 50));
-        phones.add(new NewPhone("DTM001", "Samsung Galaxy S24", 22000000, 24, OSType.ANDROID, "Samsung", 30));
-        phones.add(new NewPhone("DTM002", "iPhone 14", 20000000, 24, OSType.IOS, "Apple", 25));
-        phones.add(new NewPhone("DTM003", "Xiaomi 13 Pro", 15000000, 18, OSType.ANDROID, "Xiaomi", 40));
-        phones.add(new NewPhone("DTM004", "Google Pixel 8", 18000000, 24, OSType.ANDROID, "Google", 20));
-
-        // Thêm điện thoại cũ
-        phones.add(new OldPhone("DTC000", "iPhone 12", 12000000, 6, OSType.IOS, "Apple", 85));
-        phones.add(new OldPhone("DTC001", "Samsung Galaxy S21", 10000000, 6, OSType.ANDROID, "Samsung", 78));
-        phones.add(new OldPhone("DTC002", "iPhone 11", 8000000, 3, OSType.IOS, "Apple", 70));
-        phones.add(new OldPhone("DTC003", "Huawei P40", 7000000, 6, OSType.ANDROID, "Huawei", 65));
-        phones.add(new OldPhone("DTC004", "Nokia 8.3", 5000000, 3, OSType.ANDROID, "Nokia", 80));
-        phones.add(new OldPhone("DTC005", "BlackBerry Key2", 3000000, 3, OSType.BLACKBERRY_OS, "BlackBerry", 60));
-        phones.add(new OldPhone("DTC006", "iPhone 14", 6000000, 3, OSType.IOS, "Apple", 55));
-    }
+//    public static void initializePhones() {
+//        // Thêm điện thoại mới
+//        phones.add(new NewPhone("DTM000", "iPhone 15 Pro", 25000000, 24, OSType.IOS, "Apple", 50));
+//        phones.add(new NewPhone("DTM001", "Samsung Galaxy S24", 22000000, 24, OSType.ANDROID, "Samsung", 30));
+//        phones.add(new NewPhone("DTM002", "iPhone 14", 20000000, 24, OSType.IOS, "Apple", 25));
+//        phones.add(new NewPhone("DTM003", "Xiaomi 13 Pro", 15000000, 18, OSType.ANDROID, "Xiaomi", 40));
+//        phones.add(new NewPhone("DTM004", "Google Pixel 8", 18000000, 24, OSType.ANDROID, "Google", 20));
+//
+//        // Thêm điện thoại cũ
+//        phones.add(new OldPhone("DTC000", "iPhone 12", 12000000, 6, OSType.IOS, "Apple", 85));
+//        phones.add(new OldPhone("DTC001", "Samsung Galaxy S21", 10000000, 6, OSType.ANDROID, "Samsung", 78));
+//        phones.add(new OldPhone("DTC002", "iPhone 11", 8000000, 3, OSType.IOS, "Apple", 70));
+//        phones.add(new OldPhone("DTC003", "Huawei P40", 7000000, 6, OSType.ANDROID, "Huawei", 65));
+//        phones.add(new OldPhone("DTC004", "Nokia 8.3", 5000000, 3, OSType.ANDROID, "Nokia", 80));
+//        phones.add(new OldPhone("DTC005", "BlackBerry Key2", 3000000, 3, OSType.BLACKBERRY_OS, "BlackBerry", 60));
+//        phones.add(new OldPhone("DTC006", "iPhone 14", 6000000, 3, OSType.IOS, "Apple", 55));
+//    }
 
     private static void mainMenu() {
         System.out.println(">> LỰA CHỌN CHỨC NĂNG <<");
@@ -169,8 +170,83 @@ public class Main implements PhoneConstants {
         }
     }
 
+    // 6. Tìm kiếm
+    private static void processSearchPhone() {
+        while (true) {
+            try {
+                menuSearchPhone();
+                System.out.print("Lựa chọn của bạn: ");
+                int choice = Integer.parseInt(sc.nextLine());
+
+                switch (choice) {
+                    case 1 -> {
+                        searchByStatus(phones);
+                    }
+                    case 2 -> {
+                        searchByPrice(phones);
+                    }
+                    case 3 -> {
+                        searchByName(phones);
+                    }
+                    case 4 -> {
+                        return;
+                    }
+                    default -> System.out.println(">>Error: Lựa chọn không hợp lệ!");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(">>Error: Vui lòng nhập số nguyên dương!");
+            }
+        }
+    }
+
+    // 7. Tổng tiền
+    private static void totalPrice() {
+        if (phones.isEmpty()) {
+            System.out.println(">>Error: Danh sách trống!");
+            return;
+        }
+
+        double sum = 0;
+        for (Phone phone : phones) {
+            sum += phone.totalPrice();
+        }
+        System.out.printf("Tổng tiền: %,.2fVND\n", sum);
+    }
+
+    // 8. Giảm giá điện thoại cũ
+    private static void promotionOldPhone() {
+        if (phones.isEmpty()) {
+            System.out.println(">>Error: Danh sách trống!");
+            return;
+        }
+
+        int ratePromote;
+        while (true) {
+            try {
+                System.out.print("Nhập tỷ lệ phần trăm giảm giá: ");
+                ratePromote = Integer.parseInt(sc.nextLine());
+
+                if (ratePromote < 0 || ratePromote > 100) {
+                    System.out.println(">> Error: Tỷ lệ phải từ 0%-100%!");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println(">>Error: Vui lòng nhập số nguyên dương!");
+            }
+        }
+
+        for (Phone phone : phones) {
+            if (phone instanceof OldPhone) {
+                OldPhone oldPhone = (OldPhone) phone;
+                oldPhone.promotion(ratePromote);
+            }
+        }
+        System.out.println("Giảm giá thành công!");
+    }
+
     public static void main(String[] args) {
-        initializePhones();
+//        initializePhones();
         while (true) {
             try {
                 mainMenu();
@@ -194,10 +270,13 @@ public class Main implements PhoneConstants {
                         processSortByPrice();
                         break;
                     case 6:
+                        processSearchPhone();
                         break;
                     case 7:
+                        totalPrice();
                         break;
                     case 8:
+                        promotionOldPhone();
                         break;
                     case 9:
                         return;
