@@ -13,6 +13,7 @@ import static buoi_5.bai_tap_ve_nha.Main.AddPhone.menuAddPhone;
 import static buoi_5.bai_tap_ve_nha.Main.ShowListPhone.*;
 import static buoi_5.bai_tap_ve_nha.Main.UpdatePhone.updateNewPhone;
 import static buoi_5.bai_tap_ve_nha.Main.UpdatePhone.updateOldPhone;
+import static buoi_5.bai_tap_ve_nha.Main.SortPhoneByPrice.*;
 
 public class Main implements PhoneConstants {
     static Scanner sc = new Scanner(System.in);
@@ -51,7 +52,7 @@ public class Main implements PhoneConstants {
         System.out.println("++ ----------------------------------------- ++");
     }
 
-    // Hiển thị danh sách
+    //1. Hiển thị danh sách
     private static void processShowPhone() {
         while (true) {
             try {
@@ -135,17 +136,46 @@ public class Main implements PhoneConstants {
 
         if (!found) {
             System.out.println(">>Error: ID không tồn tại!");
+            return;
+        }
+        System.out.println("Xóa điện thoại với id #" + id + " thành công!");
+    }
+
+    // 5. Sắp xếp theo giá
+    private static void processSortByPrice() {
+        while (true) {
+            try {
+                menuSortPhone();
+                System.out.print("Lựa chọn của bạn: ");
+                int choice = Integer.parseInt(sc.nextLine());
+
+                switch (choice) {
+                    case 1 -> {
+                        sortByFor(phones, true);
+                        displayListPhone(phones);
+                    }
+                    case 2 -> {
+                        sortByFor(phones, false);
+                        displayListPhone(phones);
+                    }
+                    case 3 -> {
+                        return;
+                    }
+                    default -> System.out.println(">>Error: Lựa chọn không hợp lệ!");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(">>Error: Vui lòng nhập số nguyên dương!");
+            }
         }
     }
 
     public static void main(String[] args) {
         initializePhones();
         while (true) {
-            int choice;
             try {
                 mainMenu();
                 System.out.print("Lựa chọn của bạn: ");
-                choice = Integer.parseInt(sc.nextLine());
+                int choice = Integer.parseInt(sc.nextLine());
 
                 switch (choice) {
                     case 1:
@@ -161,6 +191,7 @@ public class Main implements PhoneConstants {
                         processDeletePhone();
                         break;
                     case 5:
+                        processSortByPrice();
                         break;
                     case 6:
                         break;
