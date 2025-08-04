@@ -42,7 +42,7 @@ public class ShowListPhone {
     public static Phone getPhone(String id, ArrayList<Phone> phones) {
         Phone phone = null;
         for (Phone p : phones) {
-            if (p.getId().equals(id)) {
+            if (p.getId().equalsIgnoreCase(id)) {
                 phone = p;
                 break;
             }
