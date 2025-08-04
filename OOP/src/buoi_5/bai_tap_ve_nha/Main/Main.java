@@ -254,34 +254,18 @@ public class Main implements PhoneConstants {
                 int choice = Integer.parseInt(sc.nextLine());
 
                 switch (choice) {
-                    case 1:
-                        processShowPhone();
-                        break;
-                    case 2:
-                        processAddPhone();
-                        break;
-                    case 3:
-                        processUpdatePhone();
-                        break;
-                    case 4:
-                        processDeletePhone();
-                        break;
-                    case 5:
-                        processSortByPrice();
-                        break;
-                    case 6:
-                        processSearchPhone();
-                        break;
-                    case 7:
-                        totalPrice();
-                        break;
-                    case 8:
-                        promotionOldPhone();
-                        break;
-                    case 9:
+                    case 1 -> processShowPhone();
+                    case 2 -> processAddPhone();
+                    case 3 -> processUpdatePhone();
+                    case 4 -> processDeletePhone();
+                    case 5 -> processSortByPrice();
+                    case 6 -> processSearchPhone();
+                    case 7 -> totalPrice();
+                    case 8 -> promotionOldPhone();
+                    case 9 -> {
                         return;
-                    default:
-                        System.out.println(">>Error: Lựa chọn không hợp lệ!");
+                    }
+                    default -> System.out.println(">>Error: Lựa chọn không hợp lệ!");
                 }
             } catch (NumberFormatException e) {
                 System.out.println(">>Error: Vui lòng nhập số nguyên dương!");
