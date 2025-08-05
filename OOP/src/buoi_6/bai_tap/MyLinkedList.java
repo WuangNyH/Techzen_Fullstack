@@ -121,12 +121,11 @@ public class MyLinkedList {
             return;
         }
 
-        Node temp = tail;
+        Node oldTail = tail;
         tail = tail.prev;
-
         tail.next = null;
-        temp.prev = null;
-        temp.next = null;
+
+        oldTail.prev = null;
     }
 
     public void remove(int index) {
