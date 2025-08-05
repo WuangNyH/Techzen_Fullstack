@@ -104,8 +104,10 @@ public class MyLinkedList {
             head = null;
             tail = null;
         } else {
+            Node oldHead = head;
             head = head.next;
             head.prev = null;
+            oldHead.next = null;
         }
         size--;
     }
@@ -121,9 +123,10 @@ public class MyLinkedList {
 
         Node temp = tail;
         tail = tail.prev;
+
         tail.next = null;
         temp.prev = null;
-        size--;
+        temp.next = null;
     }
 
     public void remove(int index) {
@@ -144,6 +147,8 @@ public class MyLinkedList {
 
         temp.prev.next = temp.next;
         temp.next.prev = temp.prev;
+        temp.prev = null;
+        temp.next = null;
         size--;
     }
 
