@@ -4,6 +4,7 @@ public class MyLinkedList {
     private static class Node {
         private int value;
         private Node next;
+        private Node prev;
 
         public Node(int value) {
             this.value = value;
@@ -20,19 +21,40 @@ public class MyLinkedList {
         }
     }
 
-    private void checkNull() {
-        if (head == null) {
-            throw new NullPointerException("Lỗi: Hiện tại mảng đang rỗng!");
+    private void checkEmpty() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Lỗi: Hiện tại mảng đang rỗng!");
         }
+    }
+
+    private float getMiddle() {
+        return (float) size / 2;
+    }
+
+    private Node getNode(int index) {
+        Node temp;
+        if (index < getMiddle()) {
+            temp = head;
+            for (int i = 0; i < index; i++) {
+                temp = temp.next;
+            }
+        } else {
+            temp = tail;
+            for (int i = size - 1; i > index; i--) {
+                temp = temp.prev;
+            }
+        }
+        return temp;
     }
 
     public void addFirst(int value) {
         Node newNode = new Node(value);
-        if (head == null) {
+        if (isEmpty()) {
             head = newNode;
             tail = newNode;
         } else {
             newNode.next = head;
+            head.prev = newNode;
             head = newNode;
         }
         size++;
@@ -45,67 +67,67 @@ public class MyLinkedList {
         }
         Node newNode = new Node(value);
         tail.next = newNode;
+        newNode.prev = tail;
         tail = newNode;
         size++;
     }
 
-    public boolean add(int index, int value) {
+    public void add(int index, int value) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException(String.format("Lỗi: Index %d vượt quá giới hạn độ dài mảng %d", index, size));
         }
 
         if (index == size) {
             addLast(value);
-            return false;
+            return;
         }
 
         if (index == 0) {
             addFirst(value);
-            return false;
+            return;
         }
 
-        Node temp = head;
-        for (int i = 1; i < index; i++) {
-            temp = temp.next;
-        }
+        Node temp = getNode(index);
 
         Node newNode = new Node(value);
-        newNode.next = temp.next;
-        temp.next = newNode;
+        newNode.next = temp;
+        newNode.prev = temp.prev;
+        temp.prev.next = newNode;
+        temp.prev = newNode;
         size++;
-        return false;
     }
 
     public void removeFirst() {
-        checkNull();
+        checkEmpty();
 
         if (size == 1) {
             head = null;
             tail = null;
         } else {
             head = head.next;
+            head.prev = null;
         }
         size--;
     }
 
     public void removeLast() {
-        checkNull();
+        checkEmpty();
 
         if (size == 1) {
             head = null;
             tail = null;
+            return;
         }
 
-        Node temp = head;
-        for (int i = 1; i < size; i++) {
-            temp = temp.next;
-        }
-        temp.next = null;
+        Node temp = tail;
+        tail = tail.prev;
+        tail.next = null;
+        temp.prev = null;
         size--;
     }
 
     public void remove(int index) {
-        checkNull();
+        checkEmpty();
         checkIndex(index);
 
         if (index == size - 1) {
@@ -118,27 +140,25 @@ public class MyLinkedList {
             return;
         }
 
-        Node temp = head;
-        for (int i = 1; i < index; i++) {
-            temp = temp.next;
-        }
+        Node temp = getNode(index);
 
-        temp.next = temp.next.next;
+        temp.prev.next = temp.next;
+        temp.next.prev = temp.prev;
         size--;
     }
 
     public int getFirst() {
-        checkNull();
+        checkEmpty();
         return head.value;
     }
 
     public int getLast() {
-        checkNull();
+        checkEmpty();
         return tail.value;
     }
 
     public int get(int index) {
-        checkNull();
+        checkEmpty();
         checkIndex(index);
 
         if (index == 0) {
@@ -149,61 +169,54 @@ public class MyLinkedList {
             return tail.value;
         }
 
-        Node temp = head;
-        for (int i = 0; i < index; i++) {
-            temp = temp.next;
-        }
-
-        return temp.value;
+        return getNode(index).value;
     }
 
     public void set(int index, int value) {
-        checkNull();
+        checkEmpty();
         checkIndex(index);
 
-        Node temp = head;
-        for (int i = 0; i < index; i++) {
-            temp = temp.next;
-        }
-
-        temp.value = value;
+        Node node = getNode(index);
+        node.value = value;
     }
 
     public int indexOf(int element) {
-        int idx = -1;
-        if (head == null) {
-            return idx;
+        if (isEmpty()) {
+            return -1;
         }
 
         Node temp = head;
         for (int i = 0; i < size; i++) {
             if (temp.value == element) {
-                idx = i;
-                break;
-            } else {
-                temp = temp.next;
-            }
-        }
-        return idx;
-    }
-
-    public int lastIndexOf(int element) {
-        int idx = -1;
-        if (head == null) {
-            return idx;
-        }
-        Node temp = head;
-        for (int i = 0; i < size; i++) {
-            if (temp.value == element) {
-                idx = i;
+                return i;
             }
             temp = temp.next;
         }
-        return idx;
+
+        return -1;
+    }
+
+    public int lastIndexOf(int element) {
+        if (head == null) {
+            return -1;
+        }
+        Node temp = tail;
+        for (int i = size - 1; i >= 0; i--) {
+            if (temp.value == element) {
+                return i;
+            }
+            temp = temp.prev;
+        }
+
+        return -1;
     }
 
     public int size() {
         return size;
+    }
+
+    public boolean isEmpty() {
+        return head == null;
     }
 
     @Override
@@ -211,16 +224,15 @@ public class MyLinkedList {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("[");
         Node temp = head;
-        for (int i = 0; i < size; i++) {
-            stringBuilder.append(temp.value).append(", ");
+
+        while (temp != null) {
+            stringBuilder.append(temp.value);
+            if (temp.next != null) {
+                stringBuilder.append(", ");
+            }
             temp = temp.next;
         }
-
-        if (stringBuilder.length() > 1) {
-            stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length(), "]");
-        } else {
-            stringBuilder.append("]");
-        }
+        stringBuilder.append("]");
 
         return stringBuilder.toString();
     }

@@ -9,17 +9,26 @@ public class MyArrayList {
     private int capacity;
     private int[] arr;
 
-    public void add(int element) {
-        if (arr == null) {
-            this.capacity = 10;
-            this.arr = new int[this.capacity];
-        }
+    public MyArrayList() {
+        this.capacity = 10;
+        arr = new int[capacity];
+    }
 
+    private void checkIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException(String.format("Lỗi: Index %d vượt quá giới hạn độ dài mảng %d", index, size));
+        }
+    }
+
+    private void checkEmpty() {
+        if (isEmpty()) {
+            throw new NullPointerException("Lỗi: Hiện tại mảng đang rỗng!");
+        }
+    }
+
+    public void add(int element) {
         if (this.size == this.capacity) {
             this.capacity *= 1.5;
-            if (this.capacity == this.size) {
-                this.capacity++;
-            }
 
             int[] newArr = new int[this.capacity];
 
@@ -39,7 +48,7 @@ public class MyArrayList {
             throw new IndexOutOfBoundsException(String.format("Lỗi: Index %d vượt quá giới hạn độ dài mảng %d", index, size));
         }
 
-        if (index == this.size || arr == null) {
+        if (index == this.size) {
             add(element);
             return;
         }
@@ -63,22 +72,14 @@ public class MyArrayList {
     }
 
     public void set(int index, int element) {
-        if (index < 0 || index >= size || arr == null) {
-            throw new IndexOutOfBoundsException(String.format("Lỗi: Index %d vượt quá giới hạn độ dài mảng %d", index, size));
-        }
-
-        for (int i = 0; i < size; i++) {
-            if (i == index) {
-                arr[i] = element;
-            }
-        }
+        checkEmpty();
+        checkIndex(index);
+        arr[index] = element;
     }
 
     public int get(int index) {
-        if (index < 0 || index >= size || arr == null) {
-            throw new IndexOutOfBoundsException(String.format("Lỗi: Index %d vượt quá giới hạn độ dài mảng %d", index, size));
-        }
-
+        checkEmpty();
+        checkIndex(index);
         return arr[index];
     }
 
@@ -105,44 +106,33 @@ public class MyArrayList {
     }
 
     public void remove(int index) {
-        if (index < 0 || index >= size || arr == null) {
-            throw new IndexOutOfBoundsException(String.format("Lỗi: Index %d vượt quá giới hạn độ dài mảng %d", index, size));
-        }
+        checkEmpty();
+        checkIndex(index);
 
-        int[] newArr = new int[this.capacity];
-        int idx = 0;
-
-        for (int i = 0; i < size; i++) {
-            if (!(i == index)) {
-                newArr[idx++] = arr[i];
-            }
+        for (int i = index; i < size - 1; i++) {
+            arr[i] = arr[i + 1];
         }
-        arr = newArr;
         size--;
     }
 
     public void removeElement(int element) {
-        if (arr == null) {
-            throw new NullPointerException("Lỗi: Hiện tại mảng đang rỗng!");
-        }
-
-        int[] newArr = new int[this.capacity];
-        int count = 0;
+        checkEmpty();
         int idx = 0;
 
         for (int i = 0; i < size; i++) {
-            if (!(arr[i] == element)) {
-                newArr[idx++] = arr[i];
-                count++;
+            if (arr[i] != element) {
+                arr[idx++] = arr[i];
             }
         }
-
-        size = count;
-        arr = newArr;
+        size = idx;
     }
 
     public int size() {
         return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     @Override
@@ -151,14 +141,13 @@ public class MyArrayList {
         stringBuilder.append("[");
 
         for (int i = 0; i < size; i++) {
-            stringBuilder.append(arr[i]).append(", ");
+            stringBuilder.append(arr[i]);
+            if (i != size - 1) {
+                stringBuilder.append(", ");
+            }
         }
 
-        if (stringBuilder.length() > 1) {
-            stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length(), "]");
-        } else {
-            stringBuilder.append("]");
-        }
+        stringBuilder.append("]");
 
         return stringBuilder.toString();
     }
