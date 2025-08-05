@@ -18,7 +18,7 @@ public class MyArrayList {
 
     private void checkEmpty() {
         if (isEmpty()) {
-            throw new NullPointerException("Lỗi: Hiện tại mảng đang rỗng!");
+            throw new IllegalStateException("Lỗi: Hiện tại mảng đang rỗng!");
         }
     }
 
