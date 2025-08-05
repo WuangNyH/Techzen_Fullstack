@@ -36,27 +36,27 @@ public class MyLinkedList {
             size++;
         }
     }
-
-    public void add(int index, int value) {
-        if (index < 0 || index > size) {
-            System.out.println("Lỗi: Ngoài phạm vi!");
-        } else if (index == 0) {
-            addFirst(value);
-        } else if (index == size) {
-            addLast(value);
-        } else {
-            Node temp = head;
-
-            for (int i = 1; i < index; i++) {
-                temp = temp.next;
-            }
-
-            Node newNode = new Node(value);
-            newNode.next = temp.next;
-            temp.next = newNode;
-            size++;
-        }
-    }
+//
+//    public void add(int index, int value) {
+//        if (index < 0 || index > size) {
+//            System.out.println("Lỗi: Ngoài phạm vi!");
+//        } else if (index == 0) {
+//            addFirst(value);
+//        } else if (index == size) {
+//            addLast(value);
+//        } else {
+//            Node temp = head;
+//
+//            for (int i = 1; i < index; i++) {
+//                temp = temp.next;
+//            }
+//
+//            Node newNode = new Node(value);
+//            newNode.next = temp.next;
+//            temp.next = newNode;
+//            size++;
+//        }
+//    }
 
     public Integer removeFirst() {
         if (head == null) {
@@ -129,16 +129,16 @@ public class MyLinkedList {
         return size == 0;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[");
-        Node temp = head;
-        for (int i = 0; i < size; i++) {
-            stringBuilder.append(temp.value).append(", ");
-            temp = temp.next;
-        }
-        stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length(), "]");
-        return stringBuilder.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append("[");
+//        Node temp = head;
+//        for (int i = 0; i < size; i++) {
+//            stringBuilder.append(temp.value).append(", ");
+//            temp = temp.next;
+//        }
+//        stringBuilder.replace(stringBuilder.length() - 2, stringBuilder.length(), "]");
+//        return stringBuilder.toString();
+//    }
 }
