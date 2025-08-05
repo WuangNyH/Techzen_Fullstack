@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Person> persons = new ArrayList<>();
+    static ArrayList<Course> courses = new ArrayList<>();
 
     private static void mainMenu() {
         System.out.println("===== Màn Hình =====");
@@ -19,7 +20,13 @@ public class Main {
         System.out.println("7. Tính học phí của học viên");
         System.out.println("8. Tính  lương của  giảng viên");
         System.out.println("9. Tìm kếm giảng viên có bao nhiêu trợ giảng");
-        System.out.println("10. Thoát...");
+        System.out.println("10. Tạo lớp học");
+        System.out.println("11. Thêm học viên vào lớp học");
+        System.out.println("12. Học viên có điểm trung bình cao nhất trong lớp");
+        System.out.println("13. Thêm buổi giảng mới");
+        System.out.println("14. Xóa buổi giảng theo ngày");
+        System.out.println("15. Hiển thị toàn bộ lịch");
+        System.out.println("16. Thoát...");
     }
 
     // 1 Quân
@@ -503,6 +510,59 @@ public class Main {
         }
     }
 
+    // 12
+    private static void findStudentMaxScore() {
+        if (courses.isEmpty()) {
+            System.out.println("Hiện tại chưa có lớp học!");
+            return;
+        }
+
+        System.out.println("=====DANH SÁCH LỚP HỌC=====");
+        for (int i = 0; i < courses.size(); i++) {
+            System.out.println((i + 1) + ". " + courses.get(i).getId() + " - " + courses.get(i).getName());
+        }
+
+        ArrayList<Student> students;
+
+        while (true) {
+            try {
+                System.out.print("Chọn lớp: ");
+                int choiceCourse = Integer.parseInt(sc.nextLine());
+
+                if (choiceCourse < 0 || choiceCourse > courses.size()) {
+                    System.out.println("Lựa chọn không hợp lệ!");
+                    continue;
+                }
+
+                students = courses.get(choiceCourse - 1).getStudents();
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Vui lòng nhập một số nguyên!");
+            }
+        }
+
+        if (students.isEmpty()) {
+            System.out.println("Hiện tại lớp chưa có học viên nào!");
+            return;
+        }
+
+        ArrayList<Student> listMaxScore = new ArrayList<>();
+
+        double max = students.get(0).getAvgScore();
+        for (Student student : students) {
+            if (student.getAvgScore() > max) {
+                max = student.getAvgScore();
+                listMaxScore.clear();
+                listMaxScore.add(student);
+            } else if (student.getAvgScore() == max) {
+                listMaxScore.add(student);
+            }
+        }
+
+        System.out.println("Danh sách sinh viên có điểm cao nhất trong lớp: ");
+        displayList(listMaxScore);
+    }
+
     public static void main(String[] args) {
         int choice;
 
@@ -521,8 +581,14 @@ public class Main {
                 case 6 -> menuSortByAVG();
                 case 7 -> tuitionStudent();
                 case 8 -> calculateSalary();
-                case 9 -> findSupportsOfTeacherByName();
-                case 10 -> {
+//                case 9 ->
+//                case 10 ->
+//                case 11 ->
+                case 12 -> findStudentMaxScore();
+//                case 13 ->
+//                case 14 ->
+//                case 15 ->
+                case 16 -> {
                     return;
                 }
                 default -> System.out.println("Lựa chọn không hợp lệ xin chọn lại!\n");
