@@ -1,9 +1,5 @@
 package buoi_6.bai_tap;
 
-import buoi_6.sang.ss7_list.MyLinkedList;
-
-import java.util.LinkedList;
-
 public class MyArrayList {
     private int size;
     private int capacity;
