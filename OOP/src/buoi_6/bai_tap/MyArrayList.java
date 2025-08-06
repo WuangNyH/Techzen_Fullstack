@@ -1,6 +1,8 @@
 package buoi_6.bai_tap;
 
-public class MyArrayList {
+import java.util.Iterator;
+
+public class MyArrayList implements Iterable<Integer> {
     private int size;
     private int capacity;
     private int[] arr;
@@ -146,5 +148,22 @@ public class MyArrayList {
         stringBuilder.append("]");
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public Iterator<Integer> iterator() {
+        return new Iterator<>() {
+            private int idx = 0;
+
+            @Override
+            public boolean hasNext() {
+                return idx < size;
+            }
+
+            @Override
+            public Integer next() {
+                return arr[idx++];
+            }
+        };
     }
 }
