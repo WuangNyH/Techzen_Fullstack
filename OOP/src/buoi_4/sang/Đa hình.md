@@ -2,7 +2,8 @@
 
 ### ✅ Khái niệm:
 
-* "Đa hình" trong OOP là khả năng một phương thức hoặc hành vi có thể hoạt động theo **nhiều cách khác nhau** dựa vào **ngữ cảnh cụ thể**.
+* "Đa hình" trong OOP là khả năng một phương thức hoặc hành vi có thể hoạt động theo **nhiều cách khác nhau** dựa vào *
+  *ngữ cảnh cụ thể**.
 * Cùng một lời gọi hàm, nhưng **kết quả hoặc cách thực hiện khác nhau**.
 
 ---
@@ -77,7 +78,7 @@ class Cat extends Animal {
 ```
 
 ```java
-public class Main {
+public class buoi_7.bai_tap.Main {
     public static void main(String[] args) {
         Animal a1 = new Dog();
         Animal a2 = new Cat();
@@ -96,7 +97,8 @@ public class Main {
 
 ## ✅ `instanceof` là gì?
 
-`instanceof` là một **toán tử logic** trong Java dùng để **kiểm tra xem một đối tượng có phải là một thể hiện (instance) của một lớp cụ thể hoặc lớp con của nó hay không**.
+`instanceof` là một **toán tử logic** trong Java dùng để **kiểm tra xem một đối tượng có phải là một thể hiện (instance)
+của một lớp cụ thể hoặc lớp con của nó hay không**.
 
 ### 🔹 Cú pháp:
 

@@ -176,7 +176,7 @@ public class Counter {
 ```
 
 ```java
-public class Main {
+public class buoi_7.bai_tap.Main {
     public static void main(String[] args) {
         new Counter();  // Count: 1
         new Counter();  // Count: 2
