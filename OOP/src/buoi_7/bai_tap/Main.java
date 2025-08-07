@@ -60,8 +60,8 @@ public class Main {
         System.out.println(">> LỰA CHỌN CHỨC NĂNG <<");
         System.out.println("++ ----------------------------------------- ++");
         System.out.printf("| 1. %-40s |\n", "Thêm công việc");
-        System.out.printf("| 2. %-40s |\n", "Xem công việc công việc mới nhất");
-        System.out.printf("| 3. %-40s |\n", "Xóa công việc mới nhất");
+        System.out.printf("| 2. %-40s |\n", "Xem công việc công việc đầu tiên");
+        System.out.printf("| 3. %-40s |\n", "Xóa công việc đầu tiền");
         System.out.printf("| 4. %-40s |\n", "Xem công việc có độ ưu tiên cao nhất");
         System.out.printf("| 5. %-40s |\n", "Thoát chương trình");
         System.out.println("++ ----------------------------------------- ++");
