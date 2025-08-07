@@ -78,7 +78,13 @@ public class Main {
                     case 1 -> addTask(false);
                     case 2 -> getTask(false);
                     case 3 -> removeTask(false);
-                    case 4 -> System.out.println(highestPriority());
+                    case 4 -> {
+                        try {
+                            System.out.println(highestPriority());
+                        } catch (NullPointerException e) {
+                            System.out.println("Hiện tại danh sách rỗng!");
+                        }
+                    }
                     case 5 -> {
                         return;
                     }
@@ -212,18 +218,12 @@ public class Main {
 
 
     public static Task highestPriority() {
-        Queue<Task> temp = new LinkedList<>(taskManager.getQueue());
-
         int priority = taskManager.peekFromQueue().getPriority().getValue();
         Task task = taskManager.peekFromQueue();
 
-        int size = temp.size();
-
-        for (int i = 0; i < size; i++) {
-            Task currentTask = temp.poll();
-
-            if (currentTask.getPriority().getValue() < priority) {
-                task = currentTask;
+        for (Task element : taskManager.getQueue()) {
+            if (element.getPriority().getValue() < priority) {
+                task = element;
                 priority = task.getPriority().getValue();
             }
         }
