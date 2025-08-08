@@ -37,11 +37,11 @@ public class TreeSetStudy {
         /// -> gặp lỗi khi sử dụng TreeSet
         Set<Student> students = new TreeSet<>(new ScoreASCIdDESCComparator());
 
-        students.add(new Student(1, "Nguyễn Văn A", 7.4));
-        students.add(new Student(2, "Nguyễn Văn B", 6.2));
-        students.add(new Student(3, "Nguyễn Văn C", 7.4));
-        students.add(new Student(4, "Nguyễn Văn D", 8.6));
-        students.add(new Student(5, "Nguyễn Văn E", 5.5));
+//        students.add(new Student(1, "Nguyễn Văn A", 7.4));
+//        students.add(new Student(2, "Nguyễn Văn B", 6.2));
+//        students.add(new Student(3, "Nguyễn Văn C", 7.4));
+//        students.add(new Student(4, "Nguyễn Văn D", 8.6));
+//        students.add(new Student(5, "Nguyễn Văn E", 5.5));
 
         for (Student student : students) {
             System.out.println(student);

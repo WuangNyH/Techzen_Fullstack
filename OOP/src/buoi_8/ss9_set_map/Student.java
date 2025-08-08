@@ -1,7 +1,9 @@
 package buoi_8.ss9_set_map;
 
 
-public class Student {
+import java.util.Objects;
+
+public class Student implements Comparable<Student> {
     private int id;
     private String name;
     private double score;
@@ -50,23 +52,24 @@ public class Student {
 
 
     /// Cần override lại equal() và hashCode()
-//    @Override
-//    public boolean equals(Object o) {
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Student student = (Student) o;
-//        return id == student.id && Objects.equals(name, student.name);
-//    }
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, name);
-//    }
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Student student)) return false;
+        return getId() == student.getId() && Objects.equals(getName(), student.getName());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName());
+    }
 
     /// Cần triển khai compareTo() của interface Comparable
-//    @Override
-//    public int compareTo(Student o) {
-//        if (this.score > o.score) return 1;
-//        if (this.score < o.score) return -1;
-//        return 0;
-//    }
+    @Override
+    public int compareTo(Student o) {
+        int compare = Double.compare(this.score, o.score);
+        if (compare == 0) {
+            return Integer.compare(this.id, o.getId());
+        }
+        return compare;
+    }
 }
