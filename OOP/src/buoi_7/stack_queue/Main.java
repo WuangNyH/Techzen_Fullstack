@@ -6,18 +6,19 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-//        Stack<Integer> stack = new Stack<>();
-//
-//        stack.push(1);
-//        stack.push(2);
-//        stack.push(3);
-//        stack.push(4);
-//
-//        for (Integer integer : stack) {
-//            System.out.print(integer + " ");
-//        }
-//
-//        System.out.println(stack);
+        Stack<Integer> stack = new Stack<>();
+
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        System.out.println(stack.capacity());
+
+        for (Integer integer : stack) {
+            System.out.print(integer + " ");
+        }
+
+        System.out.println(stack);
 
 //        MyStack<Integer> myStack = new MyStack<>();
 //
