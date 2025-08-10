@@ -15,23 +15,16 @@ public class SortPhoneByPrice {
         System.out.println("++ ----------------------------------------- ++");
     }
 
-    public static void sortByFor(ArrayList<Phone> phones, boolean ascending) {
+    public static void sortByCollections(ArrayList<Phone> phones, boolean ascending) {
         if (phones.isEmpty()) {
             System.out.println(">>Error: Danh sách trống!");
             return;
         }
 
-        for (int i = 0; i < phones.size() - 1; i++) {
-            for (int j = i + 1; j < phones.size(); j++) {
-                double priceI = phones.get(i).getPrice();
-                double priceJ = phones.get(j).getPrice();
-
-                boolean sortCondition = ascending ? priceI > priceJ : priceI < priceJ;
-
-                if (sortCondition) {
-                    Collections.swap(phones, i, j);
-                }
-            }
+        if (ascending) {
+            Collections.sort(phones);
+        } else {
+            phones.sort(Collections.reverseOrder());
         }
     }
 }

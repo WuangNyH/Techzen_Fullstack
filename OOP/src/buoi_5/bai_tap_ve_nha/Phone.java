@@ -3,7 +3,7 @@ package buoi_5.bai_tap_ve_nha;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public abstract class Phone implements PhoneConstants {
+public abstract class Phone implements PhoneConstants, Comparable<Phone> {
     private String id;
     private String name;
     private double price;
@@ -165,6 +165,11 @@ public abstract class Phone implements PhoneConstants {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    @Override
+    public int compareTo(Phone phone) {
+        return Double.compare(this.price, phone.getPrice());
     }
 
     @Override

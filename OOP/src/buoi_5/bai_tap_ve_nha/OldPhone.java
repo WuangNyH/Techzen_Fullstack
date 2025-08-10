@@ -61,7 +61,7 @@ public class OldPhone extends Phone implements Promotion {
 
     @Override
     public double totalPrice() {
-        return this.statusBattery * this.getPrice();
+        return (double) this.statusBattery / 100 * this.getPrice();
     }
 
     @Override

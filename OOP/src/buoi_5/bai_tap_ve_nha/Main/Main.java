@@ -20,23 +20,23 @@ public class Main implements PhoneConstants {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Phone> phones = new ArrayList<>();
 
-//    public static void initializePhones() {
-//        // Thêm điện thoại mới
-//        phones.add(new NewPhone("DTM000", "iPhone 15 Pro", 25000000, 24, OSType.IOS, "Apple", 50));
-//        phones.add(new NewPhone("DTM001", "Samsung Galaxy S24", 22000000, 24, OSType.ANDROID, "Samsung", 30));
-//        phones.add(new NewPhone("DTM002", "iPhone 14", 20000000, 24, OSType.IOS, "Apple", 25));
-//        phones.add(new NewPhone("DTM003", "Xiaomi 13 Pro", 15000000, 18, OSType.ANDROID, "Xiaomi", 40));
-//        phones.add(new NewPhone("DTM004", "Google Pixel 8", 18000000, 24, OSType.ANDROID, "Google", 20));
-//
-//        // Thêm điện thoại cũ
-//        phones.add(new OldPhone("DTC000", "iPhone 12", 12000000, 6, OSType.IOS, "Apple", 85));
-//        phones.add(new OldPhone("DTC001", "Samsung Galaxy S21", 10000000, 6, OSType.ANDROID, "Samsung", 78));
-//        phones.add(new OldPhone("DTC002", "iPhone 11", 8000000, 3, OSType.IOS, "Apple", 70));
-//        phones.add(new OldPhone("DTC003", "Huawei P40", 7000000, 6, OSType.ANDROID, "Huawei", 65));
-//        phones.add(new OldPhone("DTC004", "Nokia 8.3", 5000000, 3, OSType.ANDROID, "Nokia", 80));
-//        phones.add(new OldPhone("DTC005", "BlackBerry Key2", 3000000, 3, OSType.BLACKBERRY_OS, "BlackBerry", 60));
-//        phones.add(new OldPhone("DTC006", "iPhone 14", 6000000, 3, OSType.IOS, "Apple", 55));
-//    }
+    public static void initializePhones() {
+        // Thêm điện thoại mới
+        phones.add(new NewPhone("DTM000", "iPhone 15 Pro", 25000000, 24, OSType.IOS, "Apple", 50));
+        phones.add(new NewPhone("DTM001", "Samsung Galaxy S24", 22000000, 24, OSType.ANDROID, "Samsung", 30));
+        phones.add(new NewPhone("DTM002", "iPhone 14", 20000000, 24, OSType.IOS, "Apple", 25));
+        phones.add(new NewPhone("DTM003", "Xiaomi 13 Pro", 15000000, 18, OSType.ANDROID, "Xiaomi", 40));
+        phones.add(new NewPhone("DTM004", "Google Pixel 8", 18000000, 24, OSType.ANDROID, "Google", 20));
+
+        // Thêm điện thoại cũ
+        phones.add(new OldPhone("DTC000", "iPhone 12", 12000000, 6, OSType.IOS, "Apple", 85));
+        phones.add(new OldPhone("DTC001", "Samsung Galaxy S21", 10000000, 6, OSType.ANDROID, "Samsung", 78));
+        phones.add(new OldPhone("DTC002", "iPhone 11", 8000000, 3, OSType.IOS, "Apple", 70));
+        phones.add(new OldPhone("DTC003", "Huawei P40", 7000000, 6, OSType.ANDROID, "Huawei", 65));
+        phones.add(new OldPhone("DTC004", "Nokia 8.3", 5000000, 3, OSType.ANDROID, "Nokia", 80));
+        phones.add(new OldPhone("DTC005", "BlackBerry Key2", 3000000, 3, OSType.BLACKBERRY_OS, "BlackBerry", 60));
+        phones.add(new OldPhone("DTC006", "iPhone 14", 6000000, 3, OSType.IOS, "Apple", 55));
+    }
 
     private static void mainMenu() {
         System.out.println(">> LỰA CHỌN CHỨC NĂNG <<");
@@ -152,11 +152,11 @@ public class Main implements PhoneConstants {
 
                 switch (choice) {
                     case 1 -> {
-                        sortByFor(phones, true);
+                        sortByCollections(phones, true);
                         displayListPhone(phones);
                     }
                     case 2 -> {
-                        sortByFor(phones, false);
+                        sortByCollections(phones, false);
                         displayListPhone(phones);
                     }
                     case 3 -> {
@@ -246,7 +246,7 @@ public class Main implements PhoneConstants {
     }
 
     public static void main(String[] args) {
-//        initializePhones();
+        initializePhones();
         while (true) {
             try {
                 mainMenu();
