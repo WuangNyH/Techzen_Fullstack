@@ -16,8 +16,8 @@ public class CustomException {
             System.out.println(e.getMessage());
         }
 
-        /// Cần kiểm tra biến age có trường hợp nào không được khởi tạo không!!
-        /// Vậy có giải pháp gì để đảm bảo age luôn được khởi tạo???
+//        / Cần kiểm tra biến age có trường hợp nào không được khởi tạo không!!
+//        / Vậy có giải pháp gì để đảm bảo age luôn được khởi tạo???
 //        System.out.println("Tuổi đã nhập: " + age);
     }
 
