@@ -1,5 +1,6 @@
 package buoi_8.bai_tap.chieu.manager.member;
 
+import buoi_8.bai_tap.chieu.exceptions.MemberNotFoundException;
 import buoi_8.bai_tap.chieu.models.StudentBE;
 import buoi_8.bai_tap.chieu.models.StudentFS;
 import buoi_8.bai_tap.chieu.models.Lecturer;
@@ -93,8 +94,7 @@ public class GetMember {
         Person person = getMemberById(id);
 
         if (person == null) {
-            System.out.println(">>> Error: Không tìm thấy thành viên với id " + id);
-            return;
+            throw new MemberNotFoundException(">>> Error: Không tìm thấy thành viên với id " + id);
         }
 
         System.out.println("Thông tin thành viên cần tìm: ");

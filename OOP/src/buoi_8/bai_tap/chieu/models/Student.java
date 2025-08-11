@@ -1,5 +1,8 @@
 package buoi_8.bai_tap.chieu.models;
 
+import buoi_8.bai_tap.chieu.exceptions.InvalidPositiveException;
+import buoi_8.bai_tap.chieu.exceptions.InvalidScoreException;
+
 import static buoi_8.bai_tap.chieu.Main.sc;
 
 public abstract class Student extends Person implements Comparable<Student> {
@@ -21,7 +24,7 @@ public abstract class Student extends Person implements Comparable<Student> {
 
     public void setAvgScore(double avgScore) {
         if (avgScore < 0 || avgScore > 10) {
-            throw new IllegalArgumentException(">>> Error: Điểm trung bình phải từ 0-10!");
+            throw new InvalidScoreException(">>> Error: Điểm trung bình phải từ 0-10!");
         }
 
         this.avgScore = avgScore;
@@ -33,7 +36,7 @@ public abstract class Student extends Person implements Comparable<Student> {
 
     public void setSessionNumber(int sessionNumber) {
         if (sessionNumber <= 0) {
-            throw new IllegalArgumentException(">>> Error: Số buổi học phải > 0!");
+            throw new InvalidPositiveException(">>> Error: Số buổi học phải > 0!");
         }
 
         this.sessionNumber = sessionNumber;
@@ -50,7 +53,7 @@ public abstract class Student extends Person implements Comparable<Student> {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(">>> Error: Vui lòng nhập số thực!");
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidScoreException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -62,7 +65,7 @@ public abstract class Student extends Person implements Comparable<Student> {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(">>> Error: Vui lòng nhập số nguyên dương!");
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidPositiveException e) {
                 System.out.println(e.getMessage());
             }
         }

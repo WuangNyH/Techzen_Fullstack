@@ -1,5 +1,7 @@
 package buoi_8.bai_tap.chieu.models;
 
+import buoi_8.bai_tap.chieu.exceptions.NullOrEmptyException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,6 +17,7 @@ public class Schedule {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Schedule() {
+        assigned = false;
     }
 
     public Schedule(LocalDate day, String content, boolean assigned) {
@@ -37,7 +40,7 @@ public class Schedule {
 
     public void setContent(String content) {
         if (content.isEmpty()) {
-            throw new IllegalArgumentException(">>> Error: Nội dung không được để trống!");
+            throw new NullOrEmptyException(">>> Error: Nội dung không được để trống!");
         }
 
         this.content = content;
@@ -70,7 +73,7 @@ public class Schedule {
                 System.out.print("Nhập nội dung: ");
                 setContent(sc.nextLine().trim());
                 break;
-            } catch (IllegalArgumentException e) {
+            } catch (NullOrEmptyException e) {
                 System.out.println(e.getMessage());
             }
         }

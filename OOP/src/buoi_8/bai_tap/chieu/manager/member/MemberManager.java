@@ -1,5 +1,6 @@
 package buoi_8.bai_tap.chieu.manager.member;
 
+import buoi_8.bai_tap.chieu.exceptions.MemberNotFoundException;
 import buoi_8.bai_tap.chieu.models.*;
 
 import java.util.ArrayList;
@@ -99,7 +100,13 @@ public class MemberManager {
                     case 1 -> addMember();
                     case 2 -> getMember();
                     case 3 -> findMember();
-                    case 4 -> findMemberById();
+                    case 4 -> {
+                        try {
+                            findMemberById();
+                        } catch (MemberNotFoundException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
                     case 5 -> updateMember();
                     case 6 -> deleteMember();
                     case 7 -> sortStudentByAvg();

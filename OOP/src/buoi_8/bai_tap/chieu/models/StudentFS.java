@@ -1,5 +1,7 @@
 package buoi_8.bai_tap.chieu.models;
 
+import buoi_8.bai_tap.chieu.exceptions.InvalidPositiveException;
+
 import static buoi_8.bai_tap.chieu.Main.sc;
 
 public class StudentFS extends Student {
@@ -19,7 +21,7 @@ public class StudentFS extends Student {
 
     public void setJoinedProjects(int joinedProjects) {
         if (joinedProjects <= 0) {
-            throw new IllegalArgumentException(">>> Error: Số dự án tham gia phải > 0!");
+            throw new InvalidPositiveException(">>> Error: Số dự án tham gia phải > 0!");
         }
 
         this.joinedProjects = joinedProjects;
@@ -41,7 +43,7 @@ public class StudentFS extends Student {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(">>> Error: Vui lòng nhập số nguyên dương!");
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidPositiveException e) {
                 System.out.println(e.getMessage());
             }
         }

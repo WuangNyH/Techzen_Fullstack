@@ -1,5 +1,7 @@
 package buoi_8.bai_tap.chieu.models;
 
+import buoi_8.bai_tap.chieu.exceptions.InvalidPositiveException;
+
 import static buoi_8.bai_tap.chieu.Main.sc;
 
 public abstract class Teacher extends Person {
@@ -19,7 +21,7 @@ public abstract class Teacher extends Person {
 
     public void setTeachingHours(double teachingHours) {
         if (teachingHours < 0) {
-            throw new IllegalArgumentException(">>> Error: Số giờ dạy phải >= 0!");
+            throw new InvalidPositiveException(">>> Error: Số giờ dạy phải >= 0!");
         }
 
         this.teachingHours = teachingHours;
@@ -36,7 +38,7 @@ public abstract class Teacher extends Person {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(">>> Error: Vui lòng nhập số thực!");
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidPositiveException e) {
                 System.out.println(e.getMessage());
             }
 

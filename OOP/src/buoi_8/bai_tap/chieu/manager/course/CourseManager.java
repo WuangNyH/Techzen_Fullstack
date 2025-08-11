@@ -1,5 +1,6 @@
 package buoi_8.bai_tap.chieu.manager.course;
 
+import buoi_8.bai_tap.chieu.exceptions.TeacherNotFoundException;
 import buoi_8.bai_tap.chieu.models.*;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import static buoi_8.bai_tap.chieu.Main.sc;
 import static buoi_8.bai_tap.chieu.manager.course.AddCourseSchedule.addNewCourse;
 import static buoi_8.bai_tap.chieu.manager.course.AddCourseSchedule.addSchedule;
+import static buoi_8.bai_tap.chieu.manager.course.AddLectureToCourse.addLectureToCourse;
 import static buoi_8.bai_tap.chieu.manager.course.AddScheduleToLecture.addScheduleToLecture;
 import static buoi_8.bai_tap.chieu.manager.course.AddStudentToClass.addStudentToClass;
 import static buoi_8.bai_tap.chieu.manager.course.DeleteSchedule.deleteSchedule;
@@ -29,7 +31,8 @@ public class CourseManager {
         System.out.printf("|  7. %-45s |\n", "Xóa lịch dạy theo ngày");
         System.out.printf("|  8. %-45s |\n", "Tìm lớp học theo mã lớp");
         System.out.printf("|  9. %-45s |\n", "Hiện lịch dạy của giảng viên");
-        System.out.printf("| 10. %-45s |\n", "Về màn hình chính");
+        System.out.printf("| 10. %-45s |\n", "Thêm giảng viên vào lớp học");
+        System.out.printf("| 11. %-45s |\n", "Về màn hình chính");
         System.out.println("++ ---------------------------------------------- ++");
     }
 
@@ -51,6 +54,13 @@ public class CourseManager {
                     case 8 -> findCourseById();
                     case 9 -> printScheduleOfLecture();
                     case 10 -> {
+                        try {
+                            addLectureToCourse();
+                        } catch (TeacherNotFoundException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    case 11 -> {
                         return;
                     }
                     default -> System.out.println(">>> Error: Lựa chọn không hợp lệ!");

@@ -1,5 +1,7 @@
 package buoi_8.bai_tap.chieu.models;
 
+import buoi_8.bai_tap.chieu.exceptions.InvalidPositiveException;
+
 import java.util.HashSet;
 
 import static buoi_8.bai_tap.chieu.Main.sc;
@@ -22,7 +24,7 @@ public class TeachingAssistant extends Teacher {
 
     public void setPracticeSessions(int practiceSessions) {
         if (practiceSessions < 0) {
-            throw new IllegalArgumentException(">>> Error: Số buổi thực hành phải >= 0!");
+            throw new InvalidPositiveException(">>> Error: Số buổi thực hành phải >= 0!");
         }
 
         this.practiceSessions = practiceSessions;
@@ -36,8 +38,8 @@ public class TeachingAssistant extends Teacher {
         return this.lecturers.add(lecturer);
     }
 
-    public boolean removeLecture(Lecturer lecturer) {
-        return this.lecturers.remove(lecturer);
+    public void removeLecture(Lecturer lecturer) {
+        this.lecturers.remove(lecturer);
     }
 
     @Override
@@ -56,7 +58,7 @@ public class TeachingAssistant extends Teacher {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(">>> Error: Vui lòng nhập số nguyên đương!");
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidPositiveException e) {
                 System.out.println(e.getMessage());
             }
         }

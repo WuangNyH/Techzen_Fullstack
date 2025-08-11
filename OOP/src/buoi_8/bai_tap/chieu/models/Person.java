@@ -1,5 +1,9 @@
 package buoi_8.bai_tap.chieu.models;
 
+import buoi_8.bai_tap.chieu.exceptions.InvalidAgeException;
+import buoi_8.bai_tap.chieu.exceptions.InvalidEmailException;
+import buoi_8.bai_tap.chieu.exceptions.NullOrEmptyException;
+
 import java.util.Objects;
 
 import static buoi_8.bai_tap.chieu.Main.sc;
@@ -26,7 +30,7 @@ public abstract class Person {
                 System.out.print("Nhập tên: ");
                 setFullName(sc.nextLine().trim());
                 break;
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | NullOrEmptyException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -38,7 +42,7 @@ public abstract class Person {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(">>> Error: Vui lòng nhập số nguyên dương!");
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidAgeException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -48,7 +52,7 @@ public abstract class Person {
                 System.out.print("Nhập email: ");
                 setEmail(sc.nextLine().trim());
                 break;
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidEmailException | NullOrEmptyException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -67,6 +71,10 @@ public abstract class Person {
     }
 
     public void setFullName(String fullName) {
+        if (fullName.isEmpty()) {
+            throw new NullOrEmptyException(">>> Error: Tên không được rỗng!");
+        }
+
         if (!fullName.matches("[a-zA-ZÀ-Ỹà-ỹ\\s]+")) {
             throw new IllegalArgumentException(">> Error: Tên không được chứa số hoặc ký tự đặc biệt.");
         }
@@ -79,8 +87,8 @@ public abstract class Person {
     }
 
     public void setAge(int age) {
-        if (age < 0) {
-            throw new IllegalArgumentException(">>> Error: Tuổi phải > 0.");
+        if (age < 18 || age > 100) {
+            throw new InvalidAgeException(">>> Error: Tuổi phải từ 18 - 100.");
         }
 
         this.age = age;
@@ -91,8 +99,12 @@ public abstract class Person {
     }
 
     public void setEmail(String email) {
+        if (email.isEmpty()) {
+            throw new NullOrEmptyException(">>> Error: Email không được rỗng!");
+        }
+
         if (!email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-            throw new IllegalArgumentException(">>> Error: Vui lòng nhập đúng định dạng (vd: ten@gmail.com).");
+            throw new InvalidEmailException(">>> Error: Vui lòng nhập đúng định dạng (vd: ten@gmail.com).");
         }
 
         this.email = email;

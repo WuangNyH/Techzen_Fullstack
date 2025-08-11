@@ -1,5 +1,8 @@
 package buoi_8.bai_tap.chieu.models;
 
+import buoi_8.bai_tap.chieu.exceptions.InvalidStringException;
+import buoi_8.bai_tap.chieu.exceptions.NullOrEmptyException;
+
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -9,6 +12,7 @@ public class Course {
     private String id;
     private String name;
     private final HashSet<Student> students = new HashSet<>();
+    private Lecturer lecturer;
 
     public Course() {
     }
@@ -31,8 +35,12 @@ public class Course {
     }
 
     public void setName(String name) {
+        if (name.isEmpty()) {
+            throw new NullOrEmptyException(">>> Error: Tên khóa học không được rỗng!");
+        }
+
         if (!name.matches("[a-zA-Z0-9#+]+")) {
-            throw new IllegalArgumentException(">>Error: Tên không được chứa ký tự đặt biệt!");
+            throw new InvalidStringException(">>Error: Tên không được chứa ký tự đặt biệt!");
         }
 
         this.name = name;
@@ -46,13 +54,21 @@ public class Course {
         return this.students.add(student);
     }
 
+    public Lecturer getLecturer() {
+        return lecturer;
+    }
+
+    public void setLecturer(Lecturer lecturer) {
+        this.lecturer = lecturer;
+    }
+
     public void input() {
         while (true) {
             try {
                 System.out.print("Nhập tên khóa học: ");
                 setName(sc.nextLine().trim());
                 break;
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidStringException | NullOrEmptyException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -74,7 +90,7 @@ public class Course {
         StringBuilder studentOutput = new StringBuilder();
 
         if (students.isEmpty()) {
-            studentOutput.append("Hiện tại chưa có học viên nào trong lớp!");
+            studentOutput.append("Hiện tại chưa có học viên nào trong lớp!\n");
         } else {
             studentOutput.append("\n");
             for (Student student : students) {
@@ -85,6 +101,7 @@ public class Course {
         return "Mã lớp học: " + this.id + "\n"
                 + "Tên: " + this.name + "\n"
                 + "Danh sách sinh viên: "
-                + studentOutput;
+                + studentOutput
+                + "Giảng viên đảm nhận: " + ((lecturer != null) ? this.lecturer.getFullName() : "Chưa có giảng viên đảm nhận") + "\n";
     }
 }

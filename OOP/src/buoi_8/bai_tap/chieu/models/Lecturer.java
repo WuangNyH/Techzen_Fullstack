@@ -1,5 +1,8 @@
 package buoi_8.bai_tap.chieu.models;
 
+import buoi_8.bai_tap.chieu.exceptions.InvalidStringException;
+import buoi_8.bai_tap.chieu.exceptions.NullOrEmptyException;
+
 import java.util.HashSet;
 
 import static buoi_8.bai_tap.chieu.Main.sc;
@@ -21,8 +24,12 @@ public class Lecturer extends Teacher {
     }
 
     public void setSubject(String subject) {
+        if (subject.isEmpty()) {
+            throw new NullOrEmptyException(">>> Error: Môn dạy không được rỗng!");
+        }
+
         if (!subject.matches("[a-zA-ZÀ-Ỹà-ỹ0-9\\s]+")) {
-            throw new IllegalArgumentException(">>> Error: Tên môn học không được chứa ký tự đặt biệt!");
+            throw new InvalidStringException(">>> Error: Tên môn học không được chứa ký tự đặt biệt!");
         }
 
         this.subject = subject;
@@ -54,7 +61,7 @@ public class Lecturer extends Teacher {
                 System.out.print("Nhập bộ môn giảng dạy: ");
                 setSubject(sc.nextLine().trim());
                 break;
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidStringException | NullOrEmptyException e) {
                 System.out.println(e.getMessage());
             }
         }

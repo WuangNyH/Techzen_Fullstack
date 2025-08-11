@@ -1,5 +1,8 @@
 package buoi_8.bai_tap.chieu.models;
 
+import buoi_8.bai_tap.chieu.exceptions.InvalidStringException;
+import buoi_8.bai_tap.chieu.exceptions.NullOrEmptyException;
+
 import static buoi_8.bai_tap.chieu.Main.sc;
 
 public class StudentBE extends Student {
@@ -18,8 +21,12 @@ public class StudentBE extends Student {
     }
 
     public void setProgLanguage(String progLanguage) {
+        if (progLanguage.isEmpty()) {
+            throw new NullOrEmptyException(">>> Error: Ngôn ngữ lập trình không được trống!");
+        }
+
         if (!progLanguage.matches("[a-zA-Z0-9\\s]+")) {
-            throw new IllegalArgumentException(">>> Error: Ngôn ngữ lập trình không được chứa ký tự đặt biệt!");
+            throw new InvalidStringException(">>> Error: Ngôn ngữ lập trình không được chứa ký tự đặt biệt!");
         }
 
         this.progLanguage = progLanguage;
@@ -39,7 +46,7 @@ public class StudentBE extends Student {
                 System.out.print("Nhập ngôn ngữ lập trình: ");
                 setProgLanguage(sc.nextLine().trim());
                 break;
-            } catch (IllegalArgumentException e) {
+            } catch (InvalidStringException | NullOrEmptyException e) {
                 System.out.println(e.getMessage());
             }
         }
