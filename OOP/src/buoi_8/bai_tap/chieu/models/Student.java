@@ -1,6 +1,6 @@
-package buoi_8.bai_tap.chieu;
+package buoi_8.bai_tap.chieu.models;
 
-import java.util.Scanner;
+import static buoi_8.bai_tap.chieu.Main.sc;
 
 public abstract class Student extends Person implements Comparable<Student> {
     private double avgScore;
@@ -20,6 +20,10 @@ public abstract class Student extends Person implements Comparable<Student> {
     }
 
     public void setAvgScore(double avgScore) {
+        if (avgScore < 0 || avgScore > 10) {
+            throw new IllegalArgumentException(">>> Error: Điểm trung bình phải từ 0-10!");
+        }
+
         this.avgScore = avgScore;
     }
 
@@ -28,44 +32,38 @@ public abstract class Student extends Person implements Comparable<Student> {
     }
 
     public void setSessionNumber(int sessionNumber) {
+        if (sessionNumber <= 0) {
+            throw new IllegalArgumentException(">>> Error: Số buổi học phải > 0!");
+        }
+
         this.sessionNumber = sessionNumber;
     }
 
     @Override
     public void input() {
-        Scanner sc = new Scanner(System.in);
-
         super.input();
 
         while (true) {
-            System.out.print("Nhập điểm trung bình: ");
-            if (sc.hasNextDouble()) {
-                this.avgScore = sc.nextDouble();
-                if (this.avgScore < 0) {
-                    System.out.println("Điểm trung bình không hợp lệ! Phải >= 0.\n");
-                    continue;
-                }
-                sc.nextLine();
+            try {
+                System.out.print("Nhập điểm trung bình: ");
+                setAvgScore(Double.parseDouble(sc.nextLine()));
                 break;
-            } else {
-                System.out.println("Điểm trung bình không hợp lệ! Nhập số thực.\n");
-                sc.nextLine();
+            } catch (NumberFormatException e) {
+                System.out.println(">>> Error: Vui lòng nhập số thực!");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
 
         while (true) {
-            System.out.print("Nhập số buổi học: ");
-            if (sc.hasNextInt()) {
-                this.sessionNumber = sc.nextInt();
-                if (this.sessionNumber < 0) {
-                    System.out.println("Số buổi học không hợp lệ! Phải >= 0.\n");
-                    continue;
-                }
-                sc.nextLine();
+            try {
+                System.out.print("Nhập số buổi học: ");
+                setSessionNumber(Integer.parseInt(sc.nextLine()));
                 break;
-            } else {
-                System.out.println("Số buổi học không hợp lệ! Nhập số nguyên.\n");
-                sc.nextLine();
+            } catch (NumberFormatException e) {
+                System.out.println(">>> Error: Vui lòng nhập số nguyên dương!");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -80,7 +78,7 @@ public abstract class Student extends Person implements Comparable<Student> {
                 + "Điểm TB: " + this.avgScore + "\n"
                 + "Số buổi học: " + this.sessionNumber + "\n"
                 + "Xếp loại: " + this.getClassify() + "\n"
-                + "Học phí: " + String.format("%.2fVND", this.tuitionFee()) + "\n";
+                + "Học phí: " + String.format("%,.2fVND", this.tuitionFee()) + "\n";
     }
 
     @Override

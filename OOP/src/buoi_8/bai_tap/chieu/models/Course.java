@@ -1,7 +1,9 @@
-package buoi_8.bai_tap.chieu;
+package buoi_8.bai_tap.chieu.models;
 
 import java.util.HashSet;
-import java.util.Scanner;
+import java.util.Objects;
+
+import static buoi_8.bai_tap.chieu.Main.sc;
 
 public class Course {
     private String id;
@@ -40,16 +42,14 @@ public class Course {
         return students;
     }
 
-    public void setStudents(Student student) {
-        this.students.add(student);
+    public boolean addStudents(Student student) {
+        return this.students.add(student);
     }
 
     public void input() {
-        Scanner sc = new Scanner(System.in);
-
         while (true) {
-            System.out.print("Nhập tên khóa học: ");
             try {
+                System.out.print("Nhập tên khóa học: ");
                 setName(sc.nextLine().trim());
                 break;
             } catch (IllegalArgumentException e) {
@@ -58,18 +58,33 @@ public class Course {
         }
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Course course)) return false;
+        return Objects.equals(getId(), course.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 
     @Override
     public String toString() {
         StringBuilder studentOutput = new StringBuilder();
 
-        for (Student student : students) {
-            studentOutput.append("\t+ ").append(student.getId()).append(": ").append(student.getFullName()).append("\n");
+        if (students.isEmpty()) {
+            studentOutput.append("Hiện tại chưa có học viên nào trong lớp!");
+        } else {
+            studentOutput.append("\n");
+            for (Student student : students) {
+                studentOutput.append("\t+ ").append(student.getId()).append(": ").append(student.getFullName()).append("\n");
+            }
         }
 
         return "Mã lớp học: " + this.id + "\n"
                 + "Tên: " + this.name + "\n"
-                + "Danh sách sinh viên: \n"
+                + "Danh sách sinh viên: "
                 + studentOutput;
     }
 }

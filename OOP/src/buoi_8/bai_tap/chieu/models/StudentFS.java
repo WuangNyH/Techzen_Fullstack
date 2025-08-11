@@ -1,6 +1,6 @@
-package buoi_8.bai_tap.chieu;
+package buoi_8.bai_tap.chieu.models;
 
-import java.util.Scanner;
+import static buoi_8.bai_tap.chieu.Main.sc;
 
 public class StudentFS extends Student {
     private int joinedProjects;
@@ -18,6 +18,10 @@ public class StudentFS extends Student {
     }
 
     public void setJoinedProjects(int joinedProjects) {
+        if (joinedProjects <= 0) {
+            throw new IllegalArgumentException(">>> Error: Số dự án tham gia phải > 0!");
+        }
+
         this.joinedProjects = joinedProjects;
     }
 
@@ -28,23 +32,17 @@ public class StudentFS extends Student {
 
     @Override
     public void input() {
-        Scanner sc = new Scanner(System.in);
-
         super.input();
 
         while (true) {
-            System.out.print("Nhập số dự án tham gia: ");
-            if (sc.hasNextInt()) {
-                this.joinedProjects = sc.nextInt();
-                if (this.joinedProjects < 0) {
-                    System.out.println("Số dự án tham gia không hợp lệ! Phải >= 0.\n");
-                    continue;
-                }
-                sc.nextLine();
+            try {
+                System.out.print("Nhập số dự án tham gia: ");
+                setJoinedProjects(Integer.parseInt(sc.nextLine()));
                 break;
-            } else {
-                System.out.println("Số dự án tham gia không hợp lệ! Nhập số nguyên.\n");
-                sc.nextLine();
+            } catch (NumberFormatException e) {
+                System.out.println(">>> Error: Vui lòng nhập số nguyên dương!");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }

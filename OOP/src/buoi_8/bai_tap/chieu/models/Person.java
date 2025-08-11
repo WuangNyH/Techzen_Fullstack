@@ -1,7 +1,8 @@
-package buoi_8.bai_tap.chieu;
+package buoi_8.bai_tap.chieu.models;
 
 import java.util.Objects;
-import java.util.Scanner;
+
+import static buoi_8.bai_tap.chieu.Main.sc;
 
 public abstract class Person {
     private String id;
@@ -20,41 +21,35 @@ public abstract class Person {
     }
 
     public void input() {
-        Scanner sc = new Scanner(System.in);
-
         while (true) {
-            System.out.print("Nhập tên: ");
-            this.fullName = sc.nextLine().trim();
-            if (this.fullName.matches("[a-zA-ZÀ-Ỹà-ỹ\\s]+")) {
+            try {
+                System.out.print("Nhập tên: ");
+                setFullName(sc.nextLine().trim());
                 break;
-            } else {
-                System.out.println("Tên không hợp lệ! Không chứa số hoặc ký tự đặc biệt.\n");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
 
         while (true) {
-            System.out.print("Nhập tuổi: ");
-            if (sc.hasNextInt()) {
-                this.age = sc.nextInt();
-                if (this.age < 0) {
-                    System.out.println("Tuổi không hợp lệ! Phải >= 0.\n");
-                    continue;
-                }
-                sc.nextLine();
+            try {
+                System.out.print("Nhập tuổi: ");
+                setAge(Integer.parseInt(sc.nextLine().trim()));
                 break;
-            } else {
-                System.out.println("Tuổi không hợp lệ! Nhập số nguyên.\n");
-                sc.nextLine();
+            } catch (NumberFormatException e) {
+                System.out.println(">>> Error: Vui lòng nhập số nguyên dương!");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
 
         while (true) {
-            System.out.print("Nhập email: ");
-            this.email = sc.nextLine().trim();
-            if (this.email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+            try {
+                System.out.print("Nhập email: ");
+                setEmail(sc.nextLine().trim());
                 break;
-            } else {
-                System.out.println("Email không hợp lệ! Vui lòng nhập đúng định dạng (vd: ten@gmail.com).\n");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -72,6 +67,10 @@ public abstract class Person {
     }
 
     public void setFullName(String fullName) {
+        if (!fullName.matches("[a-zA-ZÀ-Ỹà-ỹ\\s]+")) {
+            throw new IllegalArgumentException(">> Error: Tên không được chứa số hoặc ký tự đặc biệt.");
+        }
+
         this.fullName = fullName;
     }
 
@@ -80,6 +79,10 @@ public abstract class Person {
     }
 
     public void setAge(int age) {
+        if (age < 0) {
+            throw new IllegalArgumentException(">>> Error: Tuổi phải > 0.");
+        }
+
         this.age = age;
     }
 
@@ -88,6 +91,10 @@ public abstract class Person {
     }
 
     public void setEmail(String email) {
+        if (!email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+            throw new IllegalArgumentException(">>> Error: Vui lòng nhập đúng định dạng (vd: ten@gmail.com).");
+        }
+
         this.email = email;
     }
 

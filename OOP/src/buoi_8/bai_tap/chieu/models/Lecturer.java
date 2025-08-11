@@ -1,9 +1,12 @@
-package buoi_8.bai_tap.chieu;
+package buoi_8.bai_tap.chieu.models;
 
-import java.util.Scanner;
+import java.util.HashSet;
+
+import static buoi_8.bai_tap.chieu.Main.sc;
 
 public class Lecturer extends Teacher {
     private String subject;
+    private final HashSet<Schedule> schedules = new HashSet<>();
 
     public Lecturer() {
     }
@@ -18,7 +21,23 @@ public class Lecturer extends Teacher {
     }
 
     public void setSubject(String subject) {
+        if (!subject.matches("[a-zA-ZÀ-Ỹà-ỹ0-9\\s]+")) {
+            throw new IllegalArgumentException(">>> Error: Tên môn học không được chứa ký tự đặt biệt!");
+        }
+
         this.subject = subject;
+    }
+
+    public HashSet<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public boolean addSchedule(Schedule schedule) {
+        return schedules.add(schedule);
+    }
+
+    public void removeSchedule(String date) {
+        schedules.removeIf(schedule -> schedule.getDay().equals(date));
     }
 
     @Override
@@ -28,17 +47,15 @@ public class Lecturer extends Teacher {
 
     @Override
     public void input() {
-        Scanner sc = new Scanner(System.in);
-
         super.input();
 
         while (true) {
-            System.out.print("Nhập bộ môn giảng dạy: ");
-            this.subject = sc.nextLine().trim();
-            if (this.subject.matches("[a-zA-ZÀ-Ỹà-ỹ0-9\\s]+")) {
+            try {
+                System.out.print("Nhập bộ môn giảng dạy: ");
+                setSubject(sc.nextLine().trim());
                 break;
-            } else {
-                System.out.println("Tên môn học không hợp lệ! Không ký tự đặc biệt.\n");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }

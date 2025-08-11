@@ -1,6 +1,6 @@
-package buoi_8.bai_tap.chieu;
+package buoi_8.bai_tap.chieu.models;
 
-import java.util.Scanner;
+import static buoi_8.bai_tap.chieu.Main.sc;
 
 public class StudentBE extends Student {
     private String progLanguage;
@@ -18,6 +18,10 @@ public class StudentBE extends Student {
     }
 
     public void setProgLanguage(String progLanguage) {
+        if (!progLanguage.matches("[a-zA-Z0-9\\s]+")) {
+            throw new IllegalArgumentException(">>> Error: Ngôn ngữ lập trình không được chứa ký tự đặt biệt!");
+        }
+
         this.progLanguage = progLanguage;
     }
 
@@ -28,17 +32,15 @@ public class StudentBE extends Student {
 
     @Override
     public void input() {
-        Scanner sc = new Scanner(System.in);
-
         super.input();
 
         while (true) {
-            System.out.print("Nhập ngôn ngữ lập trình: ");
-            this.progLanguage = sc.nextLine().trim();
-            if (this.progLanguage.matches("[a-zA-Z\\s]+")) {
+            try {
+                System.out.print("Nhập ngôn ngữ lập trình: ");
+                setProgLanguage(sc.nextLine().trim());
                 break;
-            } else {
-                System.out.println("Ngôn ngữ lập trình không hợp lệ! Không chứa Ký tự đặc biệt.\n");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }

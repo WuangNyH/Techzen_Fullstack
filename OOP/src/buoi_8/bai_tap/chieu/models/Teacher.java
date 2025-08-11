@@ -1,6 +1,6 @@
-package buoi_8.bai_tap.chieu;
+package buoi_8.bai_tap.chieu.models;
 
-import java.util.Scanner;
+import static buoi_8.bai_tap.chieu.Main.sc;
 
 public abstract class Teacher extends Person {
     private double teachingHours;
@@ -18,29 +18,28 @@ public abstract class Teacher extends Person {
     }
 
     public void setTeachingHours(double teachingHours) {
+        if (teachingHours < 0) {
+            throw new IllegalArgumentException(">>> Error: Số giờ dạy phải >= 0!");
+        }
+
         this.teachingHours = teachingHours;
     }
 
     @Override
     public void input() {
-        Scanner sc = new Scanner(System.in);
-
         super.input();
 
         while (true) {
-            System.out.print("Nhập số giờ dạy: ");
-            if (sc.hasNextDouble()) {
-                this.teachingHours = sc.nextDouble();
-                if (this.teachingHours < 0) {
-                    System.out.println("Số giờ dạy không hợp lệ! Phải >= 0.\n");
-                    continue;
-                }
-                sc.nextLine();
+            try {
+                System.out.print("Nhập số giờ dạy: ");
+                setTeachingHours(Double.parseDouble(sc.nextLine()));
                 break;
-            } else {
-                System.out.println("Số giờ dạy không hợp lệ! Nhập số nguyên.\n");
-                sc.nextLine();
+            } catch (NumberFormatException e) {
+                System.out.println(">>> Error: Vui lòng nhập số thực!");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
+
         }
     }
 
@@ -50,6 +49,6 @@ public abstract class Teacher extends Person {
     public String toString() {
         return super.toString()
                 + "Số giờ dạy: " + String.format("%.2f", this.teachingHours) + "\n"
-                + "Lương: " + String.format("%.2fVND", this.getSalary()) + "\n";
+                + "Lương: " + String.format("%,.2fVND", this.getSalary()) + "\n";
     }
 }
