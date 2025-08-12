@@ -1,5 +1,7 @@
 package buoi_5.bai_tap_ve_nha;
 
+import buoi_5.bai_tap_ve_nha.exceptions.InvalidPositiveNumberException;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -21,9 +23,9 @@ public class NewPhone extends Phone {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(int quantity) throws InvalidPositiveNumberException {
         if (quantity <= 0) {
-            throw new InputMismatchException(">> Error: Số lượng phải lớn hơn không!");
+            throw new InvalidPositiveNumberException(">> Error: Số lượng phải lớn hơn không!");
         }
 
         this.quantity = quantity;
@@ -46,7 +48,7 @@ public class NewPhone extends Phone {
                 break;
             } catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
-            } catch (NumberFormatException e) {
+            } catch (InvalidPositiveNumberException e) {
                 System.out.println(">> Error: Số lượng phải là một số nguyên!");
             }
         }

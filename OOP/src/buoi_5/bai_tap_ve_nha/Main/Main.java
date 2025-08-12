@@ -4,6 +4,7 @@ import buoi_5.bai_tap_ve_nha.NewPhone;
 import buoi_5.bai_tap_ve_nha.OldPhone;
 import buoi_5.bai_tap_ve_nha.Phone;
 import buoi_5.bai_tap_ve_nha.PhoneConstants;
+import buoi_5.bai_tap_ve_nha.exceptions.InvalidPositiveNumberException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -236,13 +237,17 @@ public class Main implements PhoneConstants {
             }
         }
 
-        for (Phone phone : phones) {
-            if (phone instanceof OldPhone) {
-                OldPhone oldPhone = (OldPhone) phone;
-                oldPhone.promotion(ratePromote);
+        try {
+            for (Phone phone : phones) {
+                if (phone instanceof OldPhone) {
+                    OldPhone oldPhone = (OldPhone) phone;
+                    oldPhone.promotion(ratePromote);
+                }
             }
+            System.out.println("Giảm giá thành công!");
+        } catch (InvalidPositiveNumberException e) {
+            System.out.println(e.getMessage());
         }
-        System.out.println("Giảm giá thành công!");
     }
 
     public static void main(String[] args) {

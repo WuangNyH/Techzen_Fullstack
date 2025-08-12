@@ -1,5 +1,8 @@
 package buoi_5.bai_tap_ve_nha;
 
+import buoi_5.bai_tap_ve_nha.exceptions.InvalidPositiveNumberException;
+import buoi_5.bai_tap_ve_nha.exceptions.InvalidStatusBatteryException;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -21,9 +24,9 @@ public class OldPhone extends Phone implements Promotion {
         return statusBattery;
     }
 
-    public void setStatusBattery(int statusBattery) {
+    public void setStatusBattery(int statusBattery) throws InvalidStatusBatteryException {
         if (statusBattery < 0 || statusBattery > 100) {
-            throw new NumberFormatException(">> Error: Tình trạng pin phải từ 0-100!");
+            throw new InvalidStatusBatteryException(">> Error: Tình trạng pin phải từ 0-100!");
         }
 
         this.statusBattery = statusBattery;
@@ -44,7 +47,7 @@ public class OldPhone extends Phone implements Promotion {
             try {
                 setStatusBattery(Integer.parseInt(sc.nextLine()));
                 break;
-            } catch (InputMismatchException e) {
+            } catch (InvalidStatusBatteryException e) {
                 System.out.println(e.getMessage());
             } catch (NumberFormatException e) {
                 System.out.println(">> Error: Tình trạng pin phải là một số nguyên!");
@@ -65,7 +68,7 @@ public class OldPhone extends Phone implements Promotion {
     }
 
     @Override
-    public void promotion(int ratePromote) {
+    public void promotion(int ratePromote) throws InvalidPositiveNumberException {
         this.setPrice(this.getPrice() * (1 - (double) ratePromote / 100));
     }
 }

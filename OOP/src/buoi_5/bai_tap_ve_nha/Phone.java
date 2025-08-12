@@ -1,5 +1,9 @@
 package buoi_5.bai_tap_ve_nha;
 
+import buoi_5.bai_tap_ve_nha.exceptions.InvalidPositiveNumberException;
+import buoi_5.bai_tap_ve_nha.exceptions.InvalidStringException;
+import buoi_5.bai_tap_ve_nha.exceptions.NullOrEmptyException;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -36,9 +40,13 @@ public abstract class Phone implements PhoneConstants, Comparable<Phone> {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws InvalidStringException, NullOrEmptyException {
+        if (name.isEmpty()) {
+            throw new NullOrEmptyException(">>> Error: Tên không được rỗng!");
+        }
+
         if (!name.matches("[a-zA-Z0-9\\s]+")) {
-            throw new InputMismatchException(">>Error: Tên không được chứa ký tự đặt biệt!");
+            throw new InvalidStringException(">>Error: Tên không được chứa ký tự đặt biệt!");
         }
 
         this.name = name;
@@ -48,9 +56,9 @@ public abstract class Phone implements PhoneConstants, Comparable<Phone> {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(double price) throws InvalidPositiveNumberException {
         if (price <= 0) {
-            throw new InputMismatchException(">>Error: Giá phải lớn hơn không!");
+            throw new InvalidPositiveNumberException(">>Error: Giá phải lớn hơn không!");
         }
 
         this.price = price;
@@ -60,9 +68,9 @@ public abstract class Phone implements PhoneConstants, Comparable<Phone> {
         return warrantyPeriod;
     }
 
-    public void setWarrantyPeriod(int warrantyPeriod) {
+    public void setWarrantyPeriod(int warrantyPeriod) throws InvalidPositiveNumberException {
         if (warrantyPeriod <= 0) {
-            throw new InputMismatchException(">>Error: Thời gian bảo hành phải lớn hơn không!");
+            throw new InvalidPositiveNumberException(">>Error: Thời gian bảo hành phải lớn hơn không!");
         }
 
         this.warrantyPeriod = warrantyPeriod;
@@ -88,9 +96,13 @@ public abstract class Phone implements PhoneConstants, Comparable<Phone> {
         this.status = status;
     }
 
-    public void setManufacturer(String manufacturer) {
+    public void setManufacturer(String manufacturer) throws InvalidStringException, NullOrEmptyException {
+        if (manufacturer.isEmpty()) {
+            throw new NullOrEmptyException(">>> Error: Hãng SX không được trống!");
+        }
+
         if (!manufacturer.matches("[a-zA-Z]+")) {
-            throw new InputMismatchException(">>Error: Hãng SX không được chứa ký tự đặt biệt và chữ số!");
+            throw new InvalidStringException(">>Error: Hãng SX không được chứa ký tự đặt biệt và chữ số!");
         }
 
         this.manufacturer = manufacturer;
@@ -104,7 +116,7 @@ public abstract class Phone implements PhoneConstants, Comparable<Phone> {
             try {
                 setName(sc.nextLine().trim());
                 break;
-            } catch (InputMismatchException e) {
+            } catch (InvalidStringException | NullOrEmptyException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -116,7 +128,7 @@ public abstract class Phone implements PhoneConstants, Comparable<Phone> {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(">>Error: Giá phải là một số thực!");
-            } catch (InputMismatchException e) {
+            } catch (InvalidPositiveNumberException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -128,7 +140,7 @@ public abstract class Phone implements PhoneConstants, Comparable<Phone> {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(">>Error: Thời gian bảo hành phải là một số nguyên!");
-            } catch (InputMismatchException e) {
+            } catch (InvalidPositiveNumberException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -161,7 +173,7 @@ public abstract class Phone implements PhoneConstants, Comparable<Phone> {
             try {
                 setManufacturer(sc.nextLine().trim());
                 break;
-            } catch (InputMismatchException e) {
+            } catch (InvalidStringException | NullOrEmptyException e) {
                 System.out.println(e.getMessage());
             }
         }

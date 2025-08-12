@@ -4,6 +4,10 @@ import buoi_5.bai_tap_ve_nha.NewPhone;
 import buoi_5.bai_tap_ve_nha.OldPhone;
 import buoi_5.bai_tap_ve_nha.Phone;
 import buoi_5.bai_tap_ve_nha.PhoneConstants;
+import buoi_5.bai_tap_ve_nha.exceptions.InvalidPositiveNumberException;
+import buoi_5.bai_tap_ve_nha.exceptions.InvalidStatusBatteryException;
+import buoi_5.bai_tap_ve_nha.exceptions.InvalidStringException;
+import buoi_5.bai_tap_ve_nha.exceptions.NullOrEmptyException;
 
 import java.util.InputMismatchException;
 
@@ -43,7 +47,7 @@ public class UpdatePhone {
                         phone.setName(sc.nextLine().trim());
                         System.out.println("Cập nhật tên thành công!\n");
                         break;
-                    } catch (InputMismatchException e) {
+                    } catch (InvalidStringException | NullOrEmptyException e) {
                         System.out.println(e.getMessage());
                     }
                 }
@@ -57,7 +61,7 @@ public class UpdatePhone {
                         break;
                     } catch (NumberFormatException e) {
                         System.out.println(">>Error: Giá phải là một số thực!");
-                    } catch (InputMismatchException e) {
+                    } catch (InvalidPositiveNumberException e) {
                         System.out.println(e.getMessage());
                     }
                 }
@@ -71,7 +75,7 @@ public class UpdatePhone {
                         break;
                     } catch (NumberFormatException e) {
                         System.out.println(">>Error: Thời gian bảo hành phải là một số nguyên!");
-                    } catch (InputMismatchException e) {
+                    } catch (InvalidPositiveNumberException e) {
                         System.out.println(e.getMessage());
                     }
                 }
@@ -108,7 +112,7 @@ public class UpdatePhone {
                         phone.setManufacturer(sc.nextLine().trim());
                         System.out.println("Cập nhật hãng SX thành công!\n");
                         break;
-                    } catch (InputMismatchException e) {
+                    } catch (InvalidStringException | NullOrEmptyException e) {
                         System.out.println(e.getMessage());
                     }
                 }
@@ -134,7 +138,7 @@ public class UpdatePhone {
                             try {
                                 newPhone.setQuantity(Integer.parseInt(sc.nextLine()));
                                 break;
-                            } catch (InputMismatchException e) {
+                            } catch (InvalidPositiveNumberException e) {
                                 System.out.println(e.getMessage());
                             } catch (NumberFormatException e) {
                                 System.out.println(">> Error: Số lượng phải là một số nguyên!");
@@ -170,7 +174,7 @@ public class UpdatePhone {
                             try {
                                 oldPhone.setStatusBattery(Integer.parseInt(sc.nextLine()));
                                 break;
-                            } catch (InputMismatchException e) {
+                            } catch (InvalidStatusBatteryException e) {
                                 System.out.println(e.getMessage());
                             } catch (NumberFormatException e) {
                                 System.out.println(">> Error: Tình trạng pin phải là một số nguyên!");
