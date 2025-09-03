@@ -1,0 +1,21 @@
+- HÌnh ảnh
+- tên khóa học,
+- mô tả chi tiết,
+- thời gian học,
+- học phí cũ và mới,
+- hình thức học,
+- địa điểm, mô tả,
+- nội dung banner lý do,
+- lộ trình khóa học,
+- nội dung chi tiết module (ngắn hạn phải đủ hết tất cả các buổi),
+  - Mốc thời gian
+  - Hình ảnh
+  - Nội dung
+    - Nọi dung chi tiết
+    - Kỹ năng bổ trợ
+- Kỹ năng nhận được sau khóa học
+- Đối tượng
+
+
+- Thêm một field cho mô tả to ở trang khóa học
+- 

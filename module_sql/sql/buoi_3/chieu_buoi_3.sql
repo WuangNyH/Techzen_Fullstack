@@ -1,0 +1,237 @@
+-- Câu 1
+-- Tìm 20 khách hàng có nhiều loyalty_points nhất.
+SELECT
+	CUSTOMER_ID,
+	CUSTOMER_NAME,
+	LOYALTY_POINTS
+FROM
+	CUSTOMER
+ORDER BY LOYALTY_POINTS DESC
+LIMIT 20;
+
+-- Câu 2
+-- Tìm khách hàng có ngày sinh trong khoảng 1980–1990.
+SELECT
+	CUSTOMER_ID,
+	CUSTOMER_NAME,
+	BIRTH_DATE
+FROM CUSTOMER
+WHERE BIRTH_DATE BETWEEN DATE '1980-01-01' AND DATE '1990-12-31';
+
+-- Câu 3
+-- Liệt kê 10 đơn hàng gần nhất của kênh bán web.
+SELECT
+	ORDER_NUMBER,
+	CHANNEL,
+	CREATED_AT
+FROM ORDERS
+WHERE CHANNEL = 'web'
+ORDER BY CREATED_AT DESC
+LIMIT 10;
+
+-- Câu 4
+-- Tìm khách hàng có email chứa từ khóa 'yahoo'.
+SELECT
+	CUSTOMER_ID,
+	CUSTOMER_NAME,
+	EMAIL
+FROM CUSTOMER
+WHERE EMAIL ILIKE '%yahoo%';
+
+-- Câu 5
+-- Lấy 5 đơn hàng có phí vận chuyển (shipping_fee) thấp nhất.
+SELECT
+	ORDER_NUMBER,
+	SHIPPING_FEE
+FROM ORDERS
+ORDER BY SHIPPING_FEE
+LIMIT 5;
+
+-- Câu 6
+-- Tìm khách hàng VIP (vip_tier <> 'NONE') và sắp xếp theo ngày tạo mới nhất.
+SELECT
+	CUSTOMER_ID,
+	CUSTOMER_NAME,
+	VIP_TIER
+FROM CUSTOMER
+WHERE VIP_TIER <> 'NONE'
+ORDER BY CREATED_AT DESC;
+
+-- Câu 7
+-- Liệt kê 10 đơn hàng có tổng tiền (total_amount) từ 500 đến 1000.
+SELECT
+	ORDER_NUMBER,
+	TOTAL_AMOUNT
+FROM ORDERS
+WHERE TOTAL_AMOUNT BETWEEN 500 AND 1000
+LIMIT 10;
+
+-- Câu 8
+-- Tìm khách hàng ở thành phố bắt đầu bằng chữ S.
+SELECT
+	CUSTOMER_ID,
+	CUSTOMER_NAME,
+	CITY
+FROM CUSTOMER
+WHERE CITY ILIKE 'S%';
+
+-- Câu 9
+-- Lấy 5 đơn hàng có tổng tiền lớn nhất và trạng thái = PAID.
+SELECT
+	ORDER_NUMBER,
+	STATUS,
+	TOTAL_AMOUNT
+FROM ORDERS
+WHERE STATUS = 'PAID'
+ORDER BY TOTAL_AMOUNT DESC
+LIMIT 5;
+
+-- Câu 10
+-- Liệt kê 10 khách hàng nam có nhiều loyalty_points nhất.
+SELECT
+	CUSTOMER_ID,
+	CUSTOMER_NAME,
+	GENDER,
+	LOYALTY_POINTS
+FROM CUSTOMER
+WHERE GENDER = 'M'
+ORDER BY LOYALTY_POINTS DESC
+LIMIT 10;
+
+-- Câu 11
+-- Đếm số đơn hàng theo từng trạng thái (status).
+SELECT
+	STATUS,
+	COUNT(*) AS SO_DON_HANG
+FROM ORDERS
+GROUP BY STATUS;
+
+-- Câu 12
+-- Đếm số khách hàng theo từng thành phố (city).
+SELECT
+	CITY,
+	COUNT(*) AS SO_KHACH_HANG
+FROM CUSTOMER
+GROUP BY CITY;
+
+-- Câu 13
+-- Tính tổng total_amount của đơn hàng theo từng phương thức thanh toán (payment_method).
+SELECT
+	PAYMENT_METHOD,
+	SUM(TOTAL_AMOUNT) AS TONG_TIEN
+FROM ORDERS
+GROUP BY PAYMENT_METHOD;
+
+-- Câu 14
+-- Tính tổng số loyalty_points của khách hàng theo từng cấp độ VIP (vip_tier).
+SELECT
+	VIP_TIER,
+	SUM(LOYALTY_POINTS) AS TOTAL_LOYALTY_POINTS
+FROM CUSTOMER
+GROUP BY VIP_TIER;
+
+-- Câu 15
+-- Tính số đơn hàng theo từng kênh (channel).
+SELECT
+	CHANNEL,
+	COUNT(*) AS SO_DON_HANG
+FROM ORDERS
+GROUP BY CHANNEL;
+
+-- Câu 16
+-- Tìm các thành phố có trên 50 khách hàng.
+SELECT
+	CITY,
+	COUNT(*) AS SO_KHACH_HANG
+FROM CUSTOMER
+GROUP BY CITY
+HAVING COUNT(*) > 50;
+
+-- Câu 17
+-- Tìm phương thức thanh toán có tổng giá trị đơn hàng trên 10,000.
+SELECT
+	PAYMENT_METHOD,
+	SUM(TOTAL_AMOUNT) AS TONG_TIEN
+FROM ORDERS
+GROUP BY PAYMENT_METHOD
+HAVING SUM(TOTAL_AMOUNT) > 10000;
+
+-- Câu 18
+-- Tìm kênh bán có trung bình total_amount > 300.
+SELECT
+	CHANNEL,
+	ROUND(AVG(TOTAL_AMOUNT), 2) AS AVG_TOTAL_AMOUNT
+FROM ORDERS
+GROUP BY CHANNEL
+HAVING AVG(TOTAL_AMOUNT) > 300;
+
+-- Câu 19
+-- Tìm trạng thái đơn hàng có nhiều hơn 100 đơn hàng.
+SELECT
+	STATUS,
+	COUNT(*) AS SO_DON_HANG
+FROM ORDERS
+GROUP BY STATUS
+HAVING COUNT(*) > 100;
+
+-- Câu 20
+-- Tìm cấp độ VIP có tổng loyalty_points > 50,000.
+SELECT
+	VIP_TIER,
+	SUM(LOYALTY_POINTS) AS TOTAL_LOYALTY_POINTS
+FROM CUSTOMER
+GROUP BY VIP_TIER
+HAVING SUM(LOYALTY_POINTS) > 50000;
+
+-- Câu 21
+-- Tìm 5 thành phố có nhiều khách hàng nhất.
+SELECT
+	CITY,
+	COUNT(*) AS SO_KHACH_HANG
+FROM CUSTOMER
+GROUP BY CITY
+ORDER BY SO_KHACH_HANG DESC
+LIMIT 5;
+
+-- Câu 22
+-- Tìm 5 khách hàng có nhiều đơn hàng nhất.
+SELECT
+	O.CUSTOMER_ID,
+	C.CUSTOMER_NAME,
+	COUNT(*) AS SO_DON_HANG
+FROM ORDERS O INNER JOIN CUSTOMER C ON C.CUSTOMER_ID = O.CUSTOMER_ID
+GROUP BY O.CUSTOMER_ID, C.CUSTOMER_NAME
+ORDER BY SO_DON_HANG DESC
+LIMIT 5;
+
+-- Câu 23
+-- Liệt kê 10 khách hàng có tổng giá trị đơn hàng cao nhất.
+SELECT
+	O.CUSTOMER_ID,
+	C.CUSTOMER_NAME,
+	SUM(TOTAL_AMOUNT) AS TONG_TIEN
+FROM ORDERS O INNER JOIN CUSTOMER C ON C.CUSTOMER_ID = O.CUSTOMER_ID
+GROUP BY O.CUSTOMER_ID, C.CUSTOMER_NAME
+ORDER BY TONG_TIEN DESC
+LIMIT 10;
+
+-- Câu 24
+-- Tìm các khách hàng có trung bình đơn hàng > 500.
+SELECT
+	O.CUSTOMER_ID,
+	C.CUSTOMER_NAME,
+	ROUND(AVG(TOTAL_AMOUNT), 2) AS AVG_TOTAL_AMOUNT
+FROM ORDERS O INNER JOIN CUSTOMER C ON C.CUSTOMER_ID = O.CUSTOMER_ID
+GROUP BY O.CUSTOMER_ID, C.CUSTOMER_NAME
+HAVING AVG(TOTAL_AMOUNT) > 500;
+
+-- Câu 25
+-- Tìm kênh bán hàng có số đơn hàng hủy (status = CANCELLED) nhiều nhất.
+SELECT
+	CHANNEL,
+	COUNT(*) AS SO_DON_HANG
+FROM ORDERS
+WHERE STATUS = 'CANCELLED'
+GROUP BY CHANNEL
+ORDER BY SO_DON_HANG DESC
+LIMIT 1;
