@@ -37,14 +37,14 @@ ORDER BY CREATED_AT DESC
 LIMIT 10;
 
 -- Câu 4
--- Tìm khách hàng có email chứa 'hotmail' nhưng không ở thành phố New York.
+-- Tìm khách hàng có email chứa 'yahoo' nhưng không ở thành phố New York.
 SELECT
 	CUSTOMER_ID,
 	CUSTOMER_NAME,
 	EMAIL,
 	CITY
 FROM CUSTOMER
-WHERE EMAIL ILIKE '%hotmail%' AND CITY != 'New York';
+WHERE EMAIL ILIKE '%yahoo%' AND CITY != 'New York';
 
 -- Câu 5
 -- Tìm đơn hàng có total_amount lớn hơn trung bình của tất cả đơn hàng.
@@ -103,7 +103,7 @@ SELECT
 	COUNT(*) AS SO_KHACH_HANG
 FROM CUSTOMER
 GROUP BY VIP_TIER
-HAVING COUNT(*) < 20;
+HAVING COUNT(*)  20;
 
 -- Câu 11
 -- Tìm khách hàng có loyalty_points lớn hơn loyalty_points trung bình của tất cả khách hàng.
@@ -151,7 +151,7 @@ FROM ORDERS O
 GROUP BY CUSTOMER_ID
 HAVING SUM(TOTAL_AMOUNT) > ANY (
 	SELECT SUM(TOTAL_AMOUNT)
-	FROM ORDERS
+	FROM ORDER
 	WHERE CUSTOMER_ID IN (
 		SELECT C.CUSTOMER_ID
 		FROM CUSTOMER C
@@ -159,7 +159,6 @@ HAVING SUM(TOTAL_AMOUNT) > ANY (
 	)
 	GROUP BY CUSTOMER_ID
 );
-
 
 
 -- Câu 16
@@ -198,7 +197,7 @@ WHERE CUSTOMER_ID IN (
 	GROUP BY CUSTOMER_ID
 	HAVING COUNT(*) >= 3
 )
-GROUP BY CUSTOMER_ID, CUSTOMER_NAME
+GROUP BY CUSTOMER_ID
 ORDER BY SUM_LOYALTY_POINTS DESC
 LIMIT 5;
 
@@ -285,8 +284,8 @@ SELECT
 FROM ORDERS O
 WHERE TOTAL_AMOUNT > (
 	SELECT AVG(TOTAL_AMOUNT)
-	FROM ORDERS T
-	WHERE T.CUSTOMER_ID = O.CUSTOMER_ID
+	FROM ORDERS
+	WHERE CUSTOMER_ID = O.CUSTOMER_ID
 );
 
 -- Câu 25
@@ -300,4 +299,3 @@ WHERE NOT EXISTS (
 	FROM ORDERS O
 	WHERE O.CUSTOMER_ID = C.CUSTOMER_ID
 );
-
