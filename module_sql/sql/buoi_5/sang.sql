@@ -1,16 +1,16 @@
--- Active: 1757296562201@@127.0.0.1@5432@tzacademy
 -- 0) Chuẩn bị môi trường
 -- Tạo schema lab để mọi bảng tạo trong lab
 CREATE SCHEMA IF NOT EXISTS LAB;
 
 -- Đặt search_path để ưu tiên schema lab trước
 SET SEARCH_PATH TO LAB, PUBLIC;
+SHOW SEARCH_PATH;
 
 -- Nếu đã có bảng cũ (customers2, orders2), enum cũ (order_status), 
 -- hãy dọn dẹp sạch sẽ trước để chuẩn bị môi trường.
 DROP TABLE IF EXISTS ORDERS2 CASCADE;
 DROP TABLE IF EXISTS CUSTOMERS2 CASCADE;
-DROP TYPE IF EXISTS ORDER_STATUS;
+DROP TYPE IF EXISTS ORDER_STATUS CASCADE;
 
 
 -- A) Cấu trúc bảng, kiểu dữ liệu & ràng buộc
@@ -103,7 +103,7 @@ VALUES
 INSERT INTO ORDERS2 (CUSTOMER_ID, TOTAL_AMOUNT, STATUS)
 VALUES (3, 700, 'COMPLETED');
 
--- - Một đơn hàng không chỉ định status (để dùng giá trị mặc định
+-- - Một đơn hàng không chỉ định status (để dùng giá trị mặc định)
 INSERT INTO ORDERS2 (CUSTOMER_ID, TOTAL_AMOUNT)
 VALUES (5, 550);
 
@@ -116,7 +116,7 @@ VALUES (5, -550);
 ALTER TYPE ORDER_STATUS ADD VALUE 'RETURNED';
 
 INSERT INTO ORDERS2 (CUSTOMER_ID, TOTAL_AMOUNT, STATUS)
-VALUES (11, 220, 'RETURNED');
+VALUES (6, 220, 'RETURNED');
 
 -- 6. Xóa giá trị ENUM ‘RETURNED’
 -- Chuyển các order có status RETURNED sang CANCELED
