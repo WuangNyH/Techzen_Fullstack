@@ -1,0 +1,101 @@
+DROP SCHEMA IF EXISTS lab1 CASCADE;
+CREATE SCHEMA lab1;
+
+-- Product & Category (N:N)
+CREATE TABLE lab1.products (
+  product_id SERIAL PRIMARY KEY,
+  product_code TEXT UNIQUE NOT NULL,
+  product_name TEXT NOT NULL,
+  list_price NUMERIC(12,2) NOT NULL
+);
+
+CREATE TABLE lab1.categories (
+  category_id SERIAL PRIMARY KEY,
+  category_name TEXT NOT NULL
+);
+
+CREATE TABLE lab1.product_categories (
+  product_id INT REFERENCES lab1.products(product_id),
+  category_id INT REFERENCES lab1.categories(category_id),
+  PRIMARY KEY (product_id, category_id)
+);
+
+-- Customer / Orders / Order Items
+CREATE TABLE lab1.customers (
+  customer_id SERIAL PRIMARY KEY,
+  customer_name TEXT NOT NULL,
+  email TEXT NOT NULL
+);
+
+CREATE TABLE lab1.orders (
+  order_id SERIAL PRIMARY KEY,
+  customer_id INT NOT NULL REFERENCES lab1.customers(customer_id),
+  order_date DATE NOT NULL,
+  status TEXT NOT NULL CHECK (status IN ('PENDING','PAID','SHIPPED','DELIVERED','CANCELLED'))
+);
+
+CREATE TABLE lab1.order_items (
+  order_item_id SERIAL PRIMARY KEY,
+  order_id INT NOT NULL REFERENCES lab1.orders(order_id),
+  product_id INT NOT NULL REFERENCES lab1.products(product_id),
+  quantity INT NOT NULL CHECK (quantity>0),
+  unit_price NUMERIC(12,2) NOT NULL
+);
+
+-- Payment / Shipper
+CREATE TABLE lab1.payments (
+  payment_id SERIAL PRIMARY KEY,
+  order_id INT NOT NULL REFERENCES lab1.orders(order_id),
+  paid_at TIMESTAMPTZ,
+  amount NUMERIC(12,2) NOT NULL,
+  method TEXT NOT NULL CHECK (method IN ('CARD','EWALLET','BANK')),
+  status TEXT NOT NULL CHECK (status IN ('SUCCESS','FAILED','PENDING'))
+);
+
+CREATE TABLE lab1.shippers (
+  shipper_id SERIAL PRIMARY KEY,
+  shipper_name TEXT NOT NULL
+);
+
+CREATE TABLE lab1.shipments (
+  shipment_id SERIAL PRIMARY KEY,
+  order_id INT NOT NULL REFERENCES lab1.orders(order_id),
+  shipper_id INT NOT NULL REFERENCES lab1.shippers(shipper_id),
+  shipped_at TIMESTAMPTZ
+);
+
+-- ---------- Mock data ----------
+INSERT INTO lab1.products (product_code, product_name, list_price) VALUES
+('TSHIRT','Áo thun',199000), ('HOOD','Áo hoodie',399000), ('CAP','Mũ lưỡi trai',99000),
+('BAG','Túi tote',149000), ('JACKET','Áo khoác',699000);
+
+INSERT INTO lab1.categories (category_name) VALUES
+('Thời trang'),('Phụ kiện'),('Đồ thu đông');
+
+INSERT INTO lab1.product_categories VALUES
+(1,1),(2,1),(3,2),(4,2),(5,1),(5,3),(2,3); -- JACKET thuộc 1&3, HOOD thuộc 1&3
+
+INSERT INTO lab1.customers (customer_name,email) VALUES
+('An','an@gmail.com'),('Bình','binh@yahoo.com'),('Chi','chi@outlook.com');
+
+INSERT INTO lab1.orders (customer_id, order_date, status) VALUES
+(1, CURRENT_DATE-10, 'PAID'),
+(1, CURRENT_DATE-2 , 'PENDING'),
+(2, CURRENT_DATE-5 , 'DELIVERED'),
+(3, CURRENT_DATE-1 , 'PAID');
+
+INSERT INTO lab1.order_items (order_id, product_id, quantity, unit_price) VALUES
+(1,1,2,199000),(1,3,1,99000),
+(2,2,1,399000),
+(3,5,1,699000),(3,4,2,149000),
+(4,2,1,399000);
+
+INSERT INTO lab1.payments (order_id, paid_at, amount, method, status) VALUES
+(1, NOW()-INTERVAL '9 days', 497000, 'CARD','SUCCESS'),
+(3, NOW()-INTERVAL '4 days', 997000, 'BANK','SUCCESS'),
+(4, NOW()-INTERVAL '12 hours', 399000, 'EWALLET','PENDING');
+
+INSERT INTO lab1.shippers (shipper_name) VALUES ('Ahamove'),('GHN');
+
+INSERT INTO lab1.shipments (order_id, shipper_id, shipped_at) VALUES
+(3,2, NOW()-INTERVAL '4 days');
